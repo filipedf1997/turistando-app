@@ -57,6 +57,11 @@ const Sign = observer(({ navigation }) => {
         >
           Cadastre-se
         </Button>
+        <Button
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
+          Esqueci a senha
+        </Button>
       </View>
     </View>
   )
