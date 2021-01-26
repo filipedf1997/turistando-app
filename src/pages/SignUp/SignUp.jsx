@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import { Alert, StyleSheet, View } from 'react-native'
+import {
+  Alert,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback
+} from 'react-native'
 import {
   Text,
   TextInput,
-  Button
+  Button,
+  Checkbox,
+  Caption
 } from 'react-native-paper'
 import SignUpStore from './store/SignUpStore'
 
@@ -15,7 +22,7 @@ const SignUp = observer(({ navigation }) => {
     const result = await store.createUser()
     if (result) {
       Alert.alert(
-        null, 
+        null,
         "Você foi cadastrado com sucesso!",
         [
           {
@@ -51,12 +58,46 @@ const SignUp = observer(({ navigation }) => {
           style={styles.marginB5}
         />
         <TextInput
+          label="Telefone"
+          value={store.user.fone}
+          onChangeText={text => store.user.fone = text}
+          style={styles.marginB5}
+        />
+        <TextInput
           label="Senha"
           value={store.user.password}
           onChangeText={text => store.user.password = text}
-          style={styles.marginB20}
+          style={styles.marginB5}
           secureTextEntry
         />
+        <TextInput
+          label="Confirmar senha"
+          value={store.user.confirmPassword}
+          onChangeText={text => store.user.confirmPassword = text}
+          style={styles.marginB5}
+          secureTextEntry
+        />
+        <View style={[styles.checkWrapper, store.user.isProvider ? styles.marginB5 : styles.marginB20]}>
+          <Checkbox
+            status={store.user.isProvider ? 'checked' : 'unchecked'}
+            onPress={() => { store.user.isProvider = !store.user.isProvider }}
+          />
+          <TouchableWithoutFeedback onPress={() => { store.user.isProvider = !store.user.isProvider }}>
+            <Caption style={styles.caption}>
+              Marque esta opção se for prestador de serviços
+            </Caption>
+          </TouchableWithoutFeedback>
+        </View>
+        {store.user.isProvider &&
+          <TextInput
+            label="Descreva aqui seu perfil"
+            value={store.user.profile}
+            onChangeText={text => store.user.profile = text}
+            style={styles.marginB20}
+            multiline
+            numberOfLines={4}
+          />
+        }
         <Button
           mode='contained'
           onPress={handleSubmit}
@@ -93,6 +134,12 @@ const styles = StyleSheet.create({
   },
   marginB5: {
     marginBottom: 5
+  },
+  checkWrapper: {
+    flexDirection: 'row'
+  },
+  caption: {
+    marginLeft: 10
   }
 })
 

@@ -8,6 +8,7 @@ import {
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
+import firebase from '../../firebase/firebaseConfig'
 
 const Sign = observer(({ navigation }) => {
   const { userStore } = useStores()
@@ -16,7 +17,8 @@ const Sign = observer(({ navigation }) => {
   async function handleSubmit() {
     const result = await store.login()
     if(result){
-      userStore.user = result
+      userStore.idToken = await firebase.auth().currentUser.getIdToken()
+      userStore.user = result    
     } else {
       Alert.alert(null, "Houve um erro ao fazer o login. Tente novamente.")
     }

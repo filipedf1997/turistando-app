@@ -5,12 +5,17 @@ class SignUpStore {
   user = {
     name: '',
     email: '',
-    password: ''
+    fone: '',
+    password: '',
+    confirmPassword: '',
+    isProvider: false,
+    profile: null
   }
   isFetching = false
 
   get disable() {
-    return !this.user.name || !this.user.email || !this.user.password
+    return !this.user.name || !this.user.email || !this.user.password || !this.user.fone
+      || !this.user.confirmPassword || (this.user.isProvider && !this.user.profile)
   }
 
   async createUser() {
@@ -18,6 +23,7 @@ class SignUpStore {
       this.isFetching = true
       const { user: {uid} } = await firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)
       delete this.user.password
+      delete this.user.confirmPassword
       await firebase.database().ref(`users/${uid}`).set(this.user)
       await firebase.auth().signOut()
       this.isFetching = false

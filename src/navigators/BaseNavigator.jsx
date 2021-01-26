@@ -1,17 +1,20 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { NavigationContainer } from '@react-navigation/native'
-import AppNavigator from './AppNavigator'
+import TravelerNavigator from './TravelerNavigator'
+import ProviderNavigator from './ProviderNavigator'
 import AuthNavigator from './AuthNavigator'
 import { useStores } from '../hooks/useStores'
 
 const BaseNavigator = observer(() => {
   const { userStore } = useStores()
-  
-  return(
+
+  return (
     <NavigationContainer>
       {
-        userStore.user ? <AppNavigator /> : <AuthNavigator />
+        userStore.user && userStore.idToken
+          ? (userStore.user?.isProvider ? <ProviderNavigator /> : <TravelerNavigator />)
+          : <AuthNavigator />
       }
     </NavigationContainer>
   )

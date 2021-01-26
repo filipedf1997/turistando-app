@@ -8,12 +8,13 @@ import {
 import { useStores } from '../../hooks/useStores'
 import firebase from '../../firebase/firebaseConfig'
 
-const Home = observer(() => {
+const HomeProvider = observer(() => {
   const { userStore } = useStores()
 
   async function handleSubmit(){
     await firebase.auth().signOut()
     userStore.user = null
+    userStore.idToken = null
   }
 
   return (
@@ -21,7 +22,7 @@ const Home = observer(() => {
       <Text
         style={styles.title}
       >
-        {`Olá, ${userStore.user.name}`}
+        {`Olá, Prestador ${userStore.user.name}`}
       </Text>
       <Button
         mode='contained'
@@ -49,4 +50,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Home
+export default HomeProvider

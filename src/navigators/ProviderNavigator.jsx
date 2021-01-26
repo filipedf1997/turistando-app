@@ -1,21 +1,21 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Home from '../pages/Home/Home'
+import HomeProvider from '../pages/HomeProvider/HomeProvider'
 
-const AuthNavigator = () => {
+const ProviderNavigator = () => {
   const Stack = createStackNavigator()
 
   return (
     <Stack.Navigator
-      initialRouteName='SignIn'
+      initialRouteName='HomeProvider'
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='Home'
-        component={Home}
+        name='HomeProvider'
+        component={HomeProvider}
       />
     </Stack.Navigator>
   )
 }
 
-export default AuthNavigator
+export default ProviderNavigator
