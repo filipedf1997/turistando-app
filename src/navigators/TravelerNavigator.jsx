@@ -1,18 +1,18 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeTraveler from '../pages/HomeTraveler/HomeTraveler'
+import TabTraveler from './TabTraveler'
 
 const TravelerNavigator = () => {
   const Stack = createStackNavigator()
 
   return (
     <Stack.Navigator
-      initialRouteName='HomeTraveler'
+      initialRouteName='TabTraveler'
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='HomeTraveler'
-        component={HomeTraveler}
+        name='TabTraveler'
+        component={TabTraveler}
       />
     </Stack.Navigator>
   )

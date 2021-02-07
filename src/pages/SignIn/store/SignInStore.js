@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import firebase from '../../../firebase/firebaseConfig'
+import firebase, { db } from '../../../firebase/firebaseConfig'
 
 class SignInStore {
   email = ''
@@ -13,12 +13,11 @@ class SignInStore {
   async login() {
     try {
       this.isFetching = true
-      const { user: {uid} } = await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      const snapshot = await firebase.database().ref(`users/${uid}`)
-        .once('value')
-      this.isFetching = false
+      const { user: { uid } } = await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      const user = await db.collection("users").doc(uid).get()
 
-      return snapshot.val()
+      this.isFetching = false
+      return user.data()
     } catch (error) {
       console.log(error)
       this.isFetching = false

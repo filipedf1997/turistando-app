@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import { StyleSheet, View, Alert } from 'react-native'
 import {
@@ -8,7 +8,7 @@ import {
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
-import firebase from '../../firebase/firebaseConfig'
+import firebase, { db } from '../../firebase/firebaseConfig'
 
 const Sign = observer(({ navigation }) => {
   const { userStore } = useStores()
@@ -16,13 +16,36 @@ const Sign = observer(({ navigation }) => {
 
   async function handleSubmit() {
     const result = await store.login()
-    if(result){
+    if (result) {
       userStore.idToken = await firebase.auth().currentUser.getIdToken()
-      userStore.user = result    
+      userStore.user = result
     } else {
       Alert.alert(null, "Houve um erro ao fazer o login. Tente novamente.")
     }
   }
+
+  function verifyUser() {
+    firebase.auth().onAuthStateChanged(async (currentUser) => {
+      if (currentUser) {
+        try {
+          store.isFetching = true
+
+          const user = await db.collection("users").doc(currentUser.uid).get()
+          userStore.idToken = await firebase.auth().currentUser.getIdToken()
+          userStore.user = user.data()
+
+          store.isFetching = false
+        } catch (error) {
+          console.log(error)
+          store.isFetching = false
+        }
+      }
+    })
+  }
+
+  useEffect(() => {
+    verifyUser()
+  }, [])
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import firebase from '../../../firebase/firebaseConfig'
+import firebase, { db } from '../../../firebase/firebaseConfig'
 
 class SignUpStore {
   user = {
@@ -21,10 +21,10 @@ class SignUpStore {
   async createUser() {
     try {
       this.isFetching = true
-      const { user: {uid} } = await firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)
+      const { user: {uid} } = await firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)      
       delete this.user.password
       delete this.user.confirmPassword
-      await firebase.database().ref(`users/${uid}`).set(this.user)
+      await db.collection("users").doc(uid).set(this.user)
       await firebase.auth().signOut()
       this.isFetching = false
 

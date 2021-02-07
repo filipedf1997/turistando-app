@@ -11,7 +11,7 @@ import {
   TextInput,
   Button,
   Checkbox,
-  Caption
+  Caption,
 } from 'react-native-paper'
 import SignUpStore from './store/SignUpStore'
 
@@ -57,6 +57,10 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={text => store.user.email = text}
           style={styles.marginB5}
         />
+        {(store.user.email !== "" && !store.user.email.includes('@') || !store.user.email.includes('.')) &&
+          <Caption style={{ color: "#aa3737" }}>
+            Email inválido!
+          </Caption>}
         <TextInput
           label="Telefone"
           value={store.user.fone}
@@ -70,6 +74,10 @@ const SignUp = observer(({ navigation }) => {
           style={styles.marginB5}
           secureTextEntry
         />
+        {(store.user.password !== '' && store.user.password.length < 6) &&
+          <Caption style={{ color: "#aa3737" }}>
+            A senha precisa conter no mínino 6 dígitos!
+          </Caption>}
         <TextInput
           label="Confirmar senha"
           value={store.user.confirmPassword}
@@ -77,6 +85,10 @@ const SignUp = observer(({ navigation }) => {
           style={styles.marginB5}
           secureTextEntry
         />
+        {(store.user.confirmPassword !== '' && store.user.password !== store.user.confirmPassword) &&
+          <Caption style={{ color: "#aa3737" }}>
+            As senhas estão diferentes!
+          </Caption>}
         <View style={[styles.checkWrapper, store.user.isProvider ? styles.marginB5 : styles.marginB20]}>
           <Checkbox
             status={store.user.isProvider ? 'checked' : 'unchecked'}

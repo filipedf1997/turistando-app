@@ -1,18 +1,18 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import HomeProvider from '../pages/HomeProvider/HomeProvider'
+import TabProvider from './TabProvider'
 
 const ProviderNavigator = () => {
   const Stack = createStackNavigator()
 
   return (
     <Stack.Navigator
-      initialRouteName='HomeProvider'
+      initialRouteName='TabProvider'
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='HomeProvider'
-        component={HomeProvider}
+        name='TabProvider'
+        component={TabProvider}
       />
     </Stack.Navigator>
   )
