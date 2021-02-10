@@ -4,7 +4,7 @@ import {
   Alert,
   StyleSheet,
   View,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native'
 import {
   Text,
@@ -23,17 +23,17 @@ const SignUp = observer(({ navigation }) => {
     if (result) {
       Alert.alert(
         null,
-        "Você foi cadastrado com sucesso!",
+        'Você foi cadastrado com sucesso!',
         [
           {
             text: 'Ok',
-            onPress: () => navigation.navigate('SignIn')
+            onPress: () => navigation.navigate('SignIn'),
           },
         ],
-        { cancelable: false }
+        { cancelable: false },
       )
     } else {
-      Alert.alert(null, "Houve um erro ao lhe cadastrar. Tente novamente.")
+      Alert.alert(null, 'Houve um erro ao lhe cadastrar. Tente novamente.')
     }
   }
 
@@ -48,70 +48,81 @@ const SignUp = observer(({ navigation }) => {
         <TextInput
           label="Nome"
           value={store.user.name}
-          onChangeText={text => store.user.name = text}
+          onChangeText={(text) => { store.user.name = text }}
           style={styles.marginB5}
         />
         <TextInput
           label="Email"
           value={store.user.email}
-          onChangeText={text => store.user.email = text}
+          onChangeText={(text) => { store.user.email = text }}
           style={styles.marginB5}
         />
-        {(store.user.email !== "" && !store.user.email.includes('@') || !store.user.email.includes('.')) &&
-          <Caption style={{ color: "#aa3737" }}>
+        {(store.user.email !== '' && (!store.user.email.includes('@') || !store.user.email.includes('.')))
+          && (
+          <Caption style={{ color: '#aa3737' }}>
             Email inválido!
-          </Caption>}
+          </Caption>
+          )}
         <TextInput
           label="Telefone"
           value={store.user.fone}
-          onChangeText={text => store.user.fone = text}
+          onChangeText={(text) => { store.user.fone = text }}
           style={styles.marginB5}
         />
         <TextInput
           label="Senha"
           value={store.user.password}
-          onChangeText={text => store.user.password = text}
+          onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB5}
           secureTextEntry
         />
-        {(store.user.password !== '' && store.user.password.length < 6) &&
-          <Caption style={{ color: "#aa3737" }}>
+        {(store.user.password !== '' && store.user.password.length < 6)
+          && (
+          <Caption style={{ color: '#aa3737' }}>
             A senha precisa conter no mínino 6 dígitos!
-          </Caption>}
+          </Caption>
+          )}
         <TextInput
           label="Confirmar senha"
           value={store.user.confirmPassword}
-          onChangeText={text => store.user.confirmPassword = text}
+          onChangeText={(text) => { store.user.confirmPassword = text }}
           style={styles.marginB5}
           secureTextEntry
         />
-        {(store.user.confirmPassword !== '' && store.user.password !== store.user.confirmPassword) &&
-          <Caption style={{ color: "#aa3737" }}>
+        {(store.user.confirmPassword !== '' && store.user.password !== store.user.confirmPassword)
+          && (
+          <Caption style={{ color: '#aa3737' }}>
             As senhas estão diferentes!
-          </Caption>}
-        <View style={[styles.checkWrapper, store.user.isProvider ? styles.marginB5 : styles.marginB20]}>
+          </Caption>
+          )}
+        <View
+          style={[styles.checkWrapper, store.user.isProvider ? styles.marginB5 : styles.marginB20]}
+        >
           <Checkbox
             status={store.user.isProvider ? 'checked' : 'unchecked'}
             onPress={() => { store.user.isProvider = !store.user.isProvider }}
           />
-          <TouchableWithoutFeedback onPress={() => { store.user.isProvider = !store.user.isProvider }}>
+          <TouchableWithoutFeedback
+            onPress={() => { store.user.isProvider = !store.user.isProvider }}
+          >
             <Caption style={styles.caption}>
               Marque esta opção se for prestador de serviços
             </Caption>
           </TouchableWithoutFeedback>
         </View>
-        {store.user.isProvider &&
+        {store.user.isProvider
+          && (
           <TextInput
             label="Descreva aqui seu perfil"
             value={store.user.profile}
-            onChangeText={text => store.user.profile = text}
+            onChangeText={(text) => { store.user.profile = text }}
             style={styles.marginB20}
             multiline
             numberOfLines={4}
           />
-        }
+          )}
         <Button
-          mode='contained'
+          mode="contained"
           onPress={handleSubmit}
           style={styles.marginB5}
           disabled={store.disable}
@@ -134,25 +145,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     color: '#5602e6',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   marginB20: {
-    marginBottom: 30
+    marginBottom: 30,
   },
   marginB5: {
-    marginBottom: 5
+    marginBottom: 5,
   },
   checkWrapper: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   caption: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 })
 
 export default SignUp

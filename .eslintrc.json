@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parser": "babel-eslint",    
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+      "linebreak-style": "off",
+      "semi": "off",
+      "import/prefer-default-export": "off",
+      "import/no-named-as-default": "off",
+      "import/no-named-as-default-member": "off",      
+      "no-use-before-define": "off",
+      "react/jsx-filename-extension": "off",
+      "react/prop-types": "off",      
+      "max-len": "off",
+      "react/style-prop-object": 0,
+      "global-require": 0,
+      "no-param-reassign": 0,                  
+      "lines-between-class-members": 0,
+      "class-methods-use-this": 0,
+      "no-nested-ternary": "off"
+    }
+}

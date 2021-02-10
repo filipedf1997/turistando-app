@@ -9,7 +9,7 @@ class SignUpStore {
     password: '',
     confirmPassword: '',
     isProvider: false,
-    profile: null
+    profile: null,
   }
   isFetching = false
 
@@ -21,16 +21,19 @@ class SignUpStore {
   async createUser() {
     try {
       this.isFetching = true
-      const { user: {uid} } = await firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)      
+      const {
+        user:
+        { uid },
+      } = await firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password)
       delete this.user.password
       delete this.user.confirmPassword
-      await db.collection("users").doc(uid).set(this.user)
+      await db.collection('users').doc(uid).set(this.user)
       await firebase.auth().signOut()
       this.isFetching = false
 
       return true
     } catch (error) {
-      console.log("erro no cadastro: ", error)
+      console.log('erro no cadastro: ', error)
       this.isFetching = false
 
       return false

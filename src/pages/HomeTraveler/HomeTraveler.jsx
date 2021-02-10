@@ -11,7 +11,7 @@ import firebase from '../../firebase/firebaseConfig'
 const HomeTraveler = observer(() => {
   const { userStore } = useStores()
 
-  async function handleSubmit(){
+  async function handleSubmit() {
     await firebase.auth().signOut()
     userStore.user = null
     userStore.idToken = null
@@ -25,8 +25,8 @@ const HomeTraveler = observer(() => {
         {`Olá, Viajante ${userStore.user.name}`}
       </Text>
       <Button
-        mode='contained'
-        color='#FFF'
+        mode="contained"
+        color="#FFF"
         onPress={handleSubmit}
       >
         Sair

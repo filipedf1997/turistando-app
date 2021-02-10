@@ -17,7 +17,7 @@ class MyAccountStore {
     try {
       this.isFetching = true
       const { uid } = firebase.auth().currentUser
-      await db.collection("users").doc(uid).update({
+      await db.collection('users').doc(uid).update({
         name: this.user.name || currentUser.name,
         fone: this.user.fone || currentUser.fone,
         profile: this.user.profile || currentUser.profile
@@ -26,7 +26,7 @@ class MyAccountStore {
 
       return true
     } catch (error) {
-      console.log("erro na atualização: ", error)
+      console.log('erro na atualização: ', error)
       this.isFetching = false
 
       return false

@@ -14,7 +14,7 @@ class SignInStore {
     try {
       this.isFetching = true
       const { user: { uid } } = await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      const user = await db.collection("users").doc(uid).get()
+      const user = await db.collection('users').doc(uid).get()
 
       this.isFetching = false
       return user.data()

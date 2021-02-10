@@ -20,7 +20,7 @@ const Sign = observer(({ navigation }) => {
       userStore.idToken = await firebase.auth().currentUser.getIdToken()
       userStore.user = result
     } else {
-      Alert.alert(null, "Houve um erro ao fazer o login. Tente novamente.")
+      Alert.alert(null, 'Houve um erro ao fazer o login. Tente novamente.')
     }
   }
 
@@ -30,7 +30,7 @@ const Sign = observer(({ navigation }) => {
         try {
           store.isFetching = true
 
-          const user = await db.collection("users").doc(currentUser.uid).get()
+          const user = await db.collection('users').doc(currentUser.uid).get()
           userStore.idToken = await firebase.auth().currentUser.getIdToken()
           userStore.user = user.data()
 
@@ -58,18 +58,18 @@ const Sign = observer(({ navigation }) => {
         <TextInput
           label="Email"
           value={store.email}
-          onChangeText={text => store.email = text}
+          onChangeText={(text) => { store.email = text }}
           style={styles.marginB5}
         />
         <TextInput
           label="Senha"
           value={store.password}
-          onChangeText={text => store.password = text}
+          onChangeText={(text) => { store.password = text }}
           style={styles.marginB20}
           secureTextEntry
         />
         <Button
-          mode='contained'
+          mode="contained"
           style={styles.marginB5}
           onPress={handleSubmit}
           disabled={store.disable}

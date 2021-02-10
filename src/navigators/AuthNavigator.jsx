@@ -9,19 +9,19 @@ const AuthNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName='SignIn'
+      initialRouteName="SignIn"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='SignIn'
+        name="SignIn"
         component={SignIn}
       />
       <Stack.Screen
-        name='SignUp'
+        name="SignUp"
         component={SignUp}
       />
       <Stack.Screen
-        name='ForgotPassword'
+        name="ForgotPassword"
         component={ForgotPassword}
       />
     </Stack.Navigator>

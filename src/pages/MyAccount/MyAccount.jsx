@@ -20,9 +20,9 @@ const MyAccount = observer(() => {
   async function handleSubmit() {
     const result = await store.uptadeUser(userStore.user)
     if (result) {
-      Alert.alert(null, "Alterações feitas com sucesso!",)
+      Alert.alert(null, 'Alterações feitas com sucesso!',)
     } else {
-      Alert.alert(null, "Houve um erro ao fazer as alterações. Tente novamente.")
+      Alert.alert(null, 'Houve um erro ao fazer as alterações. Tente novamente.')
     }
   }
 
@@ -37,27 +37,28 @@ const MyAccount = observer(() => {
         <TextInput
           label="Nome"
           value={store.user.name}
-          onChangeText={text => store.user.name = text}
+          onChangeText={(text) => { store.user.name = text }}
           style={styles.marginB5}
         />
         <TextInput
           label="Telefone"
           value={store.user.fone}
-          onChangeText={text => store.user.fone = text}
+          onChangeText={(text) => { store.user.fone = text }}
           style={styles.marginB5}
         />
-        {userStore.user.isProvider &&
+        {userStore.user.isProvider
+          && (
           <TextInput
             label="Descreva aqui seu perfil"
             value={store.user.profile}
-            onChangeText={text => store.user.profile = text}
+            onChangeText={(text) => { store.user.profile = text }}
             style={styles.marginB20}
             multiline
             numberOfLines={4}
           />
-        }
+          )}
         <Button
-          mode='contained'
+          mode="contained"
           onPress={handleSubmit}
           disabled={store.disable}
           loading={store.isFetching}

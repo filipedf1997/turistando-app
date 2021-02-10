@@ -7,11 +7,11 @@ const TravelerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName='TabTraveler'
+      initialRouteName="TabTraveler"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='TabTraveler'
+        name="TabTraveler"
         component={TabTraveler}
       />
     </Stack.Navigator>

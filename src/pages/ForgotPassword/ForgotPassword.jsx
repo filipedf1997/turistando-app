@@ -16,10 +16,10 @@ const ForgotPassword = ({ navigation }) => {
       setLoading(true)
       await firebase.auth().sendPasswordResetEmail(email)
       setLoading(false)
-      Alert.alert(null, "O email foi enviado com sucesso!")
+      Alert.alert(null, 'O email foi enviado com sucesso!')
     } catch (error) {
       setLoading(false)
-      Alert.alert(null, "Houve um erro ao enviar o email. Tente novamente.")
+      Alert.alert(null, 'Houve um erro ao enviar o email. Tente novamente.')
     }
   }
 
@@ -35,11 +35,11 @@ const ForgotPassword = ({ navigation }) => {
         <TextInput
           label="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           style={styles.marginB20}
         />
         <Button
-          mode='contained'
+          mode="contained"
           style={styles.marginB5}
           onPress={handleSubmit}
           disabled={!email}

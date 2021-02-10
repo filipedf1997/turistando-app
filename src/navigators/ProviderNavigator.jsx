@@ -7,11 +7,11 @@ const ProviderNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName='TabProvider'
+      initialRouteName="TabProvider"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
-        name='TabProvider'
+        name="TabProvider"
         component={TabProvider}
       />
     </Stack.Navigator>
