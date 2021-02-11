@@ -5,7 +5,7 @@ class MyAccountStore {
   user = {
     name: '',
     fone: '',
-    profile: null
+    profile: null,
   }
   isFetching = false
 
@@ -20,7 +20,7 @@ class MyAccountStore {
       await db.collection('users').doc(uid).update({
         name: this.user.name || currentUser.name,
         fone: this.user.fone || currentUser.fone,
-        profile: this.user.profile || currentUser.profile
+        profile: this.user.profile || currentUser.profile,
       })
       this.isFetching = false
 

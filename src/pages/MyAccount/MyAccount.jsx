@@ -20,7 +20,7 @@ const MyAccount = observer(() => {
   async function handleSubmit() {
     const result = await store.uptadeUser(userStore.user)
     if (result) {
-      Alert.alert(null, 'Alterações feitas com sucesso!',)
+      Alert.alert(null, 'Alterações feitas com sucesso!')
     } else {
       Alert.alert(null, 'Houve um erro ao fazer as alterações. Tente novamente.')
     }
@@ -75,25 +75,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
     color: '#5602e6',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   marginB20: {
-    marginBottom: 30
+    marginBottom: 30,
   },
   marginB5: {
-    marginBottom: 5
+    marginBottom: 5,
   },
   checkWrapper: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   caption: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 })
 
 export default MyAccount

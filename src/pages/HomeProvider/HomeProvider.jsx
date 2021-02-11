@@ -3,7 +3,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import {
   Text,
-  Button
+  Button,
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import firebase from '../../firebase/firebaseConfig'
@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#5602e6',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 30,
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
 })
 

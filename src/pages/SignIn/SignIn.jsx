@@ -4,7 +4,7 @@ import { StyleSheet, View, Alert } from 'react-native'
 import {
   Text,
   TextInput,
-  Button
+  Button,
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
@@ -97,19 +97,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontSize: 30,
     color: '#5602e6',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   marginB20: {
-    marginBottom: 30
+    marginBottom: 30,
   },
   marginB5: {
-    marginBottom: 5
-  }
+    marginBottom: 5,
+  },
 })
 
 export default Sign
