@@ -60,6 +60,7 @@ const Sign = observer(({ navigation }) => {
           value={store.email}
           onChangeText={(text) => { store.email = text }}
           style={styles.marginB5}
+          keyboardType="email-address"
         />
         <TextInput
           label="Senha"
