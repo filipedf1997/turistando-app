@@ -5,14 +5,15 @@ import {
 } from 'react-native'
 import {
   Text,
-  TextInput,
-  Button,
+  TextInput as TextInputPaper,
   Checkbox,
   Caption,
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
 import firebase, { db } from '../../firebase/firebaseConfig'
+import Button from '../../components/Buttom'
+import TextInput from '../../components/TextInput'
 
 const Sign = observer(({ navigation }) => {
   const { userStore } = useStores()
@@ -65,6 +66,7 @@ const Sign = observer(({ navigation }) => {
           onChangeText={(text) => { store.email = text }}
           style={styles.marginB5}
           keyboardType="email-address"
+          left={<TextInputPaper.Icon name="account" color="#c3c" size={25} />}
         />
         <TextInput
           label="Senha"
@@ -72,6 +74,7 @@ const Sign = observer(({ navigation }) => {
           onChangeText={(text) => { store.password = text }}
           style={styles.marginB5}
           secureTextEntry
+          left={<TextInputPaper.Icon name="lock" color="#c3c" size={25} />}
         />
         <View
           style={[styles.checkWrapper, styles.marginB20]}
