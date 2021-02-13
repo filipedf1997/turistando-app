@@ -5,6 +5,7 @@ class SignInStore {
   email = ''
   password = ''
   isFetching = false
+  remember = false
 
   get disable() {
     return !this.email || !this.password
@@ -13,6 +14,7 @@ class SignInStore {
   async login() {
     try {
       this.isFetching = true
+      await firebase.auth().setPersistence(firebase.auth.Auth.Persistence[this.remember ? 'LOCAL' : 'NONE'])
       const { user: { uid } } = await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
       const user = await db.collection('users').doc(uid).get()
 

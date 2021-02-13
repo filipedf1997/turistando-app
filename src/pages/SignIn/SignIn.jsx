@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
-import { StyleSheet, View, Alert } from 'react-native'
+import {
+  StyleSheet, View, Alert, TouchableWithoutFeedback,
+} from 'react-native'
 import {
   Text,
   TextInput,
   Button,
+  Checkbox,
+  Caption,
 } from 'react-native-paper'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
@@ -24,7 +28,7 @@ const Sign = observer(({ navigation }) => {
     }
   }
 
-  function verifyUser() {
+  function verifyLoggedUser() {
     firebase.auth().onAuthStateChanged(async (currentUser) => {
       if (currentUser) {
         try {
@@ -44,7 +48,7 @@ const Sign = observer(({ navigation }) => {
   }
 
   useEffect(() => {
-    verifyUser()
+    verifyLoggedUser()
   }, [])
 
   return (
@@ -66,9 +70,24 @@ const Sign = observer(({ navigation }) => {
           label="Senha"
           value={store.password}
           onChangeText={(text) => { store.password = text }}
-          style={styles.marginB20}
+          style={styles.marginB5}
           secureTextEntry
         />
+        <View
+          style={[styles.checkWrapper, styles.marginB20]}
+        >
+          <Checkbox
+            status={store.remember ? 'checked' : 'unchecked'}
+            onPress={() => { store.remember = !store.remember }}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => { store.remember = !store.remember }}
+          >
+            <Caption style={styles.caption}>
+              Lembrar-me
+            </Caption>
+          </TouchableWithoutFeedback>
+        </View>
         <Button
           mode="contained"
           style={styles.marginB5}
@@ -110,6 +129,13 @@ const styles = StyleSheet.create({
   },
   marginB5: {
     marginBottom: 5,
+  },
+  checkWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  caption: {
+    marginLeft: 10,
   },
 })
 
