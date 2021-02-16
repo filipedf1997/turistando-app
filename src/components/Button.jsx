@@ -6,7 +6,7 @@ const Button = ({ children, ...props }) => {
 
   return (
     <ButtonPaper
-      color={colors.error}
+      color={colors.primary}
       {...props}
     >
       {children}

@@ -6,6 +6,7 @@ class SignInStore {
   password = ''
   isFetching = false
   remember = false
+  keyboardHide = true
 
   get disable() {
     return !this.email || !this.password

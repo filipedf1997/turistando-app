@@ -12,6 +12,7 @@ class SignUpStore {
     profile: null,
   }
   isFetching = false
+  keyboardHide = true
 
   get disable() {
     return !this.user.name || !this.user.email || !this.user.password || !this.user.fone

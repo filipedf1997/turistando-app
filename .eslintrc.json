@@ -27,6 +27,8 @@
       "lines-between-class-members": 0,
       "class-methods-use-this": 0,
       "no-nested-ternary": "off",
-      "react/jsx-props-no-spreading": 0
+      "react/jsx-props-no-spreading": 0,
+      "react/destructuring-assignment": "off",
+      "import/no-extraneous-dependencies": "off"
     }
 }

@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Alert } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import {
   Text,
-  TextInput,
-  Button,
+  useTheme,
+  TextInput as TextInputPaper,
 } from 'react-native-paper'
+import {
+  Container,
+  Content,
+  Button,
+  TextInput,
+  HeaderBar,
+} from '../../components'
 import firebase from '../../firebase/firebaseConfig'
+import Waves from '../../images/waves'
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
+  const { colors } = useTheme()
 
   async function handleSubmit() {
     try {
@@ -24,56 +33,52 @@ const ForgotPassword = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={[styles.title, styles.marginB5]}>
-          Esqueci a senha
+    <Container>
+      <HeaderBar onPress={() => navigation.navigate('SignIn')} />
+      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+        <Text
+          style={[styles.title, { color: colors.primary }]}
+        >
+          Esqueci minha senha
         </Text>
-        <Text style={styles.marginB5}>
-          Informe seu e-mail para receber uma mensagem com as instruções para redefinir a sua senha.
+        <Text style={[styles.text, { color: colors.lightText }]}>
+          Informe seu e-mail para receber uma mensagem com as instruções para mudança de senha.
         </Text>
         <TextInput
           label="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
-          style={styles.marginB20}
+          style={styles.marginV15}
+          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />
         <Button
           mode="contained"
-          style={styles.marginB5}
           onPress={handleSubmit}
           disabled={!email}
           loading={loading}
         >
           Enviar
         </Button>
-        <Button
-          onPress={() => navigation.navigate('SignIn')}
-        >
-          Voltar
-        </Button>
-      </View>
-    </View>
+      </Content>
+      <Waves />
+    </Container>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    padding: 30,
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    color: '#5602e6',
-    textAlign: 'center',
+    fontSize: 25,
+    marginBottom: 15,
   },
-  marginB20: {
-    marginBottom: 30,
+  text: {
+    fontSize: 13,
   },
-  marginB5: {
-    marginBottom: 5,
+  marginV15: {
+    marginVertical: 15,
   },
 })
 

@@ -8,16 +8,23 @@ import {
   TextInput as TextInputPaper,
   Checkbox,
   Caption,
+  useTheme,
 } from 'react-native-paper'
+
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
 import firebase, { db } from '../../firebase/firebaseConfig'
-import Button from '../../components/Buttom'
-import TextInput from '../../components/TextInput'
+import {
+  Container, Content, Button, TextInput,
+} from '../../components'
+import TuristandoLogo from '../../images/turistando-logo'
+import Waves from '../../images/waves'
 
 const Sign = observer(({ navigation }) => {
   const { userStore } = useStores()
   const [store] = useState(() => new SignInStore())
+  const { colors } = useTheme()
 
   async function handleSubmit() {
     const result = await store.login()
@@ -53,85 +60,94 @@ const Sign = observer(({ navigation }) => {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text
-          style={[styles.title, styles.marginB20]}
-        >
-          Turistando
-        </Text>
-        <TextInput
-          label="Email"
-          value={store.email}
-          onChangeText={(text) => { store.email = text }}
-          style={styles.marginB5}
-          keyboardType="email-address"
-          left={<TextInputPaper.Icon name="account" color="#c3c" size={25} />}
-        />
-        <TextInput
-          label="Senha"
-          value={store.password}
-          onChangeText={(text) => { store.password = text }}
-          style={styles.marginB5}
-          secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color="#c3c" size={25} />}
-        />
-        <View
-          style={[styles.checkWrapper, styles.marginB20]}
-        >
-          <Checkbox
-            status={store.remember ? 'checked' : 'unchecked'}
-            onPress={() => { store.remember = !store.remember }}
-          />
-          <TouchableWithoutFeedback
-            onPress={() => { store.remember = !store.remember }}
-          >
-            <Caption style={styles.caption}>
-              Lembrar-me
-            </Caption>
-          </TouchableWithoutFeedback>
+    <Container>
+      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+        <View style={styles.logoWrapper}>
+          <TuristandoLogo width={160} height={150} />
         </View>
-        <Button
-          mode="contained"
-          style={styles.marginB5}
-          onPress={handleSubmit}
-          disabled={store.disable}
-          loading={store.isFetching}
-        >
-          Entrar
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('SignUp')}
-        >
-          Cadastre-se
-        </Button>
-        <Button
-          onPress={() => navigation.navigate('ForgotPassword')}
-        >
-          Esqueci a senha
-        </Button>
-      </View>
-    </View>
+        <View>
+          <TextInput
+            label="Email"
+            value={store.email}
+            onChangeText={(text) => { store.email = text }}
+            style={styles.marginB10}
+            keyboardType="email-address"
+            left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
+          />
+          <TextInput
+            label="Senha"
+            value={store.password}
+            onChangeText={(text) => { store.password = text }}
+            style={styles.marginB10}
+            secureTextEntry
+            left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
+          />
+          <View
+            style={[styles.checkWrapper, styles.marginB10]}
+          >
+            <Checkbox
+              status={store.remember ? 'checked' : 'unchecked'}
+              onPress={() => { store.remember = !store.remember }}
+              color={colors.primary}
+            />
+            <TouchableWithoutFeedback
+              onPress={() => { store.remember = !store.remember }}
+            >
+              <Caption style={styles.caption}>
+                Lembrar-me
+              </Caption>
+            </TouchableWithoutFeedback>
+          </View>
+          <Button
+            mode="contained"
+            style={styles.marginB10}
+            onPress={handleSubmit}
+            disabled={store.disable}
+            loading={store.isFetching}
+          >
+            Entrar
+          </Button>
+          <View style={styles.bottomLinksWrapper}>
+            <Text style={{ color: colors.lightText }}>
+              Não tem uma conta?
+            </Text>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('SignUp')
+            }}
+            >
+              <Text style={[styles.bottomLinks, { color: colors.primary }]}>REGISTRE-SE</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.bottomLinksWrapper}>
+            <Text style={{ color: colors.lightText }}>
+              Esqueceu a senha?
+            </Text>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('ForgotPassword')
+            }}
+            >
+              <Text style={[styles.bottomLinks, { color: colors.primary }]}>Clique aqui!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Content>
+      <Waves />
+    </Container>
   )
 })
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    paddingHorizontal: 30,
+    flexGrow: 1,
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 30,
-    color: '#5602e6',
-    textAlign: 'center',
+  logoWrapper: {
+    alignItems: 'center',
+    marginVertical: 40,
   },
-  marginB20: {
-    marginBottom: 30,
-  },
-  marginB5: {
-    marginBottom: 5,
+  marginB10: {
+    marginBottom: 10,
   },
   checkWrapper: {
     flexDirection: 'row',
@@ -139,6 +155,15 @@ const styles = StyleSheet.create({
   },
   caption: {
     marginLeft: 10,
+  },
+  bottomLinksWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  bottomLinks: {
+    marginLeft: 5,
+    textDecorationLine: 'underline',
   },
 })
 

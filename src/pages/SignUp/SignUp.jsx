@@ -4,19 +4,27 @@ import {
   Alert,
   StyleSheet,
   View,
-  TouchableWithoutFeedback,
 } from 'react-native'
 import {
   Text,
-  TextInput,
-  Button,
-  Checkbox,
   Caption,
+  useTheme,
+  Switch,
+  TextInput as TextInputPaper,
 } from 'react-native-paper'
+import {
+  Container,
+  Content,
+  Button,
+  TextInput,
+  HeaderBar,
+} from '../../components'
 import SignUpStore from './store/SignUpStore'
+import Waves from '../../images/waves'
 
 const SignUp = observer(({ navigation }) => {
   const [store] = useState(() => new SignUpStore())
+  const { colors } = useTheme()
 
   async function handleSubmit() {
     const result = await store.createUser()
@@ -38,24 +46,27 @@ const SignUp = observer(({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View>
+    <Container>
+      <HeaderBar onPress={() => navigation.navigate('SignIn')} />
+      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
         <Text
-          style={[styles.title, styles.marginB20]}
+          style={[styles.title, { color: colors.primary }]}
         >
-          Cadastro
+          Criar uma conta
         </Text>
         <TextInput
           label="Nome"
           value={store.user.name}
           onChangeText={(text) => { store.user.name = text }}
-          style={styles.marginB5}
+          style={styles.marginB10}
+          left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
         />
         <TextInput
           label="Email"
           value={store.user.email}
           onChangeText={(text) => { store.user.email = text }}
-          style={styles.marginB5}
+          style={styles.marginB10}
+          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />
         {(store.user.email !== '' && (!store.user.email.includes('@') || !store.user.email.includes('.')))
           && (
@@ -67,14 +78,16 @@ const SignUp = observer(({ navigation }) => {
           label="Telefone"
           value={store.user.fone}
           onChangeText={(text) => { store.user.fone = text }}
-          style={styles.marginB5}
+          style={styles.marginB10}
+          left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
         />
         <TextInput
           label="Senha"
           value={store.user.password}
           onChangeText={(text) => { store.user.password = text }}
-          style={styles.marginB5}
+          style={styles.marginB10}
           secureTextEntry
+          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
         />
         {(store.user.password !== '' && store.user.password.length < 6)
           && (
@@ -86,8 +99,9 @@ const SignUp = observer(({ navigation }) => {
           label="Confirmar senha"
           value={store.user.confirmPassword}
           onChangeText={(text) => { store.user.confirmPassword = text }}
-          style={styles.marginB5}
+          style={styles.marginB10}
           secureTextEntry
+          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
         />
         {(store.user.confirmPassword !== '' && store.user.password !== store.user.confirmPassword)
           && (
@@ -96,19 +110,16 @@ const SignUp = observer(({ navigation }) => {
           </Caption>
           )}
         <View
-          style={[styles.checkWrapper, store.user.isProvider ? styles.marginB5 : styles.marginB20]}
+          style={[styles.checkWrapper, styles.marginB10]}
         >
-          <Checkbox
-            status={store.user.isProvider ? 'checked' : 'unchecked'}
-            onPress={() => { store.user.isProvider = !store.user.isProvider }}
+          <Switch
+            color={colors.primary}
+            value={store.user.isProvider}
+            onValueChange={() => { store.user.isProvider = !store.user.isProvider }}
           />
-          <TouchableWithoutFeedback
-            onPress={() => { store.user.isProvider = !store.user.isProvider }}
-          >
-            <Caption style={styles.caption}>
-              Marque esta opção se for prestador de serviços
-            </Caption>
-          </TouchableWithoutFeedback>
+          <Caption style={styles.caption}>
+            Selecione se for prestador de serviços
+          </Caption>
         </View>
         {store.user.isProvider
           && (
@@ -118,50 +129,44 @@ const SignUp = observer(({ navigation }) => {
             onChangeText={(text) => { store.user.profile = text }}
             style={styles.marginB20}
             multiline
-            numberOfLines={4}
+            numberOfLines={3}
           />
           )}
         <Button
           mode="contained"
           onPress={handleSubmit}
-          style={styles.marginB5}
+          style={styles.marginB10}
           disabled={store.disable}
           loading={store.isFetching}
         >
-          Cadastrar
+          Registrar
         </Button>
-        <Button
-          onPress={() => navigation.navigate('SignIn')}
-        >
-          Voltar
-        </Button>
-      </View>
-    </View>
+      </Content>
+      <Waves />
+    </Container>
   )
 })
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    paddingHorizontal: 30,
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    color: '#5602e6',
-    textAlign: 'center',
+    fontSize: 25,
+    marginVertical: 20,
   },
   marginB20: {
-    marginBottom: 30,
+    marginBottom: 20,
   },
-  marginB5: {
-    marginBottom: 5,
+  marginB10: {
+    marginBottom: 10,
   },
   checkWrapper: {
     flexDirection: 'row',
   },
   caption: {
+    flex: 1,
     marginLeft: 10,
   },
 })

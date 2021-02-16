@@ -6,7 +6,7 @@ const Container = ({ children, ...props }) => {
   const { colors } = useTheme()
 
   return (
-    <View style={[{ height: '100%', backgroundColor: colors.white }]} {...props}>
+    <View style={[{ height: '100%', backgroundColor: colors.background }]} {...props}>
       {children}
     </View>
   )

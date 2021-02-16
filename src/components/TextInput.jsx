@@ -1,16 +1,12 @@
 import React from 'react'
-import { TextInput as TextInputPaper, useTheme } from 'react-native-paper'
+import { TextInput as TextInputPaper } from 'react-native-paper'
 
-const TextInput = (props) => {
-  const { colors } = useTheme()
-
-  return (
-    <TextInputPaper
-      underlineColor={colors.error}
-      selectionColor={colors.primary}
-      {...props}
-    />
-  )
-}
+const TextInput = (props) => (
+  <TextInputPaper
+    underlineColor="transparent"
+    {...props}
+    style={[{ borderRadius: 5 }, props?.style]}
+  />
+)
 
 export default TextInput

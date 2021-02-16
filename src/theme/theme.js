@@ -6,9 +6,11 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    // primary: '#ffff00',
+    primary: '#EB5A10',
     black: '#000',
     white: '#FFF',
+    background: '#E5E5E5',
+    lightText: '#414141',
   },
   fonts: configureFonts(fontConfig),
   // fontSizes: { font24: RFValue(24),}
