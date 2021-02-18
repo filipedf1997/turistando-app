@@ -10,7 +10,11 @@ LogBox.ignoreLogs(['[MobX]', 'Setting a timer'])
 
 export default function App() {
   const [loaded] = Font.useFonts({
-    // 'DMSans-Regular': require('./assets/fonts/DMSans-Regular.ttf'),
+    'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+    'Roboto-Italic': require('./assets/fonts/Roboto-Italic.ttf'),
+    'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+    'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
+    'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
   })
   if (!loaded) return null
 

@@ -1,23 +1,13 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  Alert,
-  StyleSheet,
-  View,
+  StyleSheet, View,
 } from 'react-native'
 import {
-  Text,
-  Caption,
-  useTheme,
-  Switch,
-  TextInput as TextInputPaper,
+  Text, Caption, useTheme, Switch, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container,
-  Content,
-  Button,
-  TextInput,
-  HeaderBar,
+  Container, Content, Button, TextInput, HeaderBar, ModalFeedback, TextInputMask,
 } from '../../components'
 import SignUpStore from './store/SignUpStore'
 import Waves from '../../images/waves'
@@ -29,19 +19,16 @@ const SignUp = observer(({ navigation }) => {
   async function handleSubmit() {
     const result = await store.createUser()
     if (result) {
-      Alert.alert(
-        null,
-        'Você foi cadastrado com sucesso!',
-        [
-          {
-            text: 'Ok',
-            onPress: () => navigation.navigate('SignIn'),
-          },
-        ],
-        { cancelable: false },
-      )
-    } else {
-      Alert.alert(null, 'Houve um erro ao lhe cadastrar. Tente novamente.')
+      store.requestFeedback = {
+        visible: true,
+        error: false,
+        message: 'Seu cadastro foi realizado com sucesso!',
+        onPress: () => {
+          store.requestFeedback.visible = false
+          navigation.navigate('SignIn')
+        },
+        btnName: 'Ir para Login',
+      }
     }
   }
 
@@ -66,15 +53,22 @@ const SignUp = observer(({ navigation }) => {
           value={store.user.email}
           onChangeText={(text) => { store.user.email = text }}
           style={styles.marginB10}
-          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
+          keyboardType="email-address"
+          left={<TextInputPaper.Icon name="email" color={store.errorEmail ? colors.red : colors.primary} size={25} />}
         />
-        {(store.user.email !== '' && (!store.user.email.includes('@') || !store.user.email.includes('.')))
+        {store.errorEmail
           && (
-          <Caption style={{ color: '#aa3737' }}>
-            Email inválido!
+          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+            Digite um e-mail inválido!
           </Caption>
           )}
-        <TextInput
+        <TextInputMask
+          type="cel-phone"
+          options={{
+            maskType: 'BRL',
+            withDDD: true,
+            dddMask: '(99) ',
+          }}
           label="Telefone"
           value={store.user.fone}
           onChangeText={(text) => { store.user.fone = text }}
@@ -87,11 +81,11 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB10}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.red : colors.primary} size={25} />}
         />
-        {(store.user.password !== '' && store.user.password.length < 6)
+        {store.errorPassword
           && (
-          <Caption style={{ color: '#aa3737' }}>
+          <Caption style={[styles.errorMessages, { color: colors.red }]}>
             A senha precisa conter no mínino 6 dígitos!
           </Caption>
           )}
@@ -101,11 +95,11 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.confirmPassword = text }}
           style={styles.marginB10}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.red : colors.primary} size={25} />}
         />
-        {(store.user.confirmPassword !== '' && store.user.password !== store.user.confirmPassword)
+        {store.errorConfirmPassword
           && (
-          <Caption style={{ color: '#aa3737' }}>
+          <Caption style={[styles.errorMessages, { color: colors.red }]}>
             As senhas estão diferentes!
           </Caption>
           )}
@@ -117,7 +111,7 @@ const SignUp = observer(({ navigation }) => {
             value={store.user.isProvider}
             onValueChange={() => { store.user.isProvider = !store.user.isProvider }}
           />
-          <Caption style={styles.caption}>
+          <Caption style={styles.switchLabel}>
             Selecione se for prestador de serviços
           </Caption>
         </View>
@@ -142,6 +136,16 @@ const SignUp = observer(({ navigation }) => {
           Registrar
         </Button>
       </Content>
+
+      <ModalFeedback
+        visible={store.requestFeedback.visible}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        success={!store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+      />
+
       <Waves />
     </Container>
   )
@@ -165,8 +169,13 @@ const styles = StyleSheet.create({
   checkWrapper: {
     flexDirection: 'row',
   },
-  caption: {
+  switchLabel: {
     flex: 1,
+    marginLeft: 10,
+  },
+  errorMessages: {
+    marginTop: -10,
+    marginBottom: 10,
     marginLeft: 10,
   },
 })

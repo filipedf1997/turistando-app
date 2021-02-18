@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
 
-const Content = ({ children, keyboardAvoidingProps, scrollViewProps }) => (
+const Content = forwardRef(({ children, keyboardAvoidingProps, scrollViewProps }, ref) => (
   <KeyboardAvoidingView
     keyboardVerticalOffset={(Platform.OS === 'ios') ? 0 : 20}
     behavior="padding"
@@ -12,10 +12,11 @@ const Content = ({ children, keyboardAvoidingProps, scrollViewProps }) => (
       keyboardShouldPersistTaps="handled"
       {...scrollViewProps}
       contentContainerStyle={[{ flexGrow: 1 }, scrollViewProps?.contentContainerStyle]}
+      ref={ref}
     >
       {children}
     </ScrollView>
   </KeyboardAvoidingView>
-)
+))
 
 export default Content

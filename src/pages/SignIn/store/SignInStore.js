@@ -7,6 +7,12 @@ class SignInStore {
   isFetching = false
   remember = false
   keyboardHide = true
+  requestFeedback = {
+    error: false,
+    message: '',
+    onPress: null,
+    btnName: '',
+  }
 
   get disable() {
     return !this.email || !this.password
@@ -22,11 +28,26 @@ class SignInStore {
       this.isFetching = false
       return user.data()
     } catch (error) {
-      console.log(error)
-      this.isFetching = false
+      this.requestFeedback = {
+        error: true,
+        message: this.buildMessageError(error.code),
+        onPress: () => { this.requestFeedback.error = false },
+        btnName: 'Ok',
+      }
 
+      this.isFetching = false
       return false
     }
+  }
+
+  buildMessageError(code) {
+    const errorsList = {
+      'auth/invalid-email': 'Não foi possível realizar o login. Verifique o e-mail digitado e tente novamente.',
+      'auth/user-not-found': 'Não foi possível realizar o login, pois o usuário não foi encontrado em nossa base.',
+      default: 'Não foi possível realizar o login. Tente novamente.',
+    }
+
+    return errorsList[code] ?? errorsList.default
   }
 
   constructor() {

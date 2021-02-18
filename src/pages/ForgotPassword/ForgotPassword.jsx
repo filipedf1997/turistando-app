@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
 import {
-  Text,
-  useTheme,
-  TextInput as TextInputPaper,
+  Text, useTheme, TextInput as TextInputPaper, Caption,
 } from 'react-native-paper'
 import {
-  Container,
-  Content,
-  Button,
-  TextInput,
-  HeaderBar,
+  Container, Content, Button, TextInput, HeaderBar, ModalFeedback,
 } from '../../components'
 import firebase from '../../firebase/firebaseConfig'
 import Waves from '../../images/waves'
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState('')
+  const [errorEmail, setErrorEmail] = useState(false)
+  const [modalData, setModalData] = useState({})
   const [loading, setLoading] = useState(false)
   const { colors } = useTheme()
 
@@ -25,12 +21,34 @@ const ForgotPassword = ({ navigation }) => {
       setLoading(true)
       await firebase.auth().sendPasswordResetEmail(email)
       setLoading(false)
-      Alert.alert(null, 'O email foi enviado com sucesso!')
+      setModalData({
+        visible: true,
+        error: false,
+        success: true,
+        message: 'A mensagem foi enviada para o seu e-mail com sucesso!',
+        onPress: () => {
+          setModalData({})
+          navigation.navigate('SignIn')
+        },
+        btnName: 'Ir para Login',
+      })
     } catch (error) {
       setLoading(false)
-      Alert.alert(null, 'Houve um erro ao enviar o email. Tente novamente.')
+      setModalData({
+        visible: true,
+        error: true,
+        success: false,
+        message: 'Houve um erro ao enviar o e-mail. Tente novamente.',
+        onPress: () => setModalData({}),
+        btnName: 'Ok',
+      })
     }
   }
+
+  useEffect(() => {
+    if (email !== '' && (!email.includes('@') || !email.includes('.'))) setErrorEmail(true)
+    else setErrorEmail(false)
+  }, [email])
 
   return (
     <Container>
@@ -49,17 +67,33 @@ const ForgotPassword = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.marginV15}
-          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="email" color={errorEmail ? colors.red : colors.primary} size={25} />}
         />
+        {errorEmail
+          && (
+          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+            Digite um e-mail inválido!
+          </Caption>
+          )}
         <Button
           mode="contained"
           onPress={handleSubmit}
-          disabled={!email}
+          disabled={!email || errorEmail}
           loading={loading}
         >
           Enviar
         </Button>
       </Content>
+
+      <ModalFeedback
+        visible={modalData?.visible}
+        message={modalData?.message}
+        btnName={modalData?.btnName}
+        error={modalData?.error}
+        success={modalData?.success}
+        onPress={modalData?.onPress}
+      />
+
       <Waves />
     </Container>
   )
@@ -79,6 +113,11 @@ const styles = StyleSheet.create({
   },
   marginV15: {
     marginVertical: 15,
+  },
+  errorMessages: {
+    marginTop: -15,
+    marginBottom: 15,
+    marginLeft: 10,
   },
 })
 

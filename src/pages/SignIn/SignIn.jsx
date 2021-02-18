@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Alert, TouchableWithoutFeedback,
+  StyleSheet, View, TouchableWithoutFeedback,
 } from 'react-native'
 import {
-  Text,
-  TextInput as TextInputPaper,
-  Checkbox,
-  Caption,
-  useTheme,
+  Text, TextInput as TextInputPaper, Checkbox, Caption, useTheme,
 } from 'react-native-paper'
-
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
 import firebase, { db } from '../../firebase/firebaseConfig'
 import {
-  Container, Content, Button, TextInput,
+  Container, Content, Button, TextInput, ModalFeedback,
 } from '../../components'
 import TuristandoLogo from '../../images/turistando-logo'
 import Waves from '../../images/waves'
@@ -31,8 +26,6 @@ const Sign = observer(({ navigation }) => {
     if (result) {
       userStore.idToken = await firebase.auth().currentUser.getIdToken()
       userStore.user = result
-    } else {
-      Alert.alert(null, 'Houve um erro ao fazer o login. Tente novamente.')
     }
   }
 
@@ -48,7 +41,6 @@ const Sign = observer(({ navigation }) => {
 
           store.isFetching = false
         } catch (error) {
-          console.log(error)
           store.isFetching = false
         }
       }
@@ -56,8 +48,12 @@ const Sign = observer(({ navigation }) => {
   }
 
   useEffect(() => {
-    verifyLoggedUser()
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      verifyLoggedUser()
+    })
+
+    return unsubscribe
+  }, [navigation])
 
   return (
     <Container>
@@ -131,6 +127,15 @@ const Sign = observer(({ navigation }) => {
           </View>
         </View>
       </Content>
+
+      <ModalFeedback
+        visible={store.requestFeedback.error}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+      />
+
       <Waves />
     </Container>
   )
