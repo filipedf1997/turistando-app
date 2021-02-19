@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper, Caption,
 } from 'react-native-paper'
@@ -8,6 +8,11 @@ import {
 } from '../../components'
 import firebase from '../../firebase/firebaseConfig'
 import Waves from '../../images/waves'
+
+const originalWidth = 360
+const originalHeight = 110
+const aspectRatio = originalWidth / originalHeight
+const windowWidth = Dimensions.get('screen').width
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -94,7 +99,13 @@ const ForgotPassword = ({ navigation }) => {
         onPress={modalData?.onPress}
       />
 
-      <Waves />
+      <View style={{ width: windowWidth, aspectRatio }}>
+        <Waves
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
+        />
+      </View>
     </Container>
   )
 }

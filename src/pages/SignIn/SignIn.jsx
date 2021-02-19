@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, TouchableWithoutFeedback,
+  StyleSheet, View, TouchableWithoutFeedback, Dimensions, Keyboard,
 } from 'react-native'
 import {
   Text, TextInput as TextInputPaper, Checkbox, Caption, useTheme,
@@ -16,10 +16,16 @@ import {
 import TuristandoLogo from '../../images/turistando-logo'
 import Waves from '../../images/waves'
 
+const originalWidth = 360
+const originalHeight = 110
+const aspectRatio = originalWidth / originalHeight
+const windowWidth = Dimensions.get('screen').width
+
 const Sign = observer(({ navigation }) => {
   const { userStore } = useStores()
   const [store] = useState(() => new SignInStore())
   const { colors } = useTheme()
+  const scrollView = useRef(null)
 
   async function handleSubmit() {
     const result = await store.login()
@@ -48,16 +54,20 @@ const Sign = observer(({ navigation }) => {
   }
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      verifyLoggedUser()
-    })
+    verifyLoggedUser()
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { scrollView.current.scrollToEnd() },
+    )
 
-    return unsubscribe
-  }, [navigation])
+    return () => {
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   return (
     <Container>
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <Content scrollViewProps={{ contentContainerStyle: styles.container }} ref={scrollView}>
         <View style={styles.logoWrapper}>
           <TuristandoLogo width={160} height={150} />
         </View>
@@ -136,7 +146,13 @@ const Sign = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
-      <Waves />
+      <View style={{ width: windowWidth, aspectRatio }}>
+        <Waves
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
+        />
+      </View>
     </Container>
   )
 })

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View,
+  StyleSheet, View, Dimensions,
 } from 'react-native'
 import {
   Text, Caption, useTheme, Switch, TextInput as TextInputPaper,
@@ -11,6 +11,11 @@ import {
 } from '../../components'
 import SignUpStore from './store/SignUpStore'
 import Waves from '../../images/waves'
+
+const originalWidth = 360
+const originalHeight = 110
+const aspectRatio = originalWidth / originalHeight
+const windowWidth = Dimensions.get('screen').width
 
 const SignUp = observer(({ navigation }) => {
   const [store] = useState(() => new SignUpStore())
@@ -146,7 +151,13 @@ const SignUp = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
-      <Waves />
+      <View style={{ width: windowWidth, aspectRatio }}>
+        <Waves
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
+        />
+      </View>
     </Container>
   )
 })
