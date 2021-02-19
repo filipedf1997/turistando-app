@@ -7,6 +7,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#EB5A10',
+    darkOrange: '#DC4D04',
     blue: '#2093FA',
     red: '#EB1010',
     black: '#000',
@@ -14,6 +15,7 @@ const theme = {
     background: '#E5E5E5',
     lightText: '#414141',
     green: '#30E204',
+    tabColor: '#CECECE',
   },
   fonts: configureFonts(fontConfig),
   // fontSizes: { font24: RFValue(24),}
