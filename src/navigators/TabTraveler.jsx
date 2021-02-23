@@ -27,7 +27,7 @@ const TabTraveler = () => {
         }}
       />
       <Tab.Screen
-        name="Chat"
+        name="Chats"
         component={Chats}
         options={{
           tabBarIcon: 'message-text',

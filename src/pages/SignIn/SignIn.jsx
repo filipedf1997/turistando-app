@@ -91,7 +91,7 @@ const Sign = observer(({ navigation }) => {
           <View
             style={[styles.checkWrapper, styles.marginB10]}
           >
-            <Checkbox
+            <Checkbox.Android
               status={store.remember ? 'checked' : 'unchecked'}
               onPress={() => { store.remember = !store.remember }}
               color={colors.primary}

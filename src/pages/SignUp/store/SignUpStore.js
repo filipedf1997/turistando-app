@@ -12,7 +12,6 @@ class SignUpStore {
     profile: null,
   }
   isFetching = false
-  keyboardHide = true
   requestFeedback = {
     visible: false,
     error: false,

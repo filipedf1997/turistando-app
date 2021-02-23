@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import {
   StyleSheet, View, Dimensions,
@@ -7,51 +7,46 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, Button, TextInput, HeaderBar, TextInputMask,
+  Container, Content, Button, TextInput, HeaderBar, ModalFeedback, TextInputMask,
 } from '../../components'
-import MyAccountStore from './store/MyAccountStore'
 import { useStores } from '../../hooks/useStores'
 import Waves from '../../images/waves'
 
 const originalWidth = 360
-const originalHeight = 80
+const originalHeight = 110
 const aspectRatio = originalWidth / originalHeight
 const windowWidth = Dimensions.get('screen').width
 
-const MyAccount = observer(({ navigation }) => {
-  const [store] = useState(() => new MyAccountStore())
+const EditData = observer(({ navigation, route }) => {
+  const store = route?.params?.store
   const { userStore } = useStores()
   const { colors } = useTheme()
 
-  useEffect(() => {
-    store.user.name = userStore.user.name
-    store.user.email = userStore.user.email
-    store.user.fone = userStore.user.fone
-    store.user.profile = userStore.user.profile
-    store.user.isProvider = userStore.user.isProvider
-  }, [])
+  async function handleSubmit() {
+    const result = await store.uptadeUserData()
+    if (result) {
+      userStore.user.name = store.user.name
+      userStore.user.fone = store.user.fone
+      userStore.user.profile = store.user.profile
+    }
+  }
 
   return (
     <Container>
-      <HeaderBar onPress={() => navigation.navigate('Página inicial')} />
+      <HeaderBar onPress={navigation.goBack} />
       <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Minha conta
+          Editar Dados
         </Text>
         <TextInput
-          disabled
+          label="Nome"
           value={store.user.name}
-          style={[styles.marginB10, styles.textInput]}
+          onChangeText={(text) => { store.user.name = text }}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
-        />
-        <TextInput
-          disabled
-          value={store.user.email}
-          style={[styles.marginB10, styles.email]}
-          keyboardType="email-address"
-          left={<TextInputPaper.Icon name="email" color={store.errorEmail ? colors.red : colors.primary} size={25} />}
+          right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
         />
         <TextInputMask
           type="cel-phone"
@@ -60,10 +55,12 @@ const MyAccount = observer(({ navigation }) => {
             withDDD: true,
             dddMask: '(99) ',
           }}
-          disabled
+          label="Telefone"
           value={store.user.fone}
-          style={[styles.marginB10, styles.textInput]}
+          onChangeText={(text) => { store.user.fone = text }}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
+          right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
         />
         <TextInput
           disabled
@@ -75,29 +72,41 @@ const MyAccount = observer(({ navigation }) => {
         {store.user.isProvider
           && (
           <TextInput
-            disabled
             label="Informações do Perfil:"
             value={store.user.profile}
-            style={[styles.marginB20, styles.textInput]}
+            onChangeText={(text) => { store.user.profile = text }}
+            style={styles.marginB20}
             multiline
             numberOfLines={3}
+            right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
           />
           )}
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('EditData', { store })}
+          onPress={handleSubmit}
           style={styles.marginB10}
+          disabled={store.disableEdit}
+          loading={store.isFetching}
         >
-          Editar dados
+          Confirmar
         </Button>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('FAQ')}
+          onPress={() => navigation.navigate('ChangePassword', { store })}
           style={styles.marginB10}
         >
-          FAQ - Perguntas Frequentes
+          Editar senha
         </Button>
       </Content>
+
+      <ModalFeedback
+        visible={store.requestFeedback.visible}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        success={!store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+      />
 
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
@@ -128,9 +137,6 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'rgba(0,0,0,0.15)',
   },
-  email: {
-    backgroundColor: 'rgba(0,0,0,0.25)',
-  },
 })
 
-export default MyAccount
+export default EditData
