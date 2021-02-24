@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import {
   StyleSheet, View, Dimensions,
@@ -9,7 +9,6 @@ import {
 import {
   Container, Content, Button, TextInput, HeaderBar, TextInputMask,
 } from '../../components'
-import MyAccountStore from './store/MyAccountStore'
 import { useStores } from '../../hooks/useStores'
 import Waves from '../../images/waves'
 
@@ -19,17 +18,8 @@ const aspectRatio = originalWidth / originalHeight
 const windowWidth = Dimensions.get('screen').width
 
 const MyAccount = observer(({ navigation }) => {
-  const [store] = useState(() => new MyAccountStore())
   const { userStore } = useStores()
   const { colors } = useTheme()
-
-  useEffect(() => {
-    store.user.name = userStore.user.name
-    store.user.email = userStore.user.email
-    store.user.fone = userStore.user.fone
-    store.user.profile = userStore.user.profile
-    store.user.isProvider = userStore.user.isProvider
-  }, [])
 
   return (
     <Container>
@@ -42,16 +32,16 @@ const MyAccount = observer(({ navigation }) => {
         </Text>
         <TextInput
           disabled
-          value={store.user.name}
+          value={userStore.user.name}
           style={[styles.marginB10, styles.textInput]}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
         />
         <TextInput
           disabled
-          value={store.user.email}
+          value={userStore.user.email}
           style={[styles.marginB10, styles.email]}
           keyboardType="email-address"
-          left={<TextInputPaper.Icon name="email" color={store.errorEmail ? colors.red : colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />
         <TextInputMask
           type="cel-phone"
@@ -61,23 +51,23 @@ const MyAccount = observer(({ navigation }) => {
             dddMask: '(99) ',
           }}
           disabled
-          value={store.user.fone}
+          value={userStore.user.fone}
           style={[styles.marginB10, styles.textInput]}
           left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
         />
         <TextInput
           disabled
           value="*********"
-          style={[store.user.isProvider ? styles.marginB10 : styles.marginB20, styles.textInput]}
+          style={[userStore.user.isProvider ? styles.marginB10 : styles.marginB20, styles.textInput]}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.red : colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
         />
-        {store.user.isProvider
+        {userStore.user.isProvider
           && (
           <TextInput
             disabled
             label="Informações do Perfil:"
-            value={store.user.profile}
+            value={userStore.user.profile}
             style={[styles.marginB20, styles.textInput]}
             multiline
             numberOfLines={3}
@@ -85,7 +75,7 @@ const MyAccount = observer(({ navigation }) => {
           )}
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('EditData', { store })}
+          onPress={() => navigation.navigate('EditData')}
           style={styles.marginB10}
         >
           Editar dados
@@ -95,7 +85,7 @@ const MyAccount = observer(({ navigation }) => {
           onPress={() => navigation.navigate('FAQ')}
           style={styles.marginB10}
         >
-          FAQ - Perguntas Frequentes
+          Perguntas Frequentes
         </Button>
       </Content>
 

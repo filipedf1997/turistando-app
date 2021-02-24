@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import {
   StyleSheet, View, Dimensions,
@@ -10,6 +10,7 @@ import {
   Container, Content, Button, TextInput, HeaderBar, ModalFeedback, TextInputMask,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
+import MyAccountStore from './store/MyAccountStore'
 import Waves from '../../images/waves'
 
 const originalWidth = 360
@@ -17,8 +18,8 @@ const originalHeight = 110
 const aspectRatio = originalWidth / originalHeight
 const windowWidth = Dimensions.get('screen').width
 
-const EditData = observer(({ navigation, route }) => {
-  const store = route?.params?.store
+const EditData = observer(({ navigation }) => {
+  const [store] = useState(() => new MyAccountStore())
   const { userStore } = useStores()
   const { colors } = useTheme()
 
@@ -30,6 +31,14 @@ const EditData = observer(({ navigation, route }) => {
       userStore.user.profile = store.user.profile
     }
   }
+
+  useEffect(() => {
+    store.user.name = userStore.user.name
+    store.user.email = userStore.user.email
+    store.user.fone = userStore.user.fone
+    store.user.profile = userStore.user.profile
+    store.user.isProvider = userStore.user.isProvider
+  }, [])
 
   return (
     <Container>

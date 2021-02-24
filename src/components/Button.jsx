@@ -9,7 +9,7 @@ const Button = ({ children, ...props }) => {
       color={colors.primary}
       uppercase={false}
       contentStyle={{ height: 45 }}
-      labelStyle={{ fontSize: 18, fontWeight: '500' }}
+      labelStyle={{ fontSize: 16, fontWeight: '500' }}
       {...props}
     >
       {children}
