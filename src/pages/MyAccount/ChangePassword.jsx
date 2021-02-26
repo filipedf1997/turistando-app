@@ -93,7 +93,6 @@ const ChangePassword = observer(({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 25,

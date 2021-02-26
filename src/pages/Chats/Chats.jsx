@@ -1,48 +1,55 @@
 import React, { useEffect } from 'react'
 import {
-  View, StyleSheet, Text, TouchableOpacity,
+  StyleSheet,
 } from 'react-native'
+import { AntDesign } from '@expo/vector-icons'
+import {
+  Text, useTheme,
+} from 'react-native-paper'
+import {
+  Container, Content,
+} from '../../components'
+import ChatButton from './UI/ChatButton'
 
 const Chats = ({ navigation }) => {
+  const { colors } = useTheme()
+
   useEffect(() => {}, [])
 
   return (
-    <View style={styles.container}>
-      <Text>Chats</Text>
-      <TouchableOpacity style={styles.chat} onPress={() => navigation.navigate('Chat')}>
-        <View style={styles.avatar}>
-          <Text>
-            F
-          </Text>
-        </View>
-        <Text>Pessoa</Text>
-      </TouchableOpacity>
-    </View>
+    <Container>
+      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+        <Text
+          style={[styles.title, { color: colors.primary }]}
+        >
+          Chat
+        </Text>
+        <ChatButton
+          name="Suporte do Turistando"
+          lastMessage="Fale conosco se precisar de ajuda!"
+          date="Ontem"
+          icon={<AntDesign name="pushpin" size={10} color={colors.white} style={{ transform: [{ rotateY: '180deg' }] }} />}
+          action={() => navigation.navigate('Chat', { name: 'Suporte do Turistando', isSupport: true })}
+        />
+        <ChatButton
+          name="Cliente 01 (Passeio de Buggy)"
+          lastMessage="Você recebeu 2 novas mensagens"
+          date="08:21"
+          icon="2"
+          action={() => navigation.navigate('Chat', { name: 'Cliente 01 (Passeio de Buggy)', isSupport: false })}
+        />
+      </Content>
+    </Container>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
+    paddingHorizontal: 30,
   },
-  chat: {
-    flexDirection: 'row',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#c2c2c2',
-    borderRadius: 3,
-    alignItems: 'center',
-  },
-  avatar: {
-    backgroundColor: '#88b8ff',
-    borderRadius: 30,
-    marginRight: 20,
-    height: 30,
-    width: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    fontSize: 25,
+    marginVertical: 20,
   },
 })
 

@@ -16,6 +16,8 @@ const theme = {
     lightText: '#414141',
     green: '#30E204',
     tabColor: '#CECECE',
+    orangeChat: '#FBAB82',
+    whiteChat: '#FFF6F6',
   },
   fonts: configureFonts(fontConfig),
   // fontSizes: { font24: RFValue(24),}

@@ -103,7 +103,6 @@ const MyAccount = observer(({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 25,
