@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar'
 import BaseNavigator from './src/navigators/BaseNavigator'
 import theme from './src/theme/theme'
 
-LogBox.ignoreLogs(['[MobX]', 'Setting a timer'])
+LogBox.ignoreLogs(['[MobX]', 'Setting a timer', 'Failed prop type: Invalid prop `locale` of type `object` supplied to `GiftedChat`, expected `string`.'])
 
 export default function App() {
   const [loaded] = Font.useFonts({

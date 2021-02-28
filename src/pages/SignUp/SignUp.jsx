@@ -64,7 +64,7 @@ const SignUp = observer(({ navigation }) => {
         {store.errorEmail
           && (
           <Caption style={[styles.errorMessages, { color: colors.red }]}>
-            Digite um e-mail inválido!
+            Digite um e-mail válido!
           </Caption>
           )}
         <TextInputMask
