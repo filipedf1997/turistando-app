@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { useTheme, Text } from 'react-native-paper'
 import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'
 
-const ChatHeaderBar = ({ action, name, lastMessage }) => {
+const ChatHeaderBar = ({ action, name, status }) => {
   const { colors } = useTheme()
 
   return (
@@ -13,11 +13,11 @@ const ChatHeaderBar = ({ action, name, lastMessage }) => {
       </TouchableOpacity>
       <MaterialCommunityIcons name="account-circle" size={45} color={colors.white} />
       <View style={styles.nameWrapper}>
-        <Text style={styles.name}>
+        <Text style={[styles.name, { color: colors.white }]}>
           {name}
         </Text>
-        <Text style={[styles.lastMessage, { color: colors.lightText }]}>
-          {lastMessage}
+        <Text style={[styles.lastMessage, { color: colors.white }]}>
+          {status}
         </Text>
       </View>
     </View>
@@ -26,7 +26,8 @@ const ChatHeaderBar = ({ action, name, lastMessage }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    paddingTop: 27,
+    paddingBottom: 10,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet, View, Dimensions, Keyboard, Platform,
 } from 'react-native'
 import {
   Text, Caption, useTheme, Switch, TextInput as TextInputPaper,
@@ -36,6 +36,22 @@ const SignUp = observer(({ navigation }) => {
       }
     }
   }
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = false },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = true },
+    )
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
 
   return (
     <Container>
@@ -151,6 +167,7 @@ const SignUp = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
+      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -158,6 +175,7 @@ const SignUp = observer(({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 })

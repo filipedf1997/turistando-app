@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Dimensions } from 'react-native'
+import {
+  View, StyleSheet, Dimensions, Keyboard, Platform,
+} from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper, Caption,
 } from 'react-native-paper'
@@ -19,6 +21,7 @@ const ForgotPassword = ({ navigation }) => {
   const [errorEmail, setErrorEmail] = useState(false)
   const [modalData, setModalData] = useState({})
   const [loading, setLoading] = useState(false)
+  const [wavesVisibility, setWavesVisibility] = useState(true)
   const { colors } = useTheme()
 
   async function handleSubmit() {
@@ -54,6 +57,22 @@ const ForgotPassword = ({ navigation }) => {
     if (email !== '' && (!email.includes('@') || !email.includes('.'))) setErrorEmail(true)
     else setErrorEmail(false)
   }, [email])
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { if (Platform.OS === 'android') setWavesVisibility(false) },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { if (Platform.OS === 'android') setWavesVisibility(true) },
+    )
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
 
   return (
     <Container>
@@ -99,6 +118,7 @@ const ForgotPassword = ({ navigation }) => {
         onPress={modalData?.onPress}
       />
 
+      {wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -106,6 +126,7 @@ const ForgotPassword = ({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 }

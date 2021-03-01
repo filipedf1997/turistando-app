@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
+    marginTop: 45,
     marginVertical: 20,
   },
 })

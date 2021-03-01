@@ -13,6 +13,7 @@ class SignInStore {
     onPress: null,
     btnName: '',
   }
+  wavesVisibility = true
 
   get disable() {
     return !this.email || !this.password

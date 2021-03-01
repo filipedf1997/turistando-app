@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, TouchableWithoutFeedback, Dimensions, Keyboard,
+  StyleSheet, View, TouchableWithoutFeedback, Dimensions, Keyboard, Platform,
 } from 'react-native'
 import {
-  Text, TextInput as TextInputPaper, Checkbox, Caption, useTheme,
+  TextInput as TextInputPaper, Checkbox, Caption, useTheme,
 } from 'react-native-paper'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useStores } from '../../hooks/useStores'
 import SignInStore from './store/SignInStore'
 import firebase, { db } from '../../firebase/firebaseConfig'
 import {
-  Container, Content, Button, TextInput, ModalFeedback,
+  Container, Content, Button, TextInput, ModalFeedback, TextLink,
 } from '../../components'
 import TuristandoLogo from '../../images/turistando-logo'
 import Waves from '../../images/waves'
@@ -57,11 +56,19 @@ const Sign = observer(({ navigation }) => {
     verifyLoggedUser()
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      () => { scrollView.current.scrollToEnd() },
+      () => {
+        if (Platform.OS === 'android') store.wavesVisibility = false
+        scrollView.current.scrollToEnd()
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = true },
     )
 
     return () => {
       keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
     }
   }, [])
 
@@ -113,28 +120,18 @@ const Sign = observer(({ navigation }) => {
           >
             Entrar
           </Button>
-          <View style={styles.bottomLinksWrapper}>
-            <Text style={{ color: colors.lightText }}>
-              Não tem uma conta?
-            </Text>
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('SignUp')
-            }}
-            >
-              <Text style={[styles.bottomLinks, { color: colors.primary }]}>REGISTRE-SE</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.bottomLinksWrapper}>
-            <Text style={{ color: colors.lightText }}>
-              Esqueceu a senha?
-            </Text>
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('ForgotPassword')
-            }}
-            >
-              <Text style={[styles.bottomLinks, { color: colors.primary }]}>Clique aqui!</Text>
-            </TouchableOpacity>
-          </View>
+          <TextLink
+            text="Não tem uma conta?"
+            textLink="REGISTRE-SE"
+            action={() => navigation.navigate('SignUp')}
+            underline
+          />
+          <TextLink
+            text="Esqueceu a senha?"
+            textLink="Clique aqui!"
+            action={() => navigation.navigate('ForgotPassword')}
+            underline
+          />
         </View>
       </Content>
 
@@ -146,6 +143,7 @@ const Sign = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
+      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -153,6 +151,7 @@ const Sign = observer(({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 })
@@ -176,15 +175,6 @@ const styles = StyleSheet.create({
   },
   caption: {
     marginLeft: 10,
-  },
-  bottomLinksWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  bottomLinks: {
-    marginLeft: 5,
-    textDecorationLine: 'underline',
   },
 })
 

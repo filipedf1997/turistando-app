@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import {
-  GiftedChat, Send, Bubble, Time,
+  GiftedChat, Send, Bubble, Time, InputToolbar,
 } from 'react-native-gifted-chat'
 import { Ionicons } from '@expo/vector-icons'
 import pt from 'dayjs/locale/pt-br'
@@ -62,7 +62,7 @@ const Chat = ({ navigation, route }) => {
       <ChatHeaderBar
         action={navigation.goBack}
         name={name}
-        lastMessage="Online"
+        status="Online"
       />
       <GiftedChat
         keyboardShouldPersistTaps="handled"
@@ -75,8 +75,8 @@ const Chat = ({ navigation, route }) => {
         }}
         placeholder="Digite aqui..."
         renderSend={(props) => (
-          <Send {...props}>
-            <Ionicons name="arrow-forward-circle" size={40} color={colors.primary} />
+          <Send {...props} containerStyle={{ marginHorizontal: 10 }}>
+            <Ionicons name="arrow-forward-circle" size={45} color={colors.primary} />
           </Send>
         )}
         renderBubble={(props) => (
@@ -92,10 +92,10 @@ const Chat = ({ navigation, route }) => {
             }}
             wrapperStyle={{
               right: {
-                backgroundColor: colors.whiteChat,
+                backgroundColor: colors.orangeChat,
               },
               left: {
-                backgroundColor: colors.orangeChat,
+                backgroundColor: colors.whiteChat,
               },
             }}
           />
@@ -111,10 +111,20 @@ const Chat = ({ navigation, route }) => {
         )}
         textInputStyle={{
           backgroundColor: colors.whiteChat,
-          margin: 10,
           borderRadius: 10,
-          paddingTop: 5,
+          paddingLeft: 10,
+          alignSelf: 'center',
         }}
+        renderInputToolbar={(props) => (
+          <InputToolbar
+            {...props}
+            containerStyle={{
+              height: 60,
+              justifyContent: 'center',
+            }}
+          />
+        )}
+        minInputToolbarHeight={60}
       />
     </View>
   )
