@@ -50,10 +50,11 @@ const EditData = observer(({ navigation }) => {
           Editar Dados
         </Text>
         <TextInput
-          label="Nome"
           value={store.user.name}
           onChangeText={(text) => { store.user.name = text }}
-          style={styles.marginB10}
+          style={[styles.marginB10, {
+            height: 60, backgroundColor: '#E5E5E5', borderColor: '#B5B4B4', borderWidth: 2,
+          }]}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
           right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
         />

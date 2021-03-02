@@ -2,7 +2,7 @@ import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { useTheme } from 'react-native-paper'
 import HomeProvider from '../pages/HomeProvider/HomeProvider'
-import MyAccount from '../pages/MyAccount/MyAccount'
+import MyAccountNav from './MyAccountNav/MyAccountNav'
 import Chats from '../pages/Chats/Chats'
 import Announcement from '../pages/Announcement/Announcement'
 
@@ -43,7 +43,7 @@ const TabProvider = () => {
       />
       <Tab.Screen
         name="Minha conta"
-        component={MyAccount}
+        component={MyAccountNav}
         options={{
           tabBarIcon: 'account-circle',
         }}

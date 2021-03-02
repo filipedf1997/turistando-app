@@ -1,21 +1,15 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet,
 } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, Button, TextInput, HeaderBar, TextInputMask,
+  Container, Content, Button, TextInput, TextInputMask,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
-import Waves from '../../images/waves'
-
-const originalWidth = 360
-const originalHeight = 80
-const aspectRatio = originalWidth / originalHeight
-const windowWidth = Dimensions.get('screen').width
 
 const MyAccount = observer(({ navigation }) => {
   const { userStore } = useStores()
@@ -23,7 +17,6 @@ const MyAccount = observer(({ navigation }) => {
 
   return (
     <Container>
-      <HeaderBar onPress={() => navigation.navigate('Página inicial')} />
       <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
         <Text
           style={[styles.title, { color: colors.primary }]}
@@ -88,14 +81,6 @@ const MyAccount = observer(({ navigation }) => {
           Perguntas Frequentes
         </Button>
       </Content>
-
-      <View style={{ width: windowWidth, aspectRatio }}>
-        <Waves
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
-        />
-      </View>
     </Container>
   )
 })

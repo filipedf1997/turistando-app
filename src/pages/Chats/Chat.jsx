@@ -124,6 +124,11 @@ const Chat = ({ navigation, route }) => {
             }}
           />
         )}
+        listViewProps={{
+          style: {
+            backgroundColor: colors.background,
+          },
+        }}
         minInputToolbarHeight={60}
       />
     </View>
