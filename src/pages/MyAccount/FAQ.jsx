@@ -1,20 +1,14 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet, View,
 } from 'react-native'
 import {
   Text, useTheme,
 } from 'react-native-paper'
 import {
-  Container, Content, HeaderBar,
+  Container, Content, HeaderBar, FaqButton,
 } from '../../components'
-import Waves from '../../images/waves'
-
-const originalWidth = 360
-const originalHeight = 110
-const aspectRatio = originalWidth / originalHeight
-const windowWidth = Dimensions.get('screen').width
 
 const FAQ = observer(({ navigation }) => {
   const { colors } = useTheme()
@@ -28,15 +22,14 @@ const FAQ = observer(({ navigation }) => {
         >
           Perguntas Frequentes
         </Text>
+        <FaqButton
+          text="O que é o Turistando Beberibe?"
+        />
+        <FaqButton
+          text="O que é o Turistando Beberibe?"
+        />
       </Content>
 
-      <View style={{ width: windowWidth, aspectRatio }}>
-        <Waves
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
-        />
-      </View>
     </Container>
   )
 })

@@ -7,7 +7,7 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, Button, TextInput, TextInputMask,
+  Container, Content, TextInput, TextInputMask, TextLinkIcon,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
 
@@ -48,13 +48,6 @@ const MyAccount = observer(({ navigation }) => {
           style={[styles.marginB10, styles.textInput]}
           left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
         />
-        <TextInput
-          disabled
-          value="*********"
-          style={[userStore.user.isProvider ? styles.marginB10 : styles.marginB20, styles.textInput]}
-          secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
-        />
         {userStore.user.isProvider
           && (
           <TextInput
@@ -66,20 +59,39 @@ const MyAccount = observer(({ navigation }) => {
             numberOfLines={3}
           />
           )}
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('EditData')}
-          style={styles.marginB10}
+        <TextLinkIcon
+          text="Precisa atualizar algum dado?"
+          textLink="Clique aqui!"
+          action={() => navigation.navigate('EditData')}
+        />
+        <Text
+          style={[styles.subTitle, { color: colors.primary }]}
         >
-          Editar dados
-        </Button>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('FAQ')}
-          style={styles.marginB10}
+          Segurança
+        </Text>
+        <TextInput
+          disabled
+          value="*********"
+          style={[styles.marginB10, styles.textInput]}
+          secureTextEntry
+          left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
+        />
+        <TextLinkIcon
+          text="Precisa atualizar a sua senha?"
+          textLink="Clique aqui!"
+          action={() => navigation.navigate('ChangePassword')}
+        />
+        <Text
+          style={[styles.subTitle, { color: colors.primary }]}
         >
-          Perguntas Frequentes
-        </Button>
+          FAQ
+        </Text>
+        <TextLinkIcon
+          text="Tem alguma dúvida sobre o Turistando? Acesse a nossa página de"
+          textLink="Perguntas Frequentes"
+          action={() => navigation.navigate('FAQ')}
+          withoutIcon
+        />
       </Content>
     </Container>
   )
@@ -88,10 +100,17 @@ const MyAccount = observer(({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
+    paddingBottom: 30,
   },
   title: {
     fontSize: 25,
-    marginVertical: 20,
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  subTitle: {
+    fontSize: 25,
+    marginTop: 15,
+    marginBottom: 15,
   },
   marginB20: {
     marginBottom: 20,

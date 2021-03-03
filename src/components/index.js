@@ -7,6 +7,7 @@ import ModalFeedback from './ModalFeedback'
 import TextInputMask from './TextInputMask'
 import TextLink from './TextLink'
 import TextLinkIcon from './TextLinkIcon'
+import FaqButton from './FaqButton'
 
 export {
   Button,
@@ -18,4 +19,5 @@ export {
   TextInputMask,
   TextLink,
   TextLinkIcon,
+  FaqButton,
 }

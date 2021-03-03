@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet,
 } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper, Caption,
@@ -9,15 +9,10 @@ import {
 import {
   Container, Content, Button, TextInput, HeaderBar, ModalFeedback,
 } from '../../components'
-import Waves from '../../images/waves'
+import MyAccountStore from './store/MyAccountStore'
 
-const originalWidth = 360
-const originalHeight = 110
-const aspectRatio = originalWidth / originalHeight
-const windowWidth = Dimensions.get('screen').width
-
-const ChangePassword = observer(({ navigation, route }) => {
-  const store = route?.params?.store
+const ChangePassword = observer(({ navigation }) => {
+  const [store] = useState(() => new MyAccountStore())
   const { colors } = useTheme()
 
   return (
@@ -78,14 +73,6 @@ const ChangePassword = observer(({ navigation, route }) => {
         success={!store.requestFeedback.error}
         onPress={store.requestFeedback.onPress}
       />
-
-      <View style={{ width: windowWidth, aspectRatio }}>
-        <Waves
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
-        />
-      </View>
     </Container>
   )
 })

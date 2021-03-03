@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useTheme, Text } from 'react-native-paper'
 
 const TextLink = ({
@@ -11,12 +11,11 @@ const TextLink = ({
     <View style={styles.bottomLinksWrapper}>
       <Text style={{ color: colors.lightText }}>
         {text}
-      </Text>
-      <TouchableOpacity onPress={action}>
-        <Text style={[styles.bottomLinks, { color: colors.primary, textDecorationLine: underline ? 'underline' : null }]}>
+        {' '}
+        <Text onPress={action} style={{ color: colors.primary, textDecorationLine: underline ? 'underline' : null }}>
           {textLink}
         </Text>
-      </TouchableOpacity>
+      </Text>
     </View>
   )
 }
@@ -26,9 +25,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 10,
-  },
-  bottomLinks: {
-    marginLeft: 5,
   },
 })
 

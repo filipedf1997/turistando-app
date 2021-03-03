@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet,
 } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper,
@@ -11,12 +11,6 @@ import {
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
 import MyAccountStore from './store/MyAccountStore'
-import Waves from '../../images/waves'
-
-const originalWidth = 360
-const originalHeight = 110
-const aspectRatio = originalWidth / originalHeight
-const windowWidth = Dimensions.get('screen').width
 
 const EditData = observer(({ navigation }) => {
   const [store] = useState(() => new MyAccountStore())
@@ -50,13 +44,19 @@ const EditData = observer(({ navigation }) => {
           Editar Dados
         </Text>
         <TextInput
+          label="Nome"
           value={store.user.name}
           onChangeText={(text) => { store.user.name = text }}
-          style={[styles.marginB10, {
-            height: 60, backgroundColor: '#E5E5E5', borderColor: '#B5B4B4', borderWidth: 2,
-          }]}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
           right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
+        />
+        <TextInput
+          disabled
+          value={userStore.user.email}
+          style={[styles.marginB10, styles.email]}
+          keyboardType="email-address"
+          left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />
         <TextInputMask
           type="cel-phone"
@@ -68,16 +68,9 @@ const EditData = observer(({ navigation }) => {
           label="Telefone"
           value={store.user.fone}
           onChangeText={(text) => { store.user.fone = text }}
-          style={styles.marginB10}
+          style={store.user.isProvider ? styles.marginB10 : styles.marginB20}
           left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
           right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
-        />
-        <TextInput
-          disabled
-          value="*********"
-          style={[store.user.isProvider ? styles.marginB10 : styles.marginB20, styles.textInput]}
-          secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.red : colors.primary} size={25} />}
         />
         {store.user.isProvider
           && (
@@ -100,13 +93,6 @@ const EditData = observer(({ navigation }) => {
         >
           Confirmar
         </Button>
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('ChangePassword', { store })}
-          style={styles.marginB10}
-        >
-          Editar senha
-        </Button>
       </Content>
 
       <ModalFeedback
@@ -117,14 +103,6 @@ const EditData = observer(({ navigation }) => {
         success={!store.requestFeedback.error}
         onPress={store.requestFeedback.onPress}
       />
-
-      <View style={{ width: windowWidth, aspectRatio }}>
-        <Waves
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${originalWidth} ${originalHeight}`}
-        />
-      </View>
     </Container>
   )
 })
