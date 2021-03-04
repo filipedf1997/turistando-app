@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
-  View, StyleSheet, Dimensions, Keyboard, Platform,
+  View, StyleSheet, Dimensions,
 } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper, Caption,
@@ -21,7 +21,6 @@ const ForgotPassword = ({ navigation }) => {
   const [errorEmail, setErrorEmail] = useState(false)
   const [modalData, setModalData] = useState({})
   const [loading, setLoading] = useState(false)
-  const [wavesVisibility, setWavesVisibility] = useState(true)
   const { colors } = useTheme()
 
   async function handleSubmit() {
@@ -58,22 +57,6 @@ const ForgotPassword = ({ navigation }) => {
     else setErrorEmail(false)
   }, [email])
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => { if (Platform.OS === 'android') setWavesVisibility(false) },
-    )
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => { if (Platform.OS === 'android') setWavesVisibility(true) },
-    )
-
-    return () => {
-      keyboardDidShowListener.remove()
-      keyboardDidHideListener.remove()
-    }
-  }, [])
-
   return (
     <Container>
       <HeaderBar onPress={() => navigation.navigate('SignIn')} />
@@ -91,11 +74,11 @@ const ForgotPassword = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.marginV15}
-          left={<TextInputPaper.Icon name="email" color={errorEmail ? colors.red : colors.primary} size={25} />}
+          left={<TextInputPaper.Icon name="email" color={errorEmail ? colors.error : colors.primary} size={25} />}
         />
         {errorEmail
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             Digite um e-mail inválido!
           </Caption>
           )}
@@ -118,7 +101,6 @@ const ForgotPassword = ({ navigation }) => {
         onPress={modalData?.onPress}
       />
 
-      {wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -126,7 +108,6 @@ const ForgotPassword = ({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
-      )}
     </Container>
   )
 }

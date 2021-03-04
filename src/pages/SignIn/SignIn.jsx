@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, TouchableWithoutFeedback, Dimensions, Keyboard, Platform,
+  StyleSheet, View, TouchableWithoutFeedback, Dimensions, Keyboard, Image,
 } from 'react-native'
 import {
   TextInput as TextInputPaper, Checkbox, Caption, useTheme,
@@ -12,7 +12,6 @@ import firebase, { db } from '../../firebase/firebaseConfig'
 import {
   Container, Content, Button, TextInput, ModalFeedback, TextLink,
 } from '../../components'
-import TuristandoLogo from '../../images/turistando-logo'
 import Waves from '../../images/waves'
 
 const originalWidth = 360
@@ -56,19 +55,11 @@ const Sign = observer(({ navigation }) => {
     verifyLoggedUser()
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
-      () => {
-        if (Platform.OS === 'android') store.wavesVisibility = false
-        scrollView.current.scrollToEnd()
-      },
-    )
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => { if (Platform.OS === 'android') store.wavesVisibility = true },
+      () => { scrollView.current.scrollToEnd() },
     )
 
     return () => {
       keyboardDidShowListener.remove()
-      keyboardDidHideListener.remove()
     }
   }, [])
 
@@ -76,7 +67,7 @@ const Sign = observer(({ navigation }) => {
     <Container>
       <Content scrollViewProps={{ contentContainerStyle: styles.container }} ref={scrollView}>
         <View style={styles.logoWrapper}>
-          <TuristandoLogo width={160} height={150} />
+          <Image source={require('../../images/logo.png')} style={{ width: 160, height: 160 }} />
         </View>
         <View>
           <TextInput
@@ -124,13 +115,11 @@ const Sign = observer(({ navigation }) => {
             text="Não tem uma conta?"
             textLink="REGISTRE-SE"
             action={() => navigation.navigate('SignUp')}
-            underline
           />
           <TextLink
             text="Esqueceu a senha?"
             textLink="Clique aqui!"
             action={() => navigation.navigate('ForgotPassword')}
-            underline
           />
         </View>
       </Content>
@@ -143,7 +132,6 @@ const Sign = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
-      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -151,7 +139,6 @@ const Sign = observer(({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
-      )}
     </Container>
   )
 })
@@ -164,7 +151,8 @@ const styles = StyleSheet.create({
   },
   logoWrapper: {
     alignItems: 'center',
-    marginVertical: 40,
+    marginBottom: 20,
+    marginTop: 60,
   },
   marginB10: {
     marginBottom: 10,

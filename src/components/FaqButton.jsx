@@ -15,7 +15,7 @@ const FaqButton = ({
           <Text style={[styles.text, { color: colors.lightText }]}>
             {text}
           </Text>
-          <Entypo name="chevron-right" size={30} color={colors.primary} />
+          <Entypo name="chevron-right" size={25} color={colors.primary} />
         </View>
       </TouchableOpacity>
       <View style={[styles.line, { borderTopColor: colors.lightText }]} />
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginRight: 10,
+    flex: 1,
   },
   line: {
     marginHorizontal: 2,

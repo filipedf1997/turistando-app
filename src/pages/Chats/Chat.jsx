@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import {
-  GiftedChat, Send, Bubble, Time, InputToolbar,
+  GiftedChat, Send, Bubble, Time, InputToolbar, Day,
 } from 'react-native-gifted-chat'
 import { Ionicons } from '@expo/vector-icons'
 import pt from 'dayjs/locale/pt-br'
@@ -92,7 +92,7 @@ const Chat = ({ navigation, route }) => {
             }}
             wrapperStyle={{
               right: {
-                backgroundColor: colors.orangeChat,
+                backgroundColor: colors.blueChat,
               },
               left: {
                 backgroundColor: colors.whiteChat,
@@ -110,7 +110,7 @@ const Chat = ({ navigation, route }) => {
           />
         )}
         textInputStyle={{
-          backgroundColor: colors.whiteChat,
+          backgroundColor: colors.background,
           borderRadius: 10,
           paddingLeft: 10,
           alignSelf: 'center',
@@ -121,14 +121,18 @@ const Chat = ({ navigation, route }) => {
             containerStyle={{
               height: 60,
               justifyContent: 'center',
+              backgroundColor: colors.whiteChat,
             }}
           />
         )}
         listViewProps={{
           style: {
-            backgroundColor: colors.background,
+            backgroundColor: colors.whiteGray,
           },
         }}
+        renderDay={(props) => (
+          <Day {...props} textStyle={{ color: colors.lightText }} />
+        )}
         minInputToolbarHeight={60}
       />
     </View>

@@ -47,14 +47,15 @@ const EditData = observer(({ navigation }) => {
           label="Nome"
           value={store.user.name}
           onChangeText={(text) => { store.user.name = text }}
-          style={styles.marginB10}
+          style={[styles.marginB10, { color: 'red' }]}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
           right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
         />
         <TextInput
           disabled
+          mode="flat"
           value={userStore.user.email}
-          style={[styles.marginB10, styles.email]}
+          style={styles.marginB10}
           keyboardType="email-address"
           left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />

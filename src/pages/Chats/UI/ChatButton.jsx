@@ -28,7 +28,7 @@ const ChatButton = ({
           <Text style={[styles.date, { color: colors.lightText }]}>
             {date}
           </Text>
-          <View style={[styles.iconWrapper, { backgroundColor: colors.primary }]}>
+          <View style={[styles.iconWrapper, { backgroundColor: colors.orange }]}>
             {typeof icon === 'string'
               ? <Text style={[styles.numberIcon, { color: colors.white }]}>{icon}</Text>
               : icon}

@@ -19,6 +19,8 @@ class MyAccountStore {
     onPress: null,
     btnName: '',
   }
+  faq = []
+  selectedQuestion = {}
 
   get disableEdit() {
     return !this.user.name || !this.user.fone || (this.user.isProvider && !this.user.profile)
@@ -97,6 +99,17 @@ class MyAccountStore {
         onPress: () => { this.requestFeedback.visible = false },
         btnName: 'Ok',
       }
+    }
+  }
+
+  async getFaq() {
+    try {
+      this.isFetching = true
+      const response = await db.collection('faq').get()
+      response.forEach((item) => this.faq.push(item.data()))
+      this.isFetching = false
+    } catch (error) {
+      console.log(error)
     }
   }
 

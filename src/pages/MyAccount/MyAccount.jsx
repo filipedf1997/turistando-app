@@ -7,7 +7,7 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, TextInput, TextInputMask, TextLinkIcon,
+  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
 
@@ -26,13 +26,14 @@ const MyAccount = observer(({ navigation }) => {
         <TextInput
           disabled
           value={userStore.user.name}
-          style={[styles.marginB10, styles.textInput]}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
         />
         <TextInput
           disabled
+          mode="flat"
           value={userStore.user.email}
-          style={[styles.marginB10, styles.email]}
+          style={styles.marginB10}
           keyboardType="email-address"
           left={<TextInputPaper.Icon name="email" color={colors.primary} size={25} />}
         />
@@ -45,23 +46,21 @@ const MyAccount = observer(({ navigation }) => {
           }}
           disabled
           value={userStore.user.fone}
-          style={[styles.marginB10, styles.textInput]}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="phone-in-talk" color={colors.primary} size={25} />}
         />
         {userStore.user.isProvider
           && (
           <TextInput
             disabled
-            label="Informações do Perfil:"
             value={userStore.user.profile}
-            style={[styles.marginB20, styles.textInput]}
+            style={styles.marginB10}
             multiline
             numberOfLines={3}
           />
           )}
         <TextLinkIcon
-          text="Precisa atualizar algum dado?"
-          textLink="Clique aqui!"
+          text="Clique aqui para alterar seus dados"
           action={() => navigation.navigate('EditData')}
         />
         <Text
@@ -72,13 +71,12 @@ const MyAccount = observer(({ navigation }) => {
         <TextInput
           disabled
           value="*********"
-          style={[styles.marginB10, styles.textInput]}
+          style={styles.marginB10}
           secureTextEntry
           left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
         />
         <TextLinkIcon
-          text="Precisa atualizar a sua senha?"
-          textLink="Clique aqui!"
+          text="Clique aqui para alterar a sua senha"
           action={() => navigation.navigate('ChangePassword')}
         />
         <Text
@@ -86,11 +84,10 @@ const MyAccount = observer(({ navigation }) => {
         >
           FAQ
         </Text>
-        <TextLinkIcon
+        <TextLink
           text="Tem alguma dúvida sobre o Turistando? Acesse a nossa página de"
           textLink="Perguntas Frequentes"
           action={() => navigation.navigate('FAQ')}
-          withoutIcon
         />
       </Content>
     </Container>

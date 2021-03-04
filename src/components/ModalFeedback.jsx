@@ -26,7 +26,7 @@ const ModalFeedback = ({
       >
         <View style={styles.image}>
           {success && <AntDesign name="checkcircle" size={68} color={colors.green} />}
-          {error && <MaterialIcons name="cancel" size={82} color={colors.red} />}
+          {error && <MaterialIcons name="cancel" size={82} color={colors.error} />}
         </View>
         <Text style={styles.text}>{message}</Text>
 

@@ -3,8 +3,7 @@ import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
 
 const Content = forwardRef(({ children, keyboardAvoidingProps, scrollViewProps }, ref) => (
   <KeyboardAvoidingView
-    keyboardVerticalOffset={(Platform.OS === 'ios') ? 0 : 20}
-    behavior={(Platform.OS === 'ios') ? 'padding' : null}
+    behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
     style={{ flex: 1 }}
     {...keyboardAvoidingProps}
   >

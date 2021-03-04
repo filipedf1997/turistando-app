@@ -19,7 +19,6 @@ class SignUpStore {
     onPress: null,
     btnName: '',
   }
-  wavesVisibility = true
 
   get disable() {
     return !this.user.name || !this.user.email || !this.user.password || !this.user.fone

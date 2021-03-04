@@ -29,13 +29,14 @@ const ChangePassword = observer(({ navigation }) => {
           value={store.user.password}
           onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB10}
+          error={store.errorPassword}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.red : colors.primary} size={25} />}
-          right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
+          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.error : colors.primary} size={25} />}
+          right={<TextInputPaper.Icon name="chevron-right" color={store.errorPassword ? colors.error : colors.primary} size={35} />}
         />
         {store.errorPassword
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             A senha precisa conter no mínino 6 dígitos!
           </Caption>
           )}
@@ -44,13 +45,14 @@ const ChangePassword = observer(({ navigation }) => {
           value={store.user.confirmPassword}
           onChangeText={(text) => { store.user.confirmPassword = text }}
           style={store.errorConfirmPassword ? styles.marginB10 : styles.marginB20}
+          error={store.errorConfirmPassword}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.red : colors.primary} size={25} />}
-          right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
+          left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.error : colors.primary} size={25} />}
+          right={<TextInputPaper.Icon name="chevron-right" color={store.errorConfirmPassword ? colors.error : colors.primary} size={35} />}
         />
         {store.errorConfirmPassword
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             As senhas estão diferentes!
           </Caption>
           )}

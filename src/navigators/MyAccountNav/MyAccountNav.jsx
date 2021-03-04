@@ -4,6 +4,7 @@ import MyAccount from '../../pages/MyAccount/MyAccount'
 import EditData from '../../pages/MyAccount/EditData'
 import ChangePassword from '../../pages/MyAccount/ChangePassword'
 import FAQ from '../../pages/MyAccount/FAQ'
+import FAQAnswer from '../../pages/MyAccount/FAQAnswer'
 
 const MyAccountNav = () => {
   const Stack = createStackNavigator()
@@ -28,6 +29,10 @@ const MyAccountNav = () => {
       <Stack.Screen
         name="FAQ"
         component={FAQ}
+      />
+      <Stack.Screen
+        name="FAQAnswer"
+        component={FAQAnswer}
       />
     </Stack.Navigator>
   )

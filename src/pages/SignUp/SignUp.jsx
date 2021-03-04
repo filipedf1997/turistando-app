@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions, Keyboard, Platform,
+  StyleSheet, View, Dimensions,
 } from 'react-native'
 import {
   Text, Caption, useTheme, Switch, TextInput as TextInputPaper,
@@ -37,22 +37,6 @@ const SignUp = observer(({ navigation }) => {
     }
   }
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => { if (Platform.OS === 'android') store.wavesVisibility = false },
-    )
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => { if (Platform.OS === 'android') store.wavesVisibility = true },
-    )
-
-    return () => {
-      keyboardDidShowListener.remove()
-      keyboardDidHideListener.remove()
-    }
-  }, [])
-
   return (
     <Container>
       <HeaderBar onPress={() => navigation.navigate('SignIn')} />
@@ -60,7 +44,7 @@ const SignUp = observer(({ navigation }) => {
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Criar uma conta
+          Criar conta
         </Text>
         <TextInput
           label="Nome"
@@ -75,11 +59,12 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.email = text }}
           style={styles.marginB10}
           keyboardType="email-address"
-          left={<TextInputPaper.Icon name="email" color={store.errorEmail ? colors.red : colors.primary} size={25} />}
+          error={store.errorEmail}
+          left={<TextInputPaper.Icon name="email" color={store.errorEmail ? colors.error : colors.primary} size={25} />}
         />
         {store.errorEmail
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             Digite um e-mail válido!
           </Caption>
           )}
@@ -102,11 +87,12 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB10}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.red : colors.primary} size={25} />}
+          error={store.errorPassword}
+          left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.error : colors.primary} size={25} />}
         />
         {store.errorPassword
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             A senha precisa conter no mínino 6 dígitos!
           </Caption>
           )}
@@ -116,11 +102,12 @@ const SignUp = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.confirmPassword = text }}
           style={styles.marginB10}
           secureTextEntry
-          left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.red : colors.primary} size={25} />}
+          error={store.errorConfirmPassword}
+          left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.error : colors.primary} size={25} />}
         />
         {store.errorConfirmPassword
           && (
-          <Caption style={[styles.errorMessages, { color: colors.red }]}>
+          <Caption style={[styles.errorMessages, { color: colors.error }]}>
             As senhas estão diferentes!
           </Caption>
           )}
@@ -167,7 +154,6 @@ const SignUp = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
-      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -175,7 +161,6 @@ const SignUp = observer(({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
-      )}
     </Container>
   )
 })

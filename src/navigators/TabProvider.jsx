@@ -16,9 +16,9 @@ const TabProvider = () => {
       initialRouteName="Página inicial"
       shifting
       sceneAnimationEnabled
-      activeColor={colors.darkOrange}
-      inactiveColor={colors.lightText}
-      barStyle={{ backgroundColor: colors.tabColor }}
+      activeColor={colors.primary}
+      inactiveColor={colors.borderTabColor}
+      barStyle={{ backgroundColor: colors.whiteGray, borderTopWidth: 1, borderColor: colors.borderTabColor }}
     >
       <Tab.Screen
         name="Página inicial"
