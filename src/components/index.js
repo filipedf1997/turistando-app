@@ -8,6 +8,7 @@ import TextInputMask from './TextInputMask'
 import TextLink from './TextLink'
 import TextLinkIcon from './TextLinkIcon'
 import FaqButton from './FaqButton'
+import DaysButton from './DaysButton'
 
 export {
   Button,
@@ -20,4 +21,5 @@ export {
   TextLink,
   TextLinkIcon,
   FaqButton,
+  DaysButton,
 }

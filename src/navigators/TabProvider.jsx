@@ -1,10 +1,11 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { useTheme } from 'react-native-paper'
+import { FontAwesome5 } from '@expo/vector-icons'
 import HomeProvider from '../pages/HomeProvider/HomeProvider'
 import MyAccountNav from './MyAccountNav/MyAccountNav'
 import Chats from '../pages/Chats/Chats'
-import Announcement from '../pages/Announcement/Announcement'
+import AnnouncementNav from './Announcement/AnnouncementNav'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -29,9 +30,9 @@ const TabProvider = () => {
       />
       <Tab.Screen
         name="Anunciar"
-        component={Announcement}
+        component={AnnouncementNav}
         options={{
-          tabBarIcon: 'bullhorn',
+          tabBarIcon: ({ color }) => <FontAwesome5 name="bullhorn" size={18} color={color} />,
         }}
       />
       <Tab.Screen

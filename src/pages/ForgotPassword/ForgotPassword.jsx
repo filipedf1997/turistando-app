@@ -12,7 +12,7 @@ import firebase from '../../firebase/firebaseConfig'
 import Waves from '../../images/waves'
 
 const originalWidth = 360
-const originalHeight = 110
+const originalHeight = 90
 const aspectRatio = originalWidth / originalHeight
 const windowWidth = Dimensions.get('screen').width
 

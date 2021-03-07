@@ -47,7 +47,7 @@ const EditData = observer(({ navigation }) => {
           label="Nome"
           value={store.user.name}
           onChangeText={(text) => { store.user.name = text }}
-          style={[styles.marginB10, { color: 'red' }]}
+          style={styles.marginB10}
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
           right={<TextInputPaper.Icon name="chevron-right" color={colors.primary} size={35} />}
         />
