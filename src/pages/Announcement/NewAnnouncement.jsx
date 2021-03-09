@@ -13,7 +13,7 @@ import {
 import { MultiselectDropdown } from 'sharingan-rn-modal-dropdown'
 import * as ImagePicker from 'expo-image-picker'
 import {
-  Container, Content, HeaderBar, TextInput, TextInputMask, DaysButton, Button,
+  Container, Content, HeaderBar, TextInput, TextInputMask, DaysButton, Button, ModalFeedback,
 } from '../../components'
 import EmptyImage from './UI/EmptyImage'
 
@@ -41,6 +41,30 @@ const NewAnnouncement = observer(({ navigation, route }) => {
     }
   }
 
+  async function handleSubmit() {
+    const result = await store.createAnnouncement()
+    if (result) {
+      store.requestFeedback = {
+        visible: true,
+        error: false,
+        message: 'Anúncio criado com sucesso!',
+        onPress: () => {
+          store.resetStore()
+          navigation.goBack()
+        },
+        btnName: 'Ok',
+      }
+    } else {
+      store.requestFeedback = {
+        visible: true,
+        error: true,
+        message: 'Não foi possível cadastrar o anúncio. Tente novamente.',
+        onPress: () => { store.requestFeedback.visible = false },
+        btnName: 'Ok',
+      }
+    }
+  }
+
   useEffect(() => {
     getPermission()
   }, [])
@@ -63,8 +87,8 @@ const NewAnnouncement = observer(({ navigation, route }) => {
           <Text style={styles.subTitle}>Título</Text>
           <TextInput
             label="Título do anúncio"
-            value={store.announcement.tile}
-            onChangeText={(text) => { store.announcement.tile = text }}
+            value={store.announcement.title}
+            onChangeText={(text) => { store.announcement.title = text }}
           />
         </View>
 
@@ -137,12 +161,23 @@ const NewAnnouncement = observer(({ navigation, route }) => {
 
         <Button
           mode="contained"
-          onPress={() => null}
+          onPress={handleSubmit}
           style={styles.wrapper}
+          disabled={store.disable}
+          loading={store.isFetching}
         >
           Confirmar
         </Button>
       </Content>
+
+      <ModalFeedback
+        visible={store.requestFeedback.visible}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        success={!store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+      />
     </Container>
   )
 })

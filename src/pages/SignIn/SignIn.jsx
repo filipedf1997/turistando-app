@@ -43,6 +43,14 @@ const Sign = observer(({ navigation }) => {
           userStore.idToken = await firebase.auth().currentUser.getIdToken()
           userStore.user = user.data()
 
+          if (!currentUser.displayName) {
+            try {
+              await currentUser.updateProfile({ displayName: userStore.user.name })
+            } catch (error) {
+              //  Let the application continue
+            }
+          }
+
           store.isFetching = false
         } catch (error) {
           store.isFetching = false
