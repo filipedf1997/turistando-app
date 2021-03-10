@@ -2,11 +2,13 @@ import { makeAutoObservable } from 'mobx'
 import firebase, { db, storage } from '../../../firebase/firebaseConfig'
 
 class AnnouncementStore {
+  announcements = []
   announcement = {
     title: '',
     experiencesTypes: [],
     description: '',
     photo: null,
+    photoBase64: '',
     amount: null,
     dates: [],
     ownerUID: '',
@@ -35,6 +37,10 @@ class AnnouncementStore {
       value: '5',
       label: 'Passeio de barco',
     },
+    {
+      value: '6',
+      label: 'Passeio de barco',
+    },
   ]
   days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
   isFetching = false
@@ -45,6 +51,7 @@ class AnnouncementStore {
     onPress: null,
     btnName: '',
   }
+  photoBlob = ''
 
   get disable() {
     return !this.announcement.title || !this.announcement.experiencesTypes.length
@@ -88,15 +95,50 @@ class AnnouncementStore {
       const user = firebase.auth().currentUser
       this.announcement.ownerUID = user.uid
       this.announcement.ownerName = user.displayName
-      delete this.announcement.photo
       const { id } = await db.collection('announcements').add(this.announcement)
-      await storage.child(`announcements/${id}`).put(this.photo)
+      await storage.child(`announcements/${id}`).put(this.photoBlob)
 
       this.isFetching = false
       return true
     } catch (error) {
+      console.log(error)
       this.isFetching = false
       return false
+    }
+  }
+
+  async getAnnouncements() {
+    try {
+      const aux = []
+      this.isFetching = true
+
+      const { uid } = firebase.auth().currentUser
+      const response = await db.collection('announcements').where('ownerUID', '==', uid).get()
+      response.forEach((item) => {
+        const announcement = item.data()
+        announcement.id = item.id
+        aux.push(announcement)
+      })
+      this.announcements = aux
+
+      await this.getPhotos()
+
+      this.isFetching = false
+      // console.log(this.announcements)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async getPhotos() {
+    try {
+      this.announcements = await Promise.all(this.announcements.map(async (announcement) => {
+        const url = await storage.child(`announcements/${announcement.id}`).getDownloadURL()
+        announcement.photo = url
+        return announcement
+      }))
+    } catch (error) {
+      console.log(error)
     }
   }
 

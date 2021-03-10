@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  Platform,
 } from 'react-native'
 import {
   Text, useTheme,
 } from 'react-native-paper'
-import { MultiselectDropdown } from 'sharingan-rn-modal-dropdown'
 import * as ImagePicker from 'expo-image-picker'
+import DropDownPicker from 'react-native-dropdown-picker'
 import {
   Container, Content, HeaderBar, TextInput, TextInputMask, DaysButton, Button, ModalFeedback,
 } from '../../components'
@@ -26,11 +27,14 @@ const NewAnnouncement = observer(({ navigation, route }) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0,
+      base64: true,
     })
 
     if (!result.cancelled) {
-      store.announcement.photo = result.uri
+      store.announcement.photo = Platform.OS === 'ios' ? result.uri.replace('file://', '') : result.uri
+      const response = await fetch(result.uri)
+      store.photoBlob = await response.blob()
     }
   }
 
@@ -94,15 +98,19 @@ const NewAnnouncement = observer(({ navigation, route }) => {
 
         <View style={styles.wrapper}>
           <Text style={styles.subTitle}>Tipo de experiência</Text>
-          <MultiselectDropdown
-            emptySelectionText="Selecione uma ou mais opçōes"
-            data={store.experiencesTypes}
-            chipType="flat"
-            chipTextStyle={{ color: colors.white }}
-            chipStyle={{ backgroundColor: colors.blue }}
-            value={store.announcement.experiencesTypes}
-            mode="outlined"
-            onChange={(value) => { store.announcement.experiencesTypes = value }}
+          <DropDownPicker
+            items={store.experiencesTypes}
+            defaultValue={[]}
+            zIndex={999}
+            multiple
+            multipleText="%d items have been selected."
+            dropDownStyle={{ backgroundColor: 'blue', opacity: 1 }}
+            dropDownMaxHeight={300}
+            itemStyle={{
+              // justifyContent: 'flex-start',
+              backgroundColor: 'red',
+            }}
+            onChangeItem={(list) => { store.announcement.experiencesTypes = list }}
           />
         </View>
 
