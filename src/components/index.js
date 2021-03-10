@@ -10,6 +10,8 @@ import TextLinkIcon from './TextLinkIcon'
 import FaqButton from './FaqButton'
 import DaysButton from './DaysButton'
 import HeaderBarLogo from './HeaderBarLogo'
+import DaysLabel from './DaysLabel'
+import AnnouncementCard from './AnnouncementCard'
 
 export {
   Button,
@@ -24,4 +26,6 @@ export {
   FaqButton,
   DaysButton,
   HeaderBarLogo,
+  DaysLabel,
+  AnnouncementCard,
 }

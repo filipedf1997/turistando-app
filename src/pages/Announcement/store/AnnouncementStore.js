@@ -8,13 +8,14 @@ class AnnouncementStore {
     experiencesTypes: [],
     description: '',
     photo: null,
-    photoBase64: '',
     amount: null,
+    amountText: '',
     dates: [],
     ownerUID: '',
     ownerName: '',
     rating: null,
     comments: [],
+    id: '',
   }
   experiencesTypes = [
     {
@@ -37,10 +38,6 @@ class AnnouncementStore {
       value: '5',
       label: 'Passeio de barco',
     },
-    {
-      value: '6',
-      label: 'Passeio de barco',
-    },
   ]
   days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
   isFetching = false
@@ -52,24 +49,28 @@ class AnnouncementStore {
     btnName: '',
   }
   photoBlob = ''
+  dropdownVisible = false
 
   get disable() {
     return !this.announcement.title || !this.announcement.experiencesTypes.length
       || !this.announcement.description || !this.announcement.photo
-      || !this.announcement.amount || !this.announcement.dates.length
+      || !this.announcement.amountText || !this.announcement.dates.length
   }
 
   resetStore() {
     this.announcement = {
       title: '',
       experiencesTypes: [],
-      photo: null,
       description: '',
+      photo: null,
       amount: null,
+      amountText: '',
       dates: [],
-      owner: null,
+      ownerUID: '',
+      ownerName: '',
       rating: null,
       comments: [],
+      id: '',
     }
     this.requestFeedback = {
       visible: false,
@@ -78,6 +79,8 @@ class AnnouncementStore {
       onPress: null,
       btnName: '',
     }
+    this.photoBlob = ''
+    this.dropdownVisible = false
   }
 
   handleDayChange(index) {
@@ -101,7 +104,25 @@ class AnnouncementStore {
       this.isFetching = false
       return true
     } catch (error) {
-      console.log(error)
+      this.isFetching = false
+      return false
+    }
+  }
+
+  async editAnnouncement() {
+    try {
+      this.isFetching = true
+
+      await db.collection('announcements').doc(this.announcement.id).update(this.announcement)
+      if (!this.photoBlob) {
+        const response = await fetch(this.announcement.photo)
+        this.photoBlob = await response.blob()
+      }
+      await storage.child(`announcements/${this.announcement.id}`).put(this.photoBlob)
+
+      this.isFetching = false
+      return true
+    } catch (error) {
       this.isFetching = false
       return false
     }

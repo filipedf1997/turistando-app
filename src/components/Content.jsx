@@ -9,8 +9,9 @@ const Content = forwardRef(({ children, keyboardAvoidingProps, scrollViewProps }
   >
     <ScrollView
       keyboardShouldPersistTaps="handled"
+      bounces={false}
       {...scrollViewProps}
-      contentContainerStyle={[{ flexGrow: 1 }, scrollViewProps?.contentContainerStyle]}
+      contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 20, ...scrollViewProps?.contentContainerStyle }}
       ref={ref}
     >
       {children}

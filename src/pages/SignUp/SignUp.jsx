@@ -167,7 +167,6 @@ const SignUp = observer(({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
     justifyContent: 'center',
   },
   title: {

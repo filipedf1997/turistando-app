@@ -22,7 +22,7 @@ const FAQ = observer(({ navigation }) => {
   return (
     <Container>
       <HeaderBar onPress={navigation.goBack} />
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <Content>
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -46,10 +46,7 @@ const FAQ = observer(({ navigation }) => {
   )
 })
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 30,
-  },
+const styles = StyleSheet.create({  
   title: {
     fontSize: 25,
     marginVertical: 20,

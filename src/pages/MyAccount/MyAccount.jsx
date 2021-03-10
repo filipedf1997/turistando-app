@@ -96,7 +96,6 @@ const MyAccount = observer(({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
     paddingBottom: 30,
   },
   title: {

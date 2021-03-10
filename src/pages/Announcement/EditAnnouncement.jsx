@@ -18,7 +18,7 @@ import {
 } from '../../components'
 import EmptyImage from './UI/EmptyImage'
 
-const NewAnnouncement = observer(({ navigation, route }) => {
+const EditAnnouncement = observer(({ navigation, route }) => {
   const store = route?.params?.store
   const { colors } = useTheme()
 
@@ -46,12 +46,12 @@ const NewAnnouncement = observer(({ navigation, route }) => {
   }
 
   async function handleSubmit() {
-    const result = await store.createAnnouncement()
+    const result = await store.editAnnouncement()
     if (result) {
       store.requestFeedback = {
         visible: true,
         error: false,
-        message: 'Anúncio criado com sucesso!',
+        message: 'Anúncio editado com sucesso!',
         onPress: () => {
           store.resetStore()
           navigation.goBack()
@@ -63,7 +63,7 @@ const NewAnnouncement = observer(({ navigation, route }) => {
       store.requestFeedback = {
         visible: true,
         error: true,
-        message: 'Não foi possível cadastrar o anúncio. Tente novamente.',
+        message: 'Não foi possível editar o anúncio. Tente novamente.',
         onPress: () => { store.requestFeedback.visible = false },
         btnName: 'Ok',
       }
@@ -85,7 +85,7 @@ const NewAnnouncement = observer(({ navigation, route }) => {
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Adicionar um anúncio
+          Editar um anúncio
         </Text>
 
         <View style={styles.wrapper}>
@@ -180,7 +180,7 @@ const NewAnnouncement = observer(({ navigation, route }) => {
           disabled={store.disable}
           loading={store.isFetching}
         >
-          Confirmar
+          Confirmar alteraçōes
         </Button>
       </Content>
 
@@ -229,4 +229,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default NewAnnouncement
+export default EditAnnouncement

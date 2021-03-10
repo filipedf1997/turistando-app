@@ -153,7 +153,6 @@ const Sign = observer(({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
     flexGrow: 1,
     justifyContent: 'center',
   },

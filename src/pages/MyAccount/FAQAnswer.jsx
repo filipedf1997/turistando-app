@@ -33,7 +33,6 @@ const FAQAnswer = observer(({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
     paddingBottom: 30,
   },
   title: {
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   question: {
-    fontWeight: 'bold',
+    fontFamily: 'Roboto-Bold',
     marginBottom: 15,
   },
   answer: {

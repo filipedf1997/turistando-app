@@ -37,7 +37,7 @@ const EditData = observer(({ navigation }) => {
   return (
     <Container>
       <HeaderBar onPress={navigation.goBack} />
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <Content>
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -109,9 +109,6 @@ const EditData = observer(({ navigation }) => {
 })
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 30,
-  },
   title: {
     fontSize: 25,
     marginVertical: 20,

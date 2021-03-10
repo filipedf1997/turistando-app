@@ -18,7 +18,7 @@ const Chats = ({ navigation }) => {
 
   return (
     <Container>
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <Content>
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -44,9 +44,6 @@ const Chats = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 30,
-  },
   title: {
     fontSize: 25,
     marginTop: 45,

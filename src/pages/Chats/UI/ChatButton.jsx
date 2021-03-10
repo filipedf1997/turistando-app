@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 13,
-    fontWeight: 'bold',
+    fontFamily: 'Roboto-Bold',
     marginBottom: 10,
   },
   lastMessage: {

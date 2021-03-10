@@ -7,7 +7,7 @@ const DaysButton = ({ isActive, value, action }) => {
 
   return (
     <TouchableOpacity
-      style={isActive ? [styles.activeButton, { backgroundColor: colors.primary }] : styles.deactivatedButton}
+      style={[styles.button, isActive ? { backgroundColor: colors.primary } : { borderWidth: 1 }]}
       onPress={action}
     >
       <Text style={{ fontSize: 12, color: isActive ? colors.white : colors.lightText }}>
@@ -23,15 +23,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
-  activeButton: {
+  button: {
     alignItems: 'center',
-    paddingVertical: 10,
-    width: 37,
-    borderRadius: 7,
-  },
-  deactivatedButton: {
-    alignItems: 'center',
-    borderWidth: 1,
     paddingVertical: 10,
     width: 37,
     borderRadius: 7,
