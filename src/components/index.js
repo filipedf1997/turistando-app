@@ -12,6 +12,8 @@ import DaysButton from './DaysButton'
 import HeaderBarLogo from './HeaderBarLogo'
 import DaysLabel from './DaysLabel'
 import AnnouncementCard from './AnnouncementCard'
+import AnnouncementCardTraveler from './AnnouncementCardTraveler'
+import CircleFirstLetter from './CircleFirstLetter'
 
 export {
   Button,
@@ -28,4 +30,6 @@ export {
   HeaderBarLogo,
   DaysLabel,
   AnnouncementCard,
+  AnnouncementCardTraveler,
+  CircleFirstLetter,
 }

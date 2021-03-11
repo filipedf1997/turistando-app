@@ -7,13 +7,20 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink,
+  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink, Button,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
+import firebase from '../../firebase/firebaseConfig'
 
 const MyAccount = observer(({ navigation }) => {
   const { userStore } = useStores()
   const { colors } = useTheme()
+
+  async function logout() {
+    await firebase.auth().signOut()
+    userStore.user = null
+    userStore.idToken = null
+  }
 
   return (
     <Container>
@@ -89,6 +96,13 @@ const MyAccount = observer(({ navigation }) => {
           textLink="Perguntas Frequentes"
           action={() => navigation.navigate('FAQ')}
         />
+        <Button
+          onPress={logout}
+          mode="text"
+          style={styles.button}
+        >
+          Sair da conta
+        </Button>
       </Content>
     </Container>
   )
@@ -120,6 +134,7 @@ const styles = StyleSheet.create({
   email: {
     backgroundColor: 'rgba(0,0,0,0.25)',
   },
+  button: { marginTop: 20 },
 })
 
 export default MyAccount
