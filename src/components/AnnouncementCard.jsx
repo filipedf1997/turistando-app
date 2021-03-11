@@ -9,7 +9,7 @@ import { s, vs } from 'react-native-size-matters'
 import { RFValue } from 'react-native-responsive-fontsize'
 import Button from './Button'
 import DaysLabel from './DaysLabel'
-import useCutText from '../utils/useCutText'
+import useCutText from '../hooks/useCutText'
 
 const AnnouncementCard = ({ action, item }) => {
   const { colors } = useTheme()

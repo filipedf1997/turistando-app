@@ -16,7 +16,7 @@ const HeaderBarLogo = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingTop: 30,
+    paddingTop: 40,
     paddingBottom: 15,
     flexDirection: 'row',
     borderBottomWidth: 1,

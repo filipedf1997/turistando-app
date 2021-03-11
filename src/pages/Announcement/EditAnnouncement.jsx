@@ -85,7 +85,7 @@ const EditAnnouncement = observer(({ navigation, route }) => {
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Editar um anúncio
+          Editar anúncio
         </Text>
 
         <View style={styles.wrapper}>

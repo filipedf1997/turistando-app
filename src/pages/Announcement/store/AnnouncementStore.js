@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import firebase, { db, storage } from '../../../firebase/firebaseConfig'
+import { experiencesTypes as xpTypes, days as daysTypes } from '../../../utils/annoucementTypes'
 
 class AnnouncementStore {
   announcements = []
@@ -17,29 +18,9 @@ class AnnouncementStore {
     comments: [],
     id: '',
   }
-  experiencesTypes = [
-    {
-      value: '1',
-      label: 'Passeio de Buggy',
-    },
-    {
-      value: '2',
-      label: 'Guia turístico',
-    },
-    {
-      value: '3',
-      label: 'Surf',
-    },
-    {
-      value: '4',
-      label: 'Kitesurf',
-    },
-    {
-      value: '5',
-      label: 'Passeio de barco',
-    },
-  ]
-  days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+  experiencesTypes = xpTypes
+  days = daysTypes
+  photoBlob = ''
   isFetching = false
   requestFeedback = {
     visible: false,
@@ -48,8 +29,6 @@ class AnnouncementStore {
     onPress: null,
     btnName: '',
   }
-  photoBlob = ''
-  dropdownVisible = false
 
   get disable() {
     return !this.announcement.title || !this.announcement.experiencesTypes.length
@@ -80,7 +59,6 @@ class AnnouncementStore {
       btnName: '',
     }
     this.photoBlob = ''
-    this.dropdownVisible = false
   }
 
   handleDayChange(index) {
@@ -145,9 +123,14 @@ class AnnouncementStore {
       await this.getPhotos()
 
       this.isFetching = false
-      // console.log(this.announcements)
     } catch (error) {
-      console.log(error)
+      this.requestFeedback = {
+        visible: true,
+        error: true,
+        message: 'Não foi possível recuperar os anúncios. Tente novamente.',
+        onPress: () => { this.requestFeedback.visible = false },
+        btnName: 'Ok',
+      }
     }
   }
 
@@ -159,7 +142,7 @@ class AnnouncementStore {
         return announcement
       }))
     } catch (error) {
-      console.log(error)
+      throw new Error()
     }
   }
 

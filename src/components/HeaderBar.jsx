@@ -18,7 +18,7 @@ const HeaderBar = ({ onPress }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    marginTop: 12,
+    marginTop: 20,
     flexDirection: 'row',
   },
 })

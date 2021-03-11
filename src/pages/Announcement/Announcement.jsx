@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import { StyleSheet, View } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper'
 import {
-  Container, Content, HeaderBarLogo, Button, AnnouncementCard,
+  Container, Content, HeaderBarLogo, Button, AnnouncementCard, ModalFeedback,
 } from '../../components'
 import AnnouncementStore from './store/AnnouncementStore'
 
@@ -31,14 +31,24 @@ const Announcement = observer(({ navigation }) => {
           ))}
         </Content>
       )}
-      <View style={{ padding: 20, backgroundColor: '#F2F2F2' }}>
+      <View style={styles.buttonWrapper}>
         <Button
           mode="contained"
+          disabled={store.isFetching}
           onPress={() => navigation.navigate('NewAnnouncement', { store })}
         >
           Adicionar anúncio
         </Button>
       </View>
+
+      <ModalFeedback
+        visible={store.requestFeedback.visible}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        success={!store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+      />
     </Container>
   )
 })
@@ -47,11 +57,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    backgroundColor: '#F2F2F2',
   },
   content: {
     paddingVertical: 20,
-    backgroundColor: '#F2F2F2',
   },
+  buttonWrapper: { padding: 20 },
 })
 
 export default Announcement
