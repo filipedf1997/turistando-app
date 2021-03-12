@@ -21,6 +21,7 @@ class MyAccountStore {
   }
   faq = []
   selectedQuestion = {}
+  passwordVisible = false
 
   get disableEdit() {
     return !this.user.name || !this.user.fone || (this.user.isProvider && !this.user.profile)

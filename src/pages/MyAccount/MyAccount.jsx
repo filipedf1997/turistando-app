@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
   StyleSheet,
@@ -7,7 +7,7 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink, Button,
+  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink, Button, ModalFeedback,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
 import firebase from '../../firebase/firebaseConfig'
@@ -15,6 +15,7 @@ import firebase from '../../firebase/firebaseConfig'
 const MyAccount = observer(({ navigation }) => {
   const { userStore } = useStores()
   const { colors } = useTheme()
+  const [modalVisibility, setModalVisibility] = useState(false)
 
   async function logout() {
     await firebase.auth().signOut()
@@ -97,13 +98,23 @@ const MyAccount = observer(({ navigation }) => {
           action={() => navigation.navigate('FAQ')}
         />
         <Button
-          onPress={logout}
+          onPress={() => setModalVisibility(true)}
           mode="text"
           style={styles.button}
         >
           Sair da conta
         </Button>
       </Content>
+
+      <ModalFeedback
+        visible={modalVisibility}
+        message="Você deseja sair da conta?"
+        btnName="Sim"
+        withoutIcon
+        onPress={logout}
+        secundaryAction={() => setModalVisibility(false)}
+        secundaryName="Cancelar"
+      />
     </Container>
   )
 })

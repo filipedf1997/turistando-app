@@ -48,6 +48,8 @@ const Announcement = observer(({ navigation }) => {
         error={store.requestFeedback.error}
         success={!store.requestFeedback.error}
         onPress={store.requestFeedback.onPress}
+        secundaryAction={store.requestFeedback.secundaryAction}
+        secundaryName={store.requestFeedback.secundaryName}
       />
     </Container>
   )

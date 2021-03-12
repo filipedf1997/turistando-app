@@ -28,6 +28,8 @@ class AnnouncementStore {
     message: '',
     onPress: null,
     btnName: '',
+    secundaryAction: null,
+    secundaryName: '',
   }
 
   get disable() {
@@ -57,6 +59,8 @@ class AnnouncementStore {
       message: '',
       onPress: null,
       btnName: '',
+      secundaryAction: null,
+      secundaryName: '',
     }
     this.photoBlob = ''
   }
@@ -128,8 +132,17 @@ class AnnouncementStore {
         visible: true,
         error: true,
         message: 'Não foi possível recuperar os anúncios. Tente novamente.',
-        onPress: () => { this.requestFeedback.visible = false },
-        btnName: 'Ok',
+        onPress: () => {
+          this.requestFeedback.visible = false
+          this.requestFeedback.secundaryName = ''
+          this.getAnnouncements()
+        },
+        btnName: 'Tentar novamente',
+        secundaryName: 'Cancelar',
+        secundaryAction: () => {
+          this.requestFeedback.visible = false
+          this.requestFeedback.secundaryName = ''
+        },
       }
     }
   }

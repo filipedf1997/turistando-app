@@ -13,6 +13,7 @@ class SignInStore {
     onPress: null,
     btnName: '',
   }
+  passwordVisible = false
 
   get disable() {
     return !this.email || !this.password
@@ -44,6 +45,7 @@ class SignInStore {
     const errorsList = {
       'auth/invalid-email': 'Não foi possível realizar o login. Verifique o e-mail digitado e tente novamente.',
       'auth/user-not-found': 'Não foi possível realizar o login, pois o usuário não foi encontrado em nossa base.',
+      'auth/wrong-password': 'Senha incorreta. Tente novamente',
       default: 'Não foi possível realizar o login. Tente novamente.',
     }
 

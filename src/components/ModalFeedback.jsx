@@ -4,11 +4,11 @@ import {
 } from 'react-native-paper'
 import { StyleSheet, View, Keyboard } from 'react-native'
 import { AntDesign, MaterialIcons } from '@expo/vector-icons'
-
 import Button from './Button'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 const ModalFeedback = ({
-  visible, message, btnName, dismissable, error, success, onPress, loading, ...props
+  visible, message, btnName, dismissable, error, success, onPress, loading, secundaryAction, secundaryName, withoutIcon, ...props
 }) => {
   const { colors } = useTheme()
 
@@ -24,11 +24,24 @@ const ModalFeedback = ({
         {...props}
         contentContainerStyle={[styles.modal, { backgroundColor: colors.white }]}
       >
+        {!withoutIcon && (
         <View style={styles.image}>
           {success && <AntDesign name="checkcircle" size={68} color={colors.green} />}
           {error && <MaterialIcons name="cancel" size={82} color={colors.error} />}
         </View>
+        )}
         <Text style={styles.text}>{message}</Text>
+
+        {!!secundaryName && (
+        <Button
+          mode="text"
+          onPress={secundaryAction}
+          loading={loading}
+          style={styles.secundaryBtn}
+        >
+          {secundaryName}
+        </Button>
+        )}
 
         <Button
           mode="contained"
@@ -54,8 +67,12 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    fontSize: RFValue(16),
     marginBottom: 20,
     marginHorizontal: 10,
+  },
+  secundaryBtn: {
+    marginBottom: 8,
   },
 })
 

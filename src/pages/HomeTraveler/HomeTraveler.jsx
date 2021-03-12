@@ -9,6 +9,7 @@ import HomeTravelerStore from './store/HomeTravelerStore'
 
 const HomeTraveler = observer(({ navigation }) => {
   const [store] = useState(() => new HomeTravelerStore())
+  // const [load, setLoad] = useState(false)
 
   function renderItem(item) {
     return (
@@ -36,12 +37,10 @@ const HomeTraveler = observer(({ navigation }) => {
           renderItem={({ item }) => renderItem(item)}
           keyExtractor={(item) => item.id}
           onEndReached={() => store.getMoreAnnouncements()}
-          onEndReachedThreshold={0.1}
-          refreshing={store.isRefreshing}
+          onEndReachedThreshold={0.3}
           contentContainerStyle={styles.content}
         />
       )}
-      {store.isRefreshing && <ActivityIndicator style={styles.loadFlatList} />}
 
       <ModalFeedback
         visible={store.requestFeedback.visible}

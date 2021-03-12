@@ -91,8 +91,16 @@ const Sign = observer(({ navigation }) => {
             value={store.password}
             onChangeText={(text) => { store.password = text }}
             style={styles.marginB10}
-            secureTextEntry
+            secureTextEntry={!store.passwordVisible}
             left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
+            right={(
+              <TextInputPaper.Icon
+                onPress={() => { store.passwordVisible = !store.passwordVisible }}
+                name={store.passwordVisible ? 'eye' : 'eye-off'}
+                color={colors.borderTabColor}
+                size={23}
+              />
+            )}
           />
           <View
             style={[styles.checkWrapper, styles.marginB10]}

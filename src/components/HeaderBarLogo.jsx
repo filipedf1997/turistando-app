@@ -7,7 +7,7 @@ const HeaderBarLogo = () => {
   const { colors } = useTheme()
 
   return (
-    <View style={[styles.container, { borderColor: colors.borderTabColor }]}>
+    <View style={[styles.container, { borderColor: colors.borderTabColor, backgroundColor: colors.background }]}>
       <TuristandoLogoBar />
     </View>
   )

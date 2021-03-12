@@ -30,9 +30,16 @@ const ChangePassword = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB10}
           error={store.errorPassword}
-          secureTextEntry
+          secureTextEntry={!store.passwordVisible}
           left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.error : colors.primary} size={25} />}
-          right={<TextInputPaper.Icon name="chevron-right" color={store.errorPassword ? colors.error : colors.primary} size={35} />}
+          right={(
+            <TextInputPaper.Icon
+              onPress={() => { store.passwordVisible = !store.passwordVisible }}
+              name={store.passwordVisible ? 'eye' : 'eye-off'}
+              color={colors.borderTabColor}
+              size={23}
+            />
+          )}
         />
         {store.errorPassword
           && (
@@ -46,9 +53,16 @@ const ChangePassword = observer(({ navigation }) => {
           onChangeText={(text) => { store.user.confirmPassword = text }}
           style={store.errorConfirmPassword ? styles.marginB10 : styles.marginB20}
           error={store.errorConfirmPassword}
-          secureTextEntry
+          secureTextEntry={!store.passwordVisible}
           left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.error : colors.primary} size={25} />}
-          right={<TextInputPaper.Icon name="chevron-right" color={store.errorConfirmPassword ? colors.error : colors.primary} size={35} />}
+          right={(
+            <TextInputPaper.Icon
+              onPress={() => { store.passwordVisible = !store.passwordVisible }}
+              name={store.passwordVisible ? 'eye' : 'eye-off'}
+              color={colors.borderTabColor}
+              size={23}
+            />
+          )}
         />
         {store.errorConfirmPassword
           && (
