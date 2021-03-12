@@ -18,6 +18,8 @@ class MyAccountStore {
     message: '',
     onPress: null,
     btnName: '',
+    secundaryAction: null,
+    secundaryName: '',
   }
   faq = []
   selectedQuestion = {}
@@ -110,7 +112,22 @@ class MyAccountStore {
       response.forEach((item) => this.faq.push(item.data()))
       this.isFetching = false
     } catch (error) {
-      console.log(error)
+      this.requestFeedback = {
+        visible: true,
+        error: true,
+        message: 'Não foi possível recuperar as Perguntas Frequentes. Tente novamente.',
+        onPress: () => {
+          this.requestFeedback.visible = false
+          this.requestFeedback.secundaryName = ''
+          this.getFaq()
+        },
+        btnName: 'Tentar novamente',
+        secundaryName: 'Cancelar',
+        secundaryAction: () => {
+          this.requestFeedback.visible = false
+          this.requestFeedback.secundaryName = ''
+        },
+      }
     }
   }
 

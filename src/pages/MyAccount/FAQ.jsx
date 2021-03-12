@@ -7,7 +7,7 @@ import {
   Text, useTheme, ActivityIndicator,
 } from 'react-native-paper'
 import {
-  Container, Content, HeaderBar, FaqButton,
+  Container, Content, HeaderBar, FaqButton, ModalFeedback,
 } from '../../components'
 import MyAccountStore from './store/MyAccountStore'
 
@@ -42,11 +42,21 @@ const FAQ = observer(({ navigation }) => {
           ))}
       </Content>
 
+      <ModalFeedback
+        visible={store.requestFeedback.visible}
+        message={store.requestFeedback.message}
+        btnName={store.requestFeedback.btnName}
+        error={store.requestFeedback.error}
+        success={!store.requestFeedback.error}
+        onPress={store.requestFeedback.onPress}
+        secundaryAction={store.requestFeedback.secundaryAction}
+        secundaryName={store.requestFeedback.secundaryName}
+      />
     </Container>
   )
 })
 
-const styles = StyleSheet.create({  
+const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     marginVertical: 20,
