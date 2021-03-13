@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx'
-import firebase, { db, storage } from '../../../firebase/firebaseConfig'
+import { db, storage } from '../../../firebase/firebaseConfig'
+import { experiencesTypes } from '../../../utils/annoucementTypes'
 
 class HomeTravelerStore {
   announcements = []
   isFetching = false
-  isRefreshing = false
   announcement = {
     title: '',
     experiencesTypes: [],
@@ -27,8 +27,17 @@ class HomeTravelerStore {
     message: '',
     onPress: null,
     btnName: '',
+    secundaryAction: null,
+    secundaryName: '',
   }
   noMoreAnnouncements = false
+  experiencesTypes = experiencesTypes
+  filterExperiences = []
+  showDatePicker = false
+  filterDateText = null
+  filterDate = ''
+  filtertMinAmount = null
+  filtertMaxAmount = null
 
   resetStore() {
     this.announcement = {
@@ -51,8 +60,9 @@ class HomeTravelerStore {
       message: '',
       onPress: null,
       btnName: '',
+      secundaryAction: null,
+      secundaryName: '',
     }
-    this.photoBlob = ''
   }
 
   async getAnnouncements() {
@@ -60,11 +70,21 @@ class HomeTravelerStore {
       const aux = []
       this.isFetching = true
 
-      const response = await db.collection('announcements').limit(this.limit).get()
+      let announcementsRef = db.collection('announcements')
+      if (this.filterExperiences.length) announcementsRef = announcementsRef.where('experiencesTypes', 'array-contains-any', this.filterExperiences)
+      if (this.filtertMinAmount) announcementsRef = announcementsRef.where('amount', '>=', this.filtertMinAmount)
+      if (this.filtertMaxAmount) announcementsRef = announcementsRef.where('amount', '<=', this.filtertMaxAmount)
+      const response = await announcementsRef.limit(this.limit).get()
       response.forEach((item) => {
         const announcement = item.data()
         announcement.id = item.id
-        aux.push(announcement)
+        if (this.filterDate) {
+          if (announcement.dates.includes(this.filterDate)) {
+            aux.push(announcement)
+          }
+        } else {
+          aux.push(announcement)
+        }
       })
       this.announcements = aux
       this.lastVisible = response.docs[response.docs.length - 1]
@@ -77,8 +97,15 @@ class HomeTravelerStore {
         visible: true,
         error: true,
         message: 'Não foi possível recuperar os anúncios. Tente novamente.',
-        onPress: () => { this.requestFeedback.visible = false },
-        btnName: 'Ok',
+        onPress: () => {
+          this.requestFeedback.visible = false
+          this.getAnnouncements()
+        },
+        btnName: 'Tentar novamente',
+        secundaryName: 'Cancelar',
+        secundaryAction: () => {
+          this.requestFeedback.visible = false
+        },
       }
     }
   }
@@ -102,15 +129,23 @@ class HomeTravelerStore {
       }
 
       let moreAnnouncements = []
-      this.isRefreshing = true
 
-      const response = await db.collection('announcements')
+      let announcementsRef = db.collection('announcements')
+      if (this.filterExperiences.length) announcementsRef = announcementsRef.where('experiencesTypes', 'array-contains-any', this.filterExperiences)
+      if (this.filtertMinAmount) announcementsRef = announcementsRef.where('amount', '>=', this.filtertMinAmount)
+      if (this.filtertMaxAmount) announcementsRef = announcementsRef.where('amount', '<=', this.filtertMaxAmount)
+      const response = await announcementsRef
         .startAfter(this.lastVisible)
         .limit(this.limit)
         .get()
       response.forEach((item) => {
         const announcement = item.data()
         announcement.id = item.id
+        if (this.filterDate) {
+          if (!announcement.includes(this.filterDate)) {
+            return
+          }
+        }
         moreAnnouncements.push(announcement)
       })
 
@@ -120,7 +155,6 @@ class HomeTravelerStore {
       this.lastVisible = response.docs[response.docs.length - 1]
 
       this.noMoreAnnouncements = response.empty
-      this.isRefreshing = false
     } catch (error) {
       this.requestFeedback = {
         visible: true,
@@ -128,6 +162,11 @@ class HomeTravelerStore {
         message: 'Não foi possível recuperar mais anúncios. Tente novamente.',
         onPress: () => { this.requestFeedback.visible = false },
         btnName: 'Ok',
+        secundaryName: 'Cancelar',
+        secundaryAction: () => {
+          this.requestFeedback.visible = false
+          this.requestFeedback.secundaryName = ''
+        },
       }
     }
   }
@@ -144,6 +183,15 @@ class HomeTravelerStore {
     } catch (error) {
       throw new Error()
     }
+  }
+
+  clearFilters() {
+    this.filterExperiences = []
+    this.showDatePicker = false
+    this.filterDateText = null
+    this.filterDate = null
+    this.filtertMinAmount = null
+    this.filtertMaxAmount = null
   }
 
   constructor() {

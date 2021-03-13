@@ -5,14 +5,22 @@ import { s, vs } from 'react-native-size-matters'
 
 const DaysLabel = ({ dates }) => {
   const { colors } = useTheme()
-  const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+  const days = [
+    { short: 'D', long: 'Dom' },
+    { short: 'S', long: 'Seg' },
+    { short: 'T', long: 'Ter' },
+    { short: 'Q', long: 'Qua' },
+    { short: 'Q', long: 'Qui' },
+    { short: 'S', long: 'Sex' },
+    { short: 'S', long: 'Sab' },
+  ]
 
   return (
     <View style={styles.container}>
       {days.map((day, index) => (
-        <View key={index} style={[styles.wrapper, dates.includes(index) ? { backgroundColor: colors.primary } : { borderWidth: 1 }]}>
-          <Text style={{ fontSize: 10, color: dates.includes(index) ? colors.white : colors.lightText }}>
-            {day}
+        <View key={index} style={[styles.wrapper, dates.includes(day.long) ? { backgroundColor: colors.primary } : { borderWidth: 1 }]}>
+          <Text style={{ fontSize: 10, color: dates.includes(day.long) ? colors.white : colors.lightText }}>
+            {day.short}
           </Text>
         </View>
       ))}

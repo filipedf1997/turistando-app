@@ -86,9 +86,17 @@ const SignUp = observer(({ navigation }) => {
           value={store.user.password}
           onChangeText={(text) => { store.user.password = text }}
           style={styles.marginB10}
-          secureTextEntry
+          secureTextEntry={!store.passwordVisible}
           error={store.errorPassword}
           left={<TextInputPaper.Icon name="lock" color={store.errorPassword ? colors.error : colors.primary} size={25} />}
+          right={(
+            <TextInputPaper.Icon
+              onPress={() => { store.passwordVisible = !store.passwordVisible }}
+              name={store.passwordVisible ? 'eye' : 'eye-off'}
+              color={colors.borderTabColor}
+              size={23}
+            />
+          )}
         />
         {store.errorPassword
           && (
@@ -101,9 +109,17 @@ const SignUp = observer(({ navigation }) => {
           value={store.user.confirmPassword}
           onChangeText={(text) => { store.user.confirmPassword = text }}
           style={styles.marginB10}
-          secureTextEntry
+          secureTextEntry={!store.passwordVisible}
           error={store.errorConfirmPassword}
           left={<TextInputPaper.Icon name="lock" color={store.errorConfirmPassword ? colors.error : colors.primary} size={25} />}
+          right={(
+            <TextInputPaper.Icon
+              onPress={() => { store.passwordVisible = !store.passwordVisible }}
+              name={store.passwordVisible ? 'eye' : 'eye-off'}
+              color={colors.borderTabColor}
+              size={23}
+            />
+          )}
         />
         {store.errorConfirmPassword
           && (

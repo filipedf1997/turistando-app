@@ -65,11 +65,11 @@ class AnnouncementStore {
     this.photoBlob = ''
   }
 
-  handleDayChange(index) {
-    if (this.announcement.dates.includes(index)) {
-      this.announcement.dates = this.announcement.dates.filter((day) => day !== index)
+  handleDayChange(value) {
+    if (this.announcement.dates.includes(value)) {
+      this.announcement.dates = this.announcement.dates.filter((day) => day !== value)
     } else {
-      this.announcement.dates.push(index)
+      this.announcement.dates.push(value)
     }
   }
 

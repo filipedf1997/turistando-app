@@ -19,6 +19,7 @@ class SignUpStore {
     onPress: null,
     btnName: '',
   }
+  passwordVisible = false
 
   get disable() {
     return !this.user.name || !this.user.email || !this.user.password || !this.user.fone

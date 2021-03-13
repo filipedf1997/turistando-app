@@ -2,10 +2,18 @@ import React from 'react'
 import { LogBox } from 'react-native'
 import { Provider } from 'react-native-paper'
 import * as Font from 'expo-font'
+import moment from 'moment'
 import BaseNavigator from './src/navigators/BaseNavigator'
 import theme from './src/theme/theme'
 
-LogBox.ignoreLogs(['[MobX]', 'Setting a timer', 'Failed prop type: Invalid prop `locale` of type `object` supplied to `GiftedChat`, expected `string`.'])
+LogBox.ignoreLogs([
+  '[MobX]',
+  'Setting a timer',
+  'Failed prop type: Invalid prop `locale` of type `object` supplied to `GiftedChat`, expected `string`.',
+  'Non-serializable values were found in the navigation state',
+])
+
+moment.defineLocale('pt-br', { weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sab'.split('_') })
 
 export default function App() {
   const [loaded] = Font.useFonts({

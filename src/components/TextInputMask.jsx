@@ -4,15 +4,14 @@ import { TextInputMask as TextInputMasked } from 'react-native-masked-text'
 
 const TextInputMask = (props) => (
   <TextInputMasked
-    {...props}
     mode="outlined"
     customTextInput={TextInputPaper}
     customTextInputProps={{
       style: [{ borderRadius: 5 }, props?.style],
-      underlineColor: 'transparent',
       label: props.label,
       left: props.left,
     }}
+    {...props}
   />
 )
 

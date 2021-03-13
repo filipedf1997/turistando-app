@@ -1,7 +1,7 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { useTheme } from 'react-native-paper'
-import HomeTraveler from '../pages/HomeTraveler/HomeTraveler'
+import HomeTravelerNav from './HomeTraveler/HomeTravelerNav'
 import MyAccountNav from './MyAccountNav/MyAccountNav'
 import Chats from '../pages/Chats/Chats'
 
@@ -12,7 +12,7 @@ const TabTraveler = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Página inicial"
+      initialRouteName="HomeTravelerNav"
       shifting
       sceneAnimationEnabled
       activeColor={colors.primary}
@@ -20,10 +20,11 @@ const TabTraveler = () => {
       barStyle={{ backgroundColor: colors.whiteGray, borderTopWidth: 1, borderColor: colors.borderTabColor }}
     >
       <Tab.Screen
-        name="Página inicial"
-        component={HomeTraveler}
+        name="HomeTravelerNav"
+        component={HomeTravelerNav}
         options={{
           tabBarIcon: 'home',
+          tabBarLabel: 'Página inicial',
         }}
       />
       <Tab.Screen
@@ -34,10 +35,11 @@ const TabTraveler = () => {
         }}
       />
       <Tab.Screen
-        name="Minha conta"
+        name="MyAccountNav"
         component={MyAccountNav}
         options={{
           tabBarIcon: 'account-circle',
+          tabBarLabel: 'Minha conta',
         }}
       />
     </Tab.Navigator>

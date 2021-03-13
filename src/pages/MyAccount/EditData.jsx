@@ -119,9 +119,6 @@ const styles = StyleSheet.create({
   marginB10: {
     marginBottom: 10,
   },
-  textInput: {
-    backgroundColor: 'rgba(0,0,0,0.15)',
-  },
 })
 
 export default EditData

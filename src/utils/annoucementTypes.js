@@ -19,6 +19,10 @@ export const experiencesTypes = [
     value: '5',
     label: 'Passeio de barco',
   },
+  {
+    value: '6',
+    label: 'Outros',
+  },
 ]
 
 export const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']

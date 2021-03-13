@@ -14,6 +14,7 @@ import DaysLabel from './DaysLabel'
 import AnnouncementCard from './AnnouncementCard'
 import AnnouncementCardTraveler from './AnnouncementCardTraveler'
 import CircleFirstLetter from './CircleFirstLetter'
+import EmptySearch from './EmptySearch'
 
 export {
   Button,
@@ -32,4 +33,5 @@ export {
   AnnouncementCard,
   AnnouncementCardTraveler,
   CircleFirstLetter,
+  EmptySearch,
 }

@@ -14,7 +14,7 @@ const TabProvider = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Página inicial"
+      initialRouteName="HomeProvider"
       shifting
       sceneAnimationEnabled
       activeColor={colors.primary}
@@ -22,17 +22,19 @@ const TabProvider = () => {
       barStyle={{ backgroundColor: colors.whiteGray, borderTopWidth: 1, borderColor: colors.borderTabColor }}
     >
       <Tab.Screen
-        name="Página inicial"
+        name="HomeProvider"
         component={HomeProvider}
         options={{
           tabBarIcon: 'home',
+          tabBarLabel: 'Página inicial',
         }}
       />
       <Tab.Screen
-        name="Anunciar"
+        name="AnnouncementNav"
         component={AnnouncementNav}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome5 name="bullhorn" size={18} color={color} />,
+          tabBarLabel: 'Anunciar',
         }}
       />
       <Tab.Screen
@@ -43,10 +45,11 @@ const TabProvider = () => {
         }}
       />
       <Tab.Screen
-        name="Minha conta"
+        name="MyAccountNav"
         component={MyAccountNav}
         options={{
           tabBarIcon: 'account-circle',
+          tabBarLabel: 'Minha conta',
         }}
       />
     </Tab.Navigator>
