@@ -12,11 +12,11 @@ const Comments = ({ item }) => {
     <View style={[styles.container, { backgroundColor: colors.whiteGray }]}>
       <View style={styles.nameWrapper}>
         <CircleFirstLetter name={item.name} />
-        <Text style={[styles.name, styles.text12]}>
+        <Text style={[styles.name, styles.text]}>
           {item.name}
         </Text>
       </View>
-      <Text style={styles.text12}>
+      <Text style={styles.text}>
         {item.comment}
       </Text>
       <Rating
@@ -46,9 +46,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 3,
   },
-  text12: {
-    fontSize: RFValue(12),
-    opacity: 0.9,
+  text: {
+    fontSize: RFValue(14),
   },
   name: { marginLeft: 5 },
   stars: { marginTop: 5 },

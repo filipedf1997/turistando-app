@@ -9,7 +9,7 @@ const DaysButton = ({
 
   return (
     <TouchableOpacity
-      style={[styles.button, isActive ? { backgroundColor: colors.primary } : { borderWidth: 1 }]}
+      style={[styles.button, isActive ? { backgroundColor: disabled ? colors.black : colors.primary } : { borderWidth: 1 }]}
       onPress={action}
       disabled={disabled}
     >

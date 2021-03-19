@@ -1,9 +1,10 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { useTheme } from 'react-native-paper'
+import { useTheme, Text } from 'react-native-paper'
 import HomeTravelerNav from './HomeTraveler/HomeTravelerNav'
 import MyAccountNav from './MyAccountNav/MyAccountNav'
 import Chats from '../pages/Chats/Chats'
+import Favorites from '../pages/Favorites/Favorites'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -24,7 +25,7 @@ const TabTraveler = () => {
         component={HomeTravelerNav}
         options={{
           tabBarIcon: 'home',
-          tabBarLabel: 'Página inicial',
+          tabBarLabel: 'Início',
         }}
       />
       <Tab.Screen
@@ -35,11 +36,19 @@ const TabTraveler = () => {
         }}
       />
       <Tab.Screen
+        name="Favorites"
+        component={Favorites}
+        options={{
+          tabBarIcon: 'star',
+          tabBarLabel: 'Favoritos',
+        }}
+      />
+      <Tab.Screen
         name="MyAccountNav"
         component={MyAccountNav}
         options={{
           tabBarIcon: 'account-circle',
-          tabBarLabel: 'Minha conta',
+          tabBarLabel: 'Conta',
         }}
       />
     </Tab.Navigator>

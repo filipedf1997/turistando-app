@@ -7,7 +7,7 @@ import {
   Text, useTheme, TextInput as TextInputPaper,
 } from 'react-native-paper'
 import {
-  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink, Button, ModalFeedback,
+  Container, Content, TextInput, TextInputMask, TextLinkIcon, TextLink, Button, ModalFeedback, HeaderBarLogo,
 } from '../../components'
 import { useStores } from '../../hooks/useStores'
 import firebase from '../../firebase/firebaseConfig'
@@ -25,6 +25,7 @@ const MyAccount = observer(({ navigation }) => {
 
   return (
     <Container>
+      <HeaderBarLogo />
       <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
         <Text
           style={[styles.title, { color: colors.primary }]}
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    marginTop: 45,
+    marginTop: 20,
     marginBottom: 20,
   },
   subTitle: {

@@ -7,7 +7,7 @@ import {
   Text, useTheme,
 } from 'react-native-paper'
 import {
-  Container, Content,
+  Container, Content, HeaderBarLogo,
 } from '../../components'
 import ChatButton from './UI/ChatButton'
 
@@ -18,6 +18,7 @@ const Chats = ({ navigation }) => {
 
   return (
     <Container>
+      <HeaderBarLogo />
       <Content>
         <Text
           style={[styles.title, { color: colors.primary }]}
@@ -46,7 +47,7 @@ const Chats = ({ navigation }) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 25,
-    marginTop: 45,
+    marginTop: 20,
     marginBottom: 20,
   },
 })

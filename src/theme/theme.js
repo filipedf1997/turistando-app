@@ -11,7 +11,7 @@ const theme = {
     blue: '#2093FA',
     error: '#E11',
     black: '#414141',
-    white: '#F5F5F5',
+    white: '#F8F8F8',
     background: '#FFFFFF',
     whiteGray: '#ECECEC',
     lightText: '#414141',

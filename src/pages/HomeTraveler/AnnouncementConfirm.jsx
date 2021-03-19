@@ -28,24 +28,22 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
         />
         <Image defaultSource={require('../../images/imageDefault.png')} source={{ uri: store.announcement.photo }} style={styles.image} />
         <View style={styles.content}>
-          <View style={styles.titleWrapper}>
-            <Text style={[styles.title, { color: colors.primary }]}>
-              {store.announcement.title}
-            </Text>
-            <Text style={[styles.title, { color: colors.primary }]}>
-              {store.announcement.amountText}
-            </Text>
-          </View>
+          <Text style={[styles.title, { color: colors.primary, marginTop: 10 }]}>
+            {store.announcement.title}
+          </Text>
+          <Text style={[styles.title, { color: colors.primary }]}>
+            {store.announcement.amountText}
+          </Text>
 
           <View style={styles.rowWrapper}>
-            <Text style={styles.text12}>
+            <Text style={styles.text}>
               Avaliaçōes:
             </Text>
             <Entypo name="star" size={15} color={colors.orange} style={styles.icon} />
             <Text style={[styles.rating, { color: colors.orange }]}>
               {`${store.announcement.rating.length ? renderRating(store.announcement.rating) : 0}`}
             </Text>
-            <Text style={styles.text12}>
+            <Text style={styles.numberRating}>
               {`(${store.announcement.rating.length ? store.announcement.rating.length : 0})`}
             </Text>
           </View>
@@ -56,18 +54,19 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
 
           <View style={[styles.nameWrapper, styles.nameWrapperDescription]}>
             <CircleFirstLetter name={store.announcement.ownerName} />
-            <Text style={[styles.name, styles.text12]}>
+            <Text style={[styles.name, styles.text]}>
               {store.announcement.ownerName}
             </Text>
           </View>
-          <Text style={styles.ownerDescription}>
+          <Text style={[styles.text, { marginBottom: 10 }]}>
             {store.announcement.ownerDescription}
           </Text>
 
           <Button
             mode="outlined"
-            style={[styles.dateBtn, { borderColor: colors.primary, borderWidth: store.reservationDateText ? 2 : 1 }]}
-            icon={() => <MaterialCommunityIcons name="calendar-clock" size={24} color={colors.primary} />}
+            labelStyle={{ fontSize: 16, fontWeight: '500', color: colors.black }}
+            style={[styles.dateBtn, { borderColor: colors.black, borderWidth: 2 }]}
+            icon={() => <MaterialCommunityIcons name="calendar-clock" size={24} color={colors.black} />}
           >
             {store.reservationDateText ? `${moment(store.reservationDateText).format('ddd')}, ${moment(store.reservationDateText).format('DD/MM/YYYY')}` : 'Selecionar data'}
           </Button>
@@ -75,7 +74,7 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
           <Text style={[styles.important, { color: colors.orange }]}>Importante!</Text>
           <Text style={styles.text}>
             Antes de efetivar a reserva, recomendamos entrar em contato com o prestador de serviços para acertamento de detalhes (horário pretendido, quantidade de pessoas, etc).
-            A reserva só será confirmada quando o pagamento for efetivado.
+            A reserva só será efetivada quando o pagamento for confirmado.
           </Text>
         </View>
       </Content>
@@ -104,11 +103,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   title: {
-    fontSize: RFValue(20),
+    fontSize: RFValue(22),
     fontFamily: 'Roboto-Bold',
+    flex: 1,
   },
   text: {
     fontSize: RFValue(14),
+    lineHeight: RFValue(20),
   },
   ownerDescription: {
     fontSize: RFValue(12),
@@ -120,9 +121,9 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   nameWrapperDescription: { marginTop: 10 },
-  text12: {
-    fontSize: RFValue(12),
-    opacity: 0.8,
+  numberRating: {
+    fontSize: RFValue(14),
+    opacity: 0.6,
   },
   name: { marginLeft: 5 },
   dateBtn: {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   rating: {
-    fontSize: RFValue(12),
+    fontSize: RFValue(14),
     marginRight: 3,
   },
   icon: {

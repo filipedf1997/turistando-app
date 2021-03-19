@@ -26,7 +26,7 @@ const TabProvider = () => {
         component={HomeProvider}
         options={{
           tabBarIcon: 'home',
-          tabBarLabel: 'Página inicial',
+          tabBarLabel: 'Início',
         }}
       />
       <Tab.Screen
@@ -49,7 +49,7 @@ const TabProvider = () => {
         component={MyAccountNav}
         options={{
           tabBarIcon: 'account-circle',
-          tabBarLabel: 'Minha conta',
+          tabBarLabel: 'Conta',
         }}
       />
     </Tab.Navigator>

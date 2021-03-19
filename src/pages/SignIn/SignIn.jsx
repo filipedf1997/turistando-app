@@ -86,7 +86,6 @@ const Sign = observer(({ navigation }) => {
             label="Senha"
             value={store.password}
             onChangeText={(text) => { store.password = text }}
-            style={styles.marginB10}
             secureTextEntry={!store.passwordVisible}
             left={<TextInputPaper.Icon name="lock" color={colors.primary} size={25} />}
             right={(
@@ -99,7 +98,7 @@ const Sign = observer(({ navigation }) => {
             )}
           />
           <View
-            style={[styles.checkWrapper, styles.marginB10]}
+            style={styles.checkWrapper}
           >
             <Checkbox.Android
               status={store.remember ? 'checked' : 'unchecked'}
@@ -174,6 +173,8 @@ const styles = StyleSheet.create({
   checkWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: -6,
+    marginVertical: 5,
   },
   caption: {
     marginLeft: 10,

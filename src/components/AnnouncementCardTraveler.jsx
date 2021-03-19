@@ -50,9 +50,6 @@ const AnnouncementCardTraveler = ({ action, item }) => {
           </Text>
         </View>
 
-        <Text style={styles.description}>
-          {cutText(item.description, 40)}
-        </Text>
         <Text style={[styles.value, { color: colors.orange }]}>
           {item.amountText}
         </Text>
@@ -73,14 +70,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    elevation: 6,
+    elevation: 4,
     borderRadius: 5,
     padding: 15,
     marginBottom: 20,
   },
   image: {
-    width: s(120),
-    height: vs(135),
+    width: s(110),
+    height: vs(120),
     borderRadius: 2,
     alignSelf: 'center',
   },
@@ -90,22 +87,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(15),
     fontFamily: 'Roboto-Bold',
   },
-  description: {
-    fontSize: RFValue(12),
-  },
   text: {
-    fontSize: RFValue(11),
-    opacity: 0.8,
+    fontSize: RFValue(12),
+    opacity: 0.9,
   },
   name: {
     marginLeft: 5,
   },
   value: {
     marginBottom: 2,
-    fontSize: RFValue(14),
+    fontSize: RFValue(15),
     fontFamily: 'Roboto-Bold',
   },
   rowWrapper: {
@@ -114,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   rating: {
-    fontSize: RFValue(11),
+    fontSize: RFValue(12),
     marginRight: 3,
   },
   icon: {

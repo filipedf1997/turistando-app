@@ -15,15 +15,18 @@ const Announcement = observer(({ navigation }) => {
 
   useEffect(() => {
     store.getAnnouncements()
-    store.ownerName = userStore.user.name
-    store.ownerDescription = userStore.user.profile
   }, [])
 
+  useEffect(() => {
+    store.ownerName = userStore.user.name
+    store.ownerDescription = userStore.user.profile
+  }, [userStore.user.name, userStore.user.profile])
+
   return (
-    <Container style={styles.container}>
+    <Container style={[styles.container, { backgroundColor: colors.white }]}>
       <HeaderBarLogo />
       {store.isFetching ? <ActivityIndicator /> : (
-        <Content scrollViewProps={{ contentContainerStyle: [styles.content, { backgroundColor: colors.white }] }}>
+        <Content scrollViewProps={{ contentContainerStyle: { paddingVertical: 20 } }}>
           {store.announcements.map((item) => (
             <AnnouncementCard
               key={item.id}
@@ -31,6 +34,10 @@ const Announcement = observer(({ navigation }) => {
               action={() => {
                 store.announcement = item
                 navigation.navigate('EditAnnouncement', { store })
+              }}
+              secundaryAction={() => {
+                store.announcement = item
+                navigation.navigate('AnnouncementDetails', { store })
               }}
             />
           ))}
@@ -64,9 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-  },
-  content: {
-    paddingVertical: 20,
   },
   buttonWrapper: { padding: 20 },
 })

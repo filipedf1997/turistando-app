@@ -17,12 +17,12 @@ const PaymentData = observer(({ navigation, route }) => {
   async function handleSubmitPayment() {
     store.isFetching = true
     await new Promise((resolve) => setTimeout(() => resolve(true), 1000))
-    store.isFetching = false
     store.resetStore()
+    store.isFetching = false
     store.requestFeedback = {
       visible: true,
       error: false,
-      title: 'Reserva confirmada com sucesso!',
+      title: 'Reserva efetivada com sucesso!',
       message: 'Entre em contato com o prestador de serviço na aba de Agendamentos.',
       onPress: () => {
         store.requestFeedback.visible = false

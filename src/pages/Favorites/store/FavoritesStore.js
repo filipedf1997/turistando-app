@@ -2,17 +2,40 @@ import { makeAutoObservable } from 'mobx'
 import firebase, { db } from '../../../firebase/firebaseConfig'
 
 class FavoritesStore {
+  favorites = []
+  isFetching = true
+  announcement = {
+    title: '',
+    experiencesTypes: [],
+    description: '',
+    photo: null,
+    amount: null,
+    amountText: '',
+    dates: [],
+    ownerUID: '',
+    ownerName: '',
+    rating: [],
+    id: '',
+  }
+  requestFeedback = {
+    visible: false,
+    error: false,
+    message: '',
+    onPress: null,
+    btnName: '',
+    secundaryAction: null,
+    secundaryName: '',
+  }
   userUid = firebase.auth().currentUser.uid
 
   async checkFavorite(announcement) {
     try {
-      const querySnapshot = await db.collection('favorites')
+      const response = await db.collection('favorites')
         .where('travelerUid', '==', this.userUid)
         .where('announcementId', '==', announcement.id)
         .get()
-      return !querySnapshot.empty
+      return !response.empty
     } catch (error) {
-      console.log(error)
       return false
     }
   }
@@ -27,25 +50,49 @@ class FavoritesStore {
       await db.collection('favorites').add(favorite)
       return true
     } catch (error) {
-      console.log(error)
       return false
     }
   }
 
   async removeFavorite(announcement) {
     try {
-      const querySnapshot = await db.collection('favorites')
+      const response = await db.collection('favorites')
         .where('travelerUid', '==', this.userUid)
         .where('announcementId', '==', announcement.id)
         .get()
-      querySnapshot.forEach((doc) => {
+      response.forEach((doc) => {
         doc.ref.delete()
       })
 
       return true
     } catch (error) {
-      console.log(error)
       return false
+    }
+  }
+
+  async getFavorites() {
+    try {
+      let aux = []
+
+      const unsubscribe = db.collection('favorites')
+        .where('travelerUid', '==', this.userUid)
+        .onSnapshot((querySnapshot) => {
+          aux = []
+          this.isFetching = true
+          querySnapshot.forEach((doc) => {
+            aux.push(doc.data().announcement);
+          })
+          this.favorites = aux
+          this.isFetching = false
+        })
+
+      firebase.auth().onAuthStateChanged(async (currentUser) => {
+        if (!currentUser) {
+          unsubscribe()
+        }
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 

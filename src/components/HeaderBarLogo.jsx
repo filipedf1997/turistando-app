@@ -8,7 +8,7 @@ const HeaderBarLogo = ({ action, withFilter }) => {
   const { colors } = useTheme()
 
   return (
-    <View style={[styles.container, { borderColor: colors.borderTabColor, backgroundColor: colors.background }]}>
+    <View style={[styles.container, { borderColor: colors.whiteGray, backgroundColor: colors.background }]}>
       <TuristandoLogoBar />
       {withFilter && (
       <TouchableOpacity

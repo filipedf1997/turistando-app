@@ -1,48 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import { StyleSheet, View, Image } from 'react-native'
-import { Text, useTheme, Snackbar } from 'react-native-paper'
-import moment from 'moment'
+import { Text, useTheme } from 'react-native-paper'
 import { vs } from 'react-native-size-matters'
-import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize'
 import {
-  Container, Content, HeaderBarAnnoucementDetail, Button, CircleFirstLetter, DaysButton, Comments,
+  Container, Content, HeaderBarAnnoucementDetail, CircleFirstLetter, DaysButton, Comments,
 } from '../../components'
-import FavoritesStore from '../Favorites/store/FavoritesStore'
 
 const AnnouncementDetails = observer(({ navigation, route }) => {
   const store = route?.params?.store
-  const [favoritesStore] = useState(() => new FavoritesStore())
   const { colors } = useTheme()
-
-  function handleConfirmDate(date) {
-    const day = moment(date).format('ddd')
-    if (!store.announcement.dates.includes(day)) {
-      store.snackbarVisibility = true
-      store.reservationDateText = null
-      store.reservationDate = null
-      store.showDatePicker = false
-      return
-    }
-    store.reservationDateText = date
-    store.reservationDate = day
-    store.showDatePicker = false
-  }
 
   function renderRating(rating) {
     const total = rating.reduce((result, current) => result + current.stars, 0)
     return total / rating.length
   }
-
-  async function checkFavorite() {
-    store.isFavorite = await favoritesStore.checkFavorite(store.announcement)
-  }
-
-  useEffect(() => {
-    checkFavorite()
-  }, [])
 
   return (
     <Container>
@@ -52,15 +26,7 @@ const AnnouncementDetails = observer(({ navigation, route }) => {
             store.resetStore()
             navigation.goBack()
           }}
-          favoriteAction={async () => {
-            if (store.isFavorite) {
-              store.isFavorite = !(await favoritesStore.removeFavorite(store.announcement))
-            } else {
-              store.isFavorite = await favoritesStore.addFavorite(store.announcement)
-            }
-          }}
-          chatAction={() => navigation.navigate('Chat', { name: store.announcement.ownerName, isSupport: false })}
-          isFavorite={store.isFavorite}
+          onlyArrow
         />
         <Image defaultSource={require('../../images/imageDefault.png')} source={{ uri: store.announcement.photo }} style={styles.image} />
         <View style={styles.content}>
@@ -112,29 +78,6 @@ const AnnouncementDetails = observer(({ navigation, route }) => {
             ))}
           </View>
 
-          <Button
-            mode="outlined"
-            onPress={() => { store.showDatePicker = true }}
-            style={[styles.dateBtn, { borderColor: colors.primary, borderWidth: store.reservationDateText ? 2 : 1 }]}
-            icon={() => <MaterialCommunityIcons name="calendar-clock" size={24} color={colors.primary} />}
-          >
-            {store.reservationDateText ? `${moment(store.reservationDateText).format('ddd')}, ${moment(store.reservationDateText).format('DD/MM/YYYY')}` : 'Selecionar data'}
-          </Button>
-          <DateTimePickerModal
-            pickerContainerStyleIOS={{ backgroundColor: colors.background }}
-            cancelTextIOS="Cancelar"
-            confirmTextIOS="Confirmar"
-            customCancelButtonIOS={() => null}
-            modalStyleIOS={styles.modalStyle}
-            headerTextIOS="Selecione uma data"
-            locale="pt_BR"
-            isVisible={store.showDatePicker}
-            mode="date"
-            onConfirm={handleConfirmDate}
-            onCancel={() => { store.showDatePicker = false }}
-            minimumDate={new Date()}
-          />
-
           <View style={styles.rowWrapper}>
             <MaterialCommunityIcons name="comment-text-multiple" size={20} color={colors.black} />
             <Text style={styles.comments}>
@@ -150,31 +93,16 @@ const AnnouncementDetails = observer(({ navigation, route }) => {
             )}
         </View>
       </Content>
-
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('AnnouncementConfirm', { store })}
-        style={styles.btnReservation}
-        disabled={!store.reservationDate}
-      >
-        Reservar
-      </Button>
-
-      <Snackbar
-        visible={store.snackbarVisibility}
-        onDismiss={() => { store.snackbarVisibility = false }}
-        style={{ backgroundColor: colors.black }}
-        duration={3000}
-      >
-        Data inválida! Tente novamente.
-      </Snackbar>
     </Container>
   )
 })
 
 const styles = StyleSheet.create({
   container: { paddingHorizontal: 0 },
-  content: { paddingHorizontal: 20 },
+  content: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
   image: {
     width: '100%',
     height: vs(280),
@@ -208,13 +136,6 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   name: { marginLeft: 5 },
-  dateBtn: {
-    marginTop: 15,
-    marginBottom: 10,
-  },
-  modalStyle: {
-    justifyContent: 'center',
-  },
   rowWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -233,8 +154,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 7,
+    marginBottom: 10,
   },
-  btnReservation: { margin: 20 },
   comments: {
     marginLeft: 7,
     fontSize: RFValue(14),

@@ -11,7 +11,7 @@ import Button from './Button'
 import DaysLabel from './DaysLabel'
 import useCutText from '../hooks/useCutText'
 
-const AnnouncementCard = ({ action, item }) => {
+const AnnouncementCard = ({ action, item, secundaryAction }) => {
   const { colors } = useTheme()
   const cutText = useCutText()
 
@@ -23,31 +23,30 @@ const AnnouncementCard = ({ action, item }) => {
         <Text style={styles.title}>
           {cutText(item.title, 20)}
         </Text>
-        <Text style={styles.description}>
-          {cutText(item.description, 40)}
-        </Text>
+
         <Text style={styles.daysTitle}>
           Dias da semana:
         </Text>
         <DaysLabel dates={item.dates} />
 
-        <View style={styles.bottom}>
-          <View>
-            <Text style={[styles.value, { color: colors.orange }]}>
-              {item.amountText}
-            </Text>
-          </View>
-          <View style={styles.buttonWrapper}>
-            <Button
-              onPress={action}
-              contentStyle={{ height: vs(30), width: '100%' }}
-              labelStyle={{ fontSize: RFValue(12) }}
-              mode="contained"
-            >
-              Editar
-            </Button>
-          </View>
-        </View>
+        <Button
+          onPress={action}
+          contentStyle={{ height: vs(30), width: '100%' }}
+          labelStyle={{ fontSize: RFValue(12) }}
+          mode="contained"
+          style={{ marginBottom: 5 }}
+        >
+          Editar
+        </Button>
+        <Button
+          onPress={secundaryAction}
+          contentStyle={{ height: vs(30), width: '100%' }}
+          labelStyle={{ fontSize: RFValue(12) }}
+          mode="outlined"
+          style={{ borderColor: colors.primary, borderWidth: 1 }}
+        >
+          Ver detalhes
+        </Button>
       </View>
     </Surface>
   )
@@ -57,16 +56,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     width: '100%',
-    elevation: 6,
+    elevation: 4,
     borderRadius: 5,
     padding: 15,
-    alignItems: 'center',
     marginBottom: 20,
   },
   image: {
-    width: s(110),
-    height: vs(120),
+    width: s(120),
+    height: vs(130),
     borderRadius: 2,
+    alignSelf: 'center',
   },
   content: {
     justifyContent: 'space-between',
@@ -74,27 +73,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(15),
     fontFamily: 'Roboto-Bold',
-  },
-  description: {
-    fontSize: RFValue(12),
   },
   daysTitle: {
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
   },
-  bottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  value: {
-    marginRight: 10,
-    fontSize: RFValue(14),
-    fontFamily: 'Roboto-Bold',
-  },
-  buttonWrapper: { flex: 1 },
-
 })
 
 export default AnnouncementCard
