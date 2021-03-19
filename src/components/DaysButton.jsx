@@ -2,13 +2,16 @@ import React from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import { useTheme, Text } from 'react-native-paper'
 
-const DaysButton = ({ isActive, value, action }) => {
+const DaysButton = ({
+  isActive, value, action, disabled,
+}) => {
   const { colors } = useTheme()
 
   return (
     <TouchableOpacity
       style={[styles.button, isActive ? { backgroundColor: colors.primary } : { borderWidth: 1 }]}
       onPress={action}
+      disabled={disabled}
     >
       <Text style={{ fontSize: 12, color: isActive ? colors.white : colors.lightText }}>
         {value}

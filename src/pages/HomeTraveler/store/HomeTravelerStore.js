@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { db, storage } from '../../../firebase/firebaseConfig'
-import { experiencesTypes } from '../../../utils/annoucementTypes'
+import { experiencesTypes, days as daysTypes } from '../../../utils/annoucementTypes'
 
 class HomeTravelerStore {
   announcements = []
@@ -15,8 +15,7 @@ class HomeTravelerStore {
     dates: [],
     ownerUID: '',
     ownerName: '',
-    rating: null,
-    comments: [],
+    rating: [],
     id: '',
   }
   limit = 5
@@ -38,6 +37,26 @@ class HomeTravelerStore {
   filterDate = ''
   filtertMinAmount = null
   filtertMaxAmount = null
+  reservationDateText = null
+  reservationDate = ''
+  days = daysTypes
+  snackbarVisibility = false
+  isFavorite = false
+  paymentData = {
+    cardNumber: '',
+    cardDate: null,
+    cardCVV: '',
+    cardHolder: '',
+    cardHolderCpf: '',
+    isIndication: false,
+    indication: '',
+  }
+
+  get disable() {
+    return !this.paymentData.cardNumber || !this.paymentData.cardDate || !this.paymentData.cardCVV
+    || !this.paymentData.cardHolder || !this.paymentData.cardHolderCpf
+    || (this.paymentData.isIndication && !this.paymentData.indication)
+  }
 
   resetStore() {
     this.announcement = {
@@ -50,8 +69,8 @@ class HomeTravelerStore {
       dates: [],
       ownerUID: '',
       ownerName: '',
-      rating: null,
-      comments: [],
+      ownerDescription: '',
+      rating: [],
       id: '',
     }
     this.requestFeedback = {
@@ -62,6 +81,18 @@ class HomeTravelerStore {
       btnName: '',
       secundaryAction: null,
       secundaryName: '',
+    }
+    this.reservationDateText = null
+    this.reservationDate = ''
+    this.isFavorite = false
+    this.paymentData = {
+      cardNumber: '',
+      cardDate: null,
+      cardCVV: '',
+      cardHolder: '',
+      cardHolderCpf: '',
+      isIndication: false,
+      indication: '',
     }
   }
 

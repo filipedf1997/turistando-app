@@ -79,6 +79,7 @@ const EditAnnouncement = observer(({ navigation, route }) => {
       <HeaderBar onPress={() => {
         store.resetStore()
         navigation.goBack()
+        store.getAnnouncements()
       }}
       />
       <Content>
@@ -164,10 +165,10 @@ const EditAnnouncement = observer(({ navigation, route }) => {
           <View style={styles.daysContainer}>
             {store.days.map((value, index) => (
               <DaysButton
-                key={value}
+                key={index}
                 value={value}
-                isActive={store.announcement.dates.includes(index)}
-                action={() => store.handleDayChange(index)}
+                isActive={store.announcement.dates.includes(value)}
+                action={() => store.handleDayChange(value)}
               />
             ))}
           </View>

@@ -2,6 +2,9 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import TabTraveler from './TabTraveler'
 import Chat from '../pages/Chats/Chat'
+import AnnouncementDetails from '../pages/HomeTraveler/AnnouncementDetails'
+import AnnouncementConfirm from '../pages/HomeTraveler/AnnouncementConfirm'
+import PaymentData from '../pages/HomeTraveler/PaymentData'
 
 const TravelerNavigator = () => {
   const Stack = createStackNavigator()
@@ -18,6 +21,18 @@ const TravelerNavigator = () => {
       <Stack.Screen
         name="Chat"
         component={Chat}
+      />
+      <Stack.Screen
+        name="AnnouncementDetails"
+        component={AnnouncementDetails}
+      />
+      <Stack.Screen
+        name="AnnouncementConfirm"
+        component={AnnouncementConfirm}
+      />
+      <Stack.Screen
+        name="PaymentData"
+        component={PaymentData}
       />
     </Stack.Navigator>
   )

@@ -4,11 +4,11 @@ import {
 } from 'react-native-paper'
 import { StyleSheet, View, Keyboard } from 'react-native'
 import { AntDesign, MaterialIcons } from '@expo/vector-icons'
-import Button from './Button'
 import { RFValue } from 'react-native-responsive-fontsize'
+import Button from './Button'
 
 const ModalFeedback = ({
-  visible, message, btnName, dismissable, error, success, onPress, loading, secundaryAction, secundaryName, withoutIcon, ...props
+  title, visible, message, btnName, dismissable, error, success, onPress, loading, secundaryAction, secundaryName, withoutIcon, ...props
 }) => {
   const { colors } = useTheme()
 
@@ -30,18 +30,13 @@ const ModalFeedback = ({
           {error && <MaterialIcons name="cancel" size={82} color={colors.error} />}
         </View>
         )}
-        <Text style={styles.text}>{message}</Text>
-
-        {!!secundaryName && (
-        <Button
-          mode="text"
-          onPress={secundaryAction}
-          loading={loading}
-          style={styles.secundaryBtn}
-        >
-          {secundaryName}
-        </Button>
+        {title && (
+        <View>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.line} />
+        </View>
         )}
+        <Text style={styles.text}>{message}</Text>
 
         <Button
           mode="contained"
@@ -50,6 +45,17 @@ const ModalFeedback = ({
         >
           {btnName}
         </Button>
+
+        {!!secundaryName && (
+        <Button
+          mode="outlined"
+          onPress={secundaryAction}
+          loading={loading}
+          style={[styles.secundaryBtn, { borderColor: colors.primary, borderWidth: 1 }]}
+        >
+          {secundaryName}
+        </Button>
+        )}
       </Modal>
     </Portal>
   )
@@ -65,14 +71,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
   },
-  text: {
+  title: {
     textAlign: 'center',
     fontSize: RFValue(16),
+    marginHorizontal: 10,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: RFValue(15),
     marginBottom: 20,
     marginHorizontal: 10,
   },
   secundaryBtn: {
-    marginBottom: 8,
+    marginTop: 10,
+  },
+  line: {
+    borderTopWidth: 1,
+    opacity: 0.2,
+    marginVertical: 10,
+    marginHorizontal: 50,
   },
 })
 

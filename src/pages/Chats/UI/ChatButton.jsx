@@ -35,7 +35,7 @@ const ChatButton = ({
           </View>
         </View>
       </TouchableOpacity>
-      <View style={[styles.line, { borderColor: colors.primary }]} />
+      <View style={styles.line} />
     </View>
   )
 }
@@ -77,8 +77,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   line: {
+    borderTopWidth: 1,
+    opacity: 0.6,
     marginVertical: 15,
-    borderTopWidth: 0.7,
   },
 })
 

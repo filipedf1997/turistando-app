@@ -44,12 +44,15 @@ class MyAccountStore {
   async uptadeUserData() {
     try {
       this.isFetching = true
-      const { uid } = firebase.auth().currentUser
-      await db.collection('users').doc(uid).update({
+      const user = firebase.auth().currentUser
+      await db.collection('users').doc(user.uid).update({
         name: this.user.name,
         fone: this.user.fone,
         profile: this.user.profile,
       })
+      if (this.user.name) {
+        await user.updateProfile({ displayName: this.user.name })
+      }
 
       this.isFetching = false
       this.requestFeedback = {

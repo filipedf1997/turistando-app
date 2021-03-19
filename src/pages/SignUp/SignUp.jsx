@@ -136,7 +136,7 @@ const SignUp = observer(({ navigation }) => {
             onValueChange={() => { store.user.isProvider = !store.user.isProvider }}
           />
           <Caption style={styles.switchLabel}>
-            Selecione se for prestador de serviços
+            Você é um prestador de serviço?
           </Caption>
         </View>
         {store.user.isProvider

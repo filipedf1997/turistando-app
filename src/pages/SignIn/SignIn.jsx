@@ -44,11 +44,7 @@ const Sign = observer(({ navigation }) => {
           userStore.user = user.data()
 
           if (!currentUser.displayName) {
-            try {
-              await currentUser.updateProfile({ displayName: userStore.user.name })
-            } catch (error) {
-              //  Let the application continue
-            }
+            await currentUser.updateProfile({ displayName: userStore.user.name })
           }
 
           store.isFetching = false
@@ -120,7 +116,7 @@ const Sign = observer(({ navigation }) => {
           </View>
           <Button
             mode="contained"
-            style={styles.marginB10}
+            style={styles.marginB20}
             onPress={handleSubmit}
             disabled={store.disable}
             loading={store.isFetching}
@@ -171,6 +167,9 @@ const styles = StyleSheet.create({
   },
   marginB10: {
     marginBottom: 10,
+  },
+  marginB20: {
+    marginBottom: 25,
   },
   checkWrapper: {
     flexDirection: 'row',

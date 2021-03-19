@@ -99,8 +99,8 @@ const MyAccount = observer(({ navigation }) => {
         />
         <Button
           onPress={() => setModalVisibility(true)}
-          mode="text"
-          style={styles.button}
+          mode="outlined"
+          style={[styles.button, { borderColor: colors.primary, borderWidth: 1 }]}
         >
           Sair da conta
         </Button>

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   bottomLinksWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 7,
   },
 })
 

@@ -14,8 +14,8 @@ class AnnouncementStore {
     dates: [],
     ownerUID: '',
     ownerName: '',
-    rating: null,
-    comments: [],
+    ownerDescription: '',
+    rating: [],
     id: '',
   }
   experiencesTypes = xpTypes
@@ -31,6 +31,8 @@ class AnnouncementStore {
     secundaryAction: null,
     secundaryName: '',
   }
+  ownerName = ''
+  ownerDescription = ''
 
   get disable() {
     return !this.announcement.title || !this.announcement.experiencesTypes.length
@@ -49,8 +51,8 @@ class AnnouncementStore {
       dates: [],
       ownerUID: '',
       ownerName: '',
-      rating: null,
-      comments: [],
+      ownerDescription: '',
+      rating: [],
       id: '',
     }
     this.requestFeedback = {
@@ -79,7 +81,8 @@ class AnnouncementStore {
 
       const user = firebase.auth().currentUser
       this.announcement.ownerUID = user.uid
-      this.announcement.ownerName = user.displayName
+      this.announcement.ownerName = this.ownerName
+      this.announcement.ownerDescription = this.ownerDescription
       const { id } = await db.collection('announcements').add(this.announcement)
       await storage.child(`announcements/${id}`).put(this.photoBlob)
 
@@ -94,7 +97,8 @@ class AnnouncementStore {
   async editAnnouncement() {
     try {
       this.isFetching = true
-
+      this.announcement.ownerName = this.ownerName
+      this.announcement.ownerDescription = this.ownerDescription
       await db.collection('announcements').doc(this.announcement.id).update(this.announcement)
       if (!this.photoBlob) {
         const response = await fetch(this.announcement.photo)

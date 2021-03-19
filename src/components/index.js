@@ -15,6 +15,8 @@ import AnnouncementCard from './AnnouncementCard'
 import AnnouncementCardTraveler from './AnnouncementCardTraveler'
 import CircleFirstLetter from './CircleFirstLetter'
 import EmptySearch from './EmptySearch'
+import HeaderBarAnnoucementDetail from './HeaderBarAnnoucementDetail'
+import Comments from './Comments'
 
 export {
   Button,
@@ -34,4 +36,6 @@ export {
   AnnouncementCardTraveler,
   CircleFirstLetter,
   EmptySearch,
+  HeaderBarAnnoucementDetail,
+  Comments,
 }

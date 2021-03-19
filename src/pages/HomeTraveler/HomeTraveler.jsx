@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import { StyleSheet, FlatList } from 'react-native'
-import { ActivityIndicator } from 'react-native-paper'
+import { ActivityIndicator, useTheme } from 'react-native-paper'
 import {
   Container, HeaderBarLogo, AnnouncementCardTraveler, ModalFeedback, EmptySearch,
 } from '../../components'
@@ -9,6 +9,7 @@ import HomeTravelerStore from './store/HomeTravelerStore'
 
 const HomeTraveler = observer(({ navigation }) => {
   const [store] = useState(() => new HomeTravelerStore())
+  const { colors } = useTheme()
 
   function renderItem(item) {
     return (
@@ -17,7 +18,7 @@ const HomeTraveler = observer(({ navigation }) => {
         item={item}
         action={() => {
           store.announcement = item
-          // navigation.navigate('EditAnnouncement', { store })
+          navigation.navigate('AnnouncementDetails', { store })
         }}
       />
     )
@@ -28,7 +29,7 @@ const HomeTraveler = observer(({ navigation }) => {
   }, [])
 
   return (
-    <Container style={styles.container}>
+    <Container style={[styles.container, { backgroundColor: colors.white }]}>
       <HeaderBarLogo withFilter action={() => navigation.navigate('Filter', { store })} />
       {store.isFetching ? <ActivityIndicator style={styles.activityIndicator} /> : (
         store.announcements.length ? (
@@ -61,7 +62,6 @@ const HomeTraveler = observer(({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
   },
   flatList: {
     padding: 20,

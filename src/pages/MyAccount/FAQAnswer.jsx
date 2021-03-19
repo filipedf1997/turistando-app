@@ -6,6 +6,7 @@ import {
 import {
   Text, useTheme,
 } from 'react-native-paper'
+import { RFValue } from 'react-native-responsive-fontsize'
 import {
   Container, Content, HeaderBar,
 } from '../../components'
@@ -23,8 +24,8 @@ const FAQAnswer = observer(({ navigation, route }) => {
         >
           Perguntas Frequentes
         </Text>
-        <Text style={styles.question}>{store.selectedQuestion.question}</Text>
-        <Text style={styles.answer}>{`\t${store.selectedQuestion.answer}`}</Text>
+        <Text style={[styles.question, { color: colors.lightText }]}>{store.selectedQuestion.question}</Text>
+        <Text style={[styles.answer, { color: colors.lightText }]}>{`\t${store.selectedQuestion.answer}`}</Text>
       </Content>
 
     </Container>
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   },
   question: {
     fontFamily: 'Roboto-Bold',
+    fontSize: RFValue(16),
     marginBottom: 15,
   },
   answer: {

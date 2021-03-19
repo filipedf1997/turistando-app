@@ -1,13 +1,12 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { useTheme, Text } from 'react-native-paper'
 import { RFValue } from 'react-native-responsive-fontsize'
 
 const CircleFirstLetter = ({ name }) => {
   const { colors } = useTheme()
-
   return (
-    <View style={[styles.container, { backgroundColor: colors.blue }]}>
+    <View style={[styles.container, { backgroundColor: colors.blue, justifyContent: Platform.OS === 'ios' ? 'center' : null }]}>
       <Text style={[styles.text, { color: colors.white }]}>
         {name.slice(0, 1)}
       </Text>
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 15,
     height: 15,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   text: {

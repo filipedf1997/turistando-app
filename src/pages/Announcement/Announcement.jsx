@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import { StyleSheet, View } from 'react-native'
-import { ActivityIndicator } from 'react-native-paper'
+import { ActivityIndicator, useTheme } from 'react-native-paper'
 import {
   Container, Content, HeaderBarLogo, Button, AnnouncementCard, ModalFeedback,
 } from '../../components'
 import AnnouncementStore from './store/AnnouncementStore'
+import { useStores } from '../../hooks/useStores'
 
 const Announcement = observer(({ navigation }) => {
   const [store] = useState(() => new AnnouncementStore())
+  const { userStore } = useStores()
+  const { colors } = useTheme()
 
   useEffect(() => {
     store.getAnnouncements()
+    store.ownerName = userStore.user.name
+    store.ownerDescription = userStore.user.profile
   }, [])
 
   return (
     <Container style={styles.container}>
       <HeaderBarLogo />
       {store.isFetching ? <ActivityIndicator /> : (
-        <Content scrollViewProps={{ contentContainerStyle: styles.content }}>
+        <Content scrollViewProps={{ contentContainerStyle: [styles.content, { backgroundColor: colors.white }] }}>
           {store.announcements.map((item) => (
             <AnnouncementCard
               key={item.id}
@@ -59,7 +64,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#F2F2F2',
   },
   content: {
     paddingVertical: 20,
