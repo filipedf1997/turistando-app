@@ -15,20 +15,31 @@ const PaymentData = observer(({ navigation, route }) => {
   const { colors } = useTheme()
 
   async function handleSubmitPayment() {
-    store.isFetching = true
-    await new Promise((resolve) => setTimeout(() => resolve(true), 1000))
-    store.resetStore()
-    store.isFetching = false
-    store.requestFeedback = {
-      visible: true,
-      error: false,
-      title: 'Reserva efetivada com sucesso!',
-      message: 'Entre em contato com o prestador de serviço na aba de Agendamentos.',
-      onPress: () => {
-        store.requestFeedback.visible = false
-        navigation.navigate('HomeTraveler')
-      },
-      btnName: 'Ok',
+    const result = store.buyExperience()
+    if (result) {
+      store.resetStore()
+      store.requestFeedback = {
+        visible: true,
+        error: false,
+        title: 'Reserva efetivada com sucesso!',
+        message: 'Entre em contato com o prestador de serviço na aba de Agendamentos.',
+        onPress: () => {
+          store.requestFeedback.visible = false
+          navigation.navigate('HomeTraveler')
+        },
+        btnName: 'Ok',
+      }
+    } else {
+      store.requestFeedback = {
+        visible: true,
+        error: true,
+        title: 'Não foi possível efetivar a reserva',
+        message: 'A reserva não foi efetivado, mas não se preocupe, nenhum valor será cobrado. Tente novamente!',
+        onPress: () => {
+          store.requestFeedback.visible = false
+        },
+        btnName: 'Ok',
+      }
     }
   }
 
@@ -142,7 +153,6 @@ const styles = StyleSheet.create({
   },
   rowWrapper: {
     flexDirection: 'row',
-    // alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 4,
   },

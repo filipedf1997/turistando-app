@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
-import { db, storage } from '../../../firebase/firebaseConfig'
+import firebase, { db, storage } from '../../../firebase/firebaseConfig'
 import { experiencesTypes, days as daysTypes } from '../../../utils/annoucementTypes'
+import buyStatus from '../../../utils/buyStatus'
 
 class HomeTravelerStore {
   announcements = []
@@ -223,6 +224,29 @@ class HomeTravelerStore {
     this.filterDate = null
     this.filtertMinAmount = null
     this.filtertMaxAmount = null
+  }
+
+  async buyExperience() {
+    try {
+      this.isFetching = true
+      const user = firebase.auth().currentUser
+      const buy = {
+        travelerUid: user.uid,
+        travelerName: user.displayName,
+        ownerUID: this.announcement.ownerUID,
+        announcement: this.announcement,
+        announcementId: this.announcement.id,
+        purchaseDate: new Date(),
+        reservationDate: this.reservationDateText,
+        status: buyStatus.PENDING,
+      }
+      await db.collection('reservations').add(buy)
+      this.isFetching = false
+      return true
+    } catch (error) {
+      this.isFetching = false
+      return false
+    }
   }
 
   constructor() {

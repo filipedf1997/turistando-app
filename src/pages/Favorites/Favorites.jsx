@@ -17,7 +17,6 @@ const Favorites = observer(({ navigation }) => {
   function renderItem(item) {
     return (
       <AnnouncementCardTraveler
-        key={item.id}
         item={item}
         action={() => {
           store.announcement = item

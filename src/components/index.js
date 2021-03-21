@@ -17,6 +17,8 @@ import CircleFirstLetter from './CircleFirstLetter'
 import EmptySearch from './EmptySearch'
 import HeaderBarAnnoucementDetail from './HeaderBarAnnoucementDetail'
 import Comments from './Comments'
+import ReservationsProviderCard from './ReservationsProviderCard'
+import ReservationsTravelerCard from './ReservationsTravelerCard'
 
 export {
   Button,
@@ -38,4 +40,6 @@ export {
   EmptySearch,
   HeaderBarAnnoucementDetail,
   Comments,
+  ReservationsProviderCard,
+  ReservationsTravelerCard,
 }

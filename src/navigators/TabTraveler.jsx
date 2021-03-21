@@ -1,10 +1,11 @@
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
-import { useTheme, Text } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import HomeTravelerNav from './HomeTraveler/HomeTravelerNav'
 import MyAccountNav from './MyAccountNav/MyAccountNav'
 import Chats from '../pages/Chats/Chats'
 import Favorites from '../pages/Favorites/Favorites'
+import Reservations from '../pages/Reservations/Reservations'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -33,6 +34,14 @@ const TabTraveler = () => {
         component={Chats}
         options={{
           tabBarIcon: 'message-text',
+        }}
+      />
+      <Tab.Screen
+        name="Reservations"
+        component={Reservations}
+        options={{
+          tabBarIcon: 'calendar-clock',
+          tabBarLabel: 'Reservas',
         }}
       />
       <Tab.Screen

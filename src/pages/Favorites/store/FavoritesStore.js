@@ -78,9 +78,8 @@ class FavoritesStore {
         .where('travelerUid', '==', this.userUid)
         .onSnapshot((querySnapshot) => {
           aux = []
-          this.isFetching = true
           querySnapshot.forEach((doc) => {
-            aux.push(doc.data().announcement);
+            aux.push(doc.data().announcement)
           })
           this.favorites = aux
           this.isFetching = false
