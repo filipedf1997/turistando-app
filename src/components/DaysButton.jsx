@@ -21,11 +21,6 @@ const DaysButton = ({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-  },
   button: {
     alignItems: 'center',
     paddingVertical: 10,

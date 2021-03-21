@@ -19,6 +19,7 @@ import HeaderBarAnnoucementDetail from './HeaderBarAnnoucementDetail'
 import Comments from './Comments'
 import ReservationsProviderCard from './ReservationsProviderCard'
 import ReservationsTravelerCard from './ReservationsTravelerCard'
+import TuristandoRating from './TuristandoRating'
 
 export {
   Button,
@@ -42,4 +43,5 @@ export {
   Comments,
   ReservationsProviderCard,
   ReservationsTravelerCard,
+  TuristandoRating,
 }

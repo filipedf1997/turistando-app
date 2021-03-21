@@ -16,9 +16,11 @@ const Comments = ({ item }) => {
           {item.name}
         </Text>
       </View>
+      {!!item.comment && (
       <Text style={styles.text}>
         {item.comment}
       </Text>
+      )}
       <Rating
         type="custom"
         ratingCount={5}

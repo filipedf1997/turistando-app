@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, RefreshControl } from 'react-native'
 import { ActivityIndicator, useTheme } from 'react-native-paper'
 import {
   Container, Content, HeaderBarLogo, Button, AnnouncementCard, ModalFeedback,
@@ -26,7 +26,16 @@ const Announcement = observer(({ navigation }) => {
     <Container style={[styles.container, { backgroundColor: colors.white }]}>
       <HeaderBarLogo />
       {store.isFetching ? <ActivityIndicator /> : (
-        <Content scrollViewProps={{ contentContainerStyle: { paddingVertical: 20 } }}>
+        <Content
+          scrollViewProps={{ contentContainerStyle: { paddingVertical: 20 } }}
+          refreshControl={(
+            <RefreshControl
+              refreshing={store.isRefreshing}
+              onRefresh={() => store.getAnnouncements(true)}
+              colors={[colors.primary]}
+            />
+          )}
+        >
           {store.announcements.map((item) => (
             <AnnouncementCard
               key={item.id}

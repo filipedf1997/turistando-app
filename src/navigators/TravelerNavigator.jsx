@@ -5,6 +5,7 @@ import Chat from '../pages/Chats/Chat'
 import AnnouncementDetails from '../pages/HomeTraveler/AnnouncementDetails'
 import AnnouncementConfirm from '../pages/HomeTraveler/AnnouncementConfirm'
 import PaymentData from '../pages/HomeTraveler/PaymentData'
+import EvaluationScreen from '../pages/Reservations/EvaluationScreen'
 
 const TravelerNavigator = () => {
   const Stack = createStackNavigator()
@@ -33,6 +34,10 @@ const TravelerNavigator = () => {
       <Stack.Screen
         name="PaymentData"
         component={PaymentData}
+      />
+      <Stack.Screen
+        name="EvaluationScreen"
+        component={EvaluationScreen}
       />
     </Stack.Navigator>
   )

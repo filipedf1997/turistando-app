@@ -39,6 +39,8 @@ const HomeTraveler = observer(({ navigation }) => {
             keyExtractor={(item) => item.id}
             onEndReached={() => store.getMoreAnnouncements()}
             onEndReachedThreshold={0.3}
+            refreshing={store.isFetching}
+            onRefresh={() => store.getAnnouncements(true)}
             contentContainerStyle={styles.flatList}
           />
         )

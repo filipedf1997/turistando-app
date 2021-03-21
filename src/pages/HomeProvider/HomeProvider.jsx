@@ -65,7 +65,7 @@ const HomeProvider = observer(({ navigation }) => {
                 onRefresh={() => store.getReservations(true)}
                 colors={[colors.primary]}
               />
-        )}
+            )}
           >
             { store.reservations.length
               ? store.reservations.map((item, index) => (

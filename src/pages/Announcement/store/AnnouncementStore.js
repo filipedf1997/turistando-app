@@ -22,6 +22,7 @@ class AnnouncementStore {
   days = daysTypes
   photoBlob = ''
   isFetching = false
+  isRefreshing = false
   requestFeedback = {
     visible: false,
     error: false,
@@ -114,10 +115,11 @@ class AnnouncementStore {
     }
   }
 
-  async getAnnouncements() {
+  async getAnnouncements(isRefreshing) {
     try {
       const aux = []
-      this.isFetching = true
+      if (isRefreshing) this.isRefreshing = true
+      else this.isFetching = true
 
       const { uid } = firebase.auth().currentUser
       const response = await db.collection('announcements').where('ownerUID', '==', uid).get()
@@ -131,7 +133,10 @@ class AnnouncementStore {
       await this.getPhotos()
 
       this.isFetching = false
+      this.isRefreshing = false
     } catch (error) {
+      this.isFetching = false
+      this.isRefreshing = false
       this.requestFeedback = {
         visible: true,
         error: true,

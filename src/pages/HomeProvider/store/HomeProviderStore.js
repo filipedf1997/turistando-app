@@ -27,7 +27,7 @@ class HomeProviderStore {
       const user = firebase.auth().currentUser
       const response = await db.collection('reservations')
         .where('ownerUID', '==', user.uid)
-        .where('status', '!=', buyStatus.REFUSED)
+        .where('status', 'in', [buyStatus.PENDING, buyStatus.CONFIRMED])
         .get()
       response.forEach((doc) => {
         const reservation = doc.data()

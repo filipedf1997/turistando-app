@@ -23,7 +23,10 @@ const Reservations = observer(({ navigation }) => {
           navigation.navigate('AnnouncementDetails', { store: storeDetails })
         }}
         contact={() => navigation.navigate('Chat', { name: item.announcement.ownerName, isSupport: false })}
-        rate={() => null}
+        rate={() => {
+          store.announcement = item.announcement
+          navigation.navigate('EvaluationScreen', { store })
+        }}
       />
     )
   }

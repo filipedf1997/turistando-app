@@ -38,12 +38,12 @@ const ReservationsProviderCard = ({
           <View style={styles.nameWrapper}>
             <CircleFirstLetter name={item.travelerName} />
             <Text style={[styles.name, styles.title]}>
-              {cutText(item.travelerName, 20)}
+              {cutText(item.travelerName, 17)}
             </Text>
           </View>
 
           <Text style={styles.text}>
-            {cutText(item.announcement.title, 20)}
+            {cutText(item.announcement.title, 17)}
           </Text>
 
           <View style={styles.rowWrapper}>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: RFValue(15),
+    fontSize: RFValue(14),
     fontFamily: 'Roboto-Bold',
   },
   text: {

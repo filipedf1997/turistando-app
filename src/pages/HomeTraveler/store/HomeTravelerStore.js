@@ -6,6 +6,7 @@ import buyStatus from '../../../utils/buyStatus'
 class HomeTravelerStore {
   announcements = []
   isFetching = false
+  isRefreshing = false
   announcement = {
     title: '',
     experiencesTypes: [],
@@ -19,7 +20,7 @@ class HomeTravelerStore {
     rating: [],
     id: '',
   }
-  limit = 5
+  limit = 10
   lastVisible = null
   requestFeedback = {
     visible: false,
@@ -97,10 +98,12 @@ class HomeTravelerStore {
     }
   }
 
-  async getAnnouncements() {
+  async getAnnouncements(isRefreshing) {
     try {
       const aux = []
-      this.isFetching = true
+      this.noMoreAnnouncements = false
+      if (isRefreshing) this.isRefreshing = true
+      else this.isFetching = true
 
       let announcementsRef = db.collection('announcements')
       if (this.filterExperiences.length) announcementsRef = announcementsRef.where('experiencesTypes', 'array-contains-any', this.filterExperiences)
@@ -124,7 +127,10 @@ class HomeTravelerStore {
       await this.getPhotos()
 
       this.isFetching = false
+      this.isRefreshing = false
     } catch (error) {
+      this.isFetching = false
+      this.isRefreshing = false
       this.requestFeedback = {
         visible: true,
         error: true,
@@ -235,7 +241,6 @@ class HomeTravelerStore {
         travelerName: user.displayName,
         ownerUID: this.announcement.ownerUID,
         announcement: this.announcement,
-        announcementId: this.announcement.id,
         purchaseDate: new Date(),
         reservationDate: this.reservationDateText,
         status: buyStatus.PENDING,
