@@ -17,7 +17,7 @@ const theme = {
     lightText: '#414141',
     green: '#109D5A',
     darkGreen: '#037740',
-    borderTabColor: '#7B7B7B',
+    gray: '#7B7B7B',
     blueChat: '#A3DEF5',
     whiteChat: '#F2F7FF',
   },

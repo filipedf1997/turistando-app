@@ -19,6 +19,12 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
     return total / rating.length
   }
 
+  function renderDate() {
+    return store.reservationDateText.seconds
+      ? `${moment.unix(store.reservationDateText.seconds).format('ddd')}, ${moment.unix(store.reservationDateText.seconds).format('DD/MM/YYYY')}`
+      : `${moment(store.reservationDateText).format('ddd')}, ${moment(store.reservationDateText).format('DD/MM/YYYY')}`
+  }
+
   return (
     <Container>
       <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
@@ -68,7 +74,7 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
             style={[styles.dateBtn, { borderColor: colors.black, borderWidth: 2 }]}
             icon={() => <MaterialCommunityIcons name="calendar-clock" size={24} color={colors.black} />}
           >
-            {store.reservationDateText ? `${moment(store.reservationDateText).format('ddd')}, ${moment(store.reservationDateText).format('DD/MM/YYYY')}` : 'Selecionar data'}
+            {store.reservationDateText ? renderDate() : 'Selecionar data'}
           </Button>
 
           <Text style={[styles.important, { color: colors.orange }]}>Importante!</Text>
@@ -79,6 +85,7 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
         </View>
       </Content>
 
+      {!store.isCardDetail && (
       <Button
         mode="contained"
         onPress={() => navigation.navigate('PaymentData', { store })}
@@ -86,6 +93,7 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
       >
         Prosseguir com a reserva
       </Button>
+      )}
     </Container>
   )
 })

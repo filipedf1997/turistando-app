@@ -14,7 +14,7 @@ import CircleFirstLetter from './CircleFirstLetter'
 import StatusLabel from './StatusLabel'
 
 const ReservationsTravelerCard = ({
-  seeDetails, contact, rate, item,
+  seeDetails, seeDetailsRefused, contact, rate, item,
 }) => {
   const { colors } = useTheme()
   const cutText = useCutText()
@@ -22,8 +22,8 @@ const ReservationsTravelerCard = ({
   function actionType(type) {
     const actionData = {
       PENDING: { action: seeDetails, text: 'Ver detalhes' },
-      CONFIRMED: { action: contact, text: 'Contatar' },
-      REFUSED: { action: seeDetails, text: 'Ver detalhes' },
+      CONFIRMED: { action: contact, text: 'Entrar em contato' },
+      REFUSED: { action: seeDetailsRefused, text: 'Ver detalhes' },
       CONCLUDED: { action: rate, text: 'Avaliar' },
     }
     return actionData[type] ?? actionData.PENDING
@@ -66,7 +66,7 @@ const ReservationsTravelerCard = ({
           <Button
             onPress={actionType(item.status).action}
             contentStyle={{ height: vs(40), width: '100%' }}
-            labelStyle={{ fontSize: RFValue(14) }}
+            labelStyle={{ fontSize: RFValue(12), fontFamily: 'Roboto-Bold' }}
             mode="outlined"
             style={{ borderColor: colors.primary, borderWidth: 1 }}
           >

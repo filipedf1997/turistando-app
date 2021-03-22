@@ -22,7 +22,7 @@ const PaymentData = observer(({ navigation, route }) => {
         visible: true,
         error: false,
         title: 'Reserva efetivada com sucesso!',
-        message: 'Entre em contato com o prestador de serviço na aba de Agendamentos.',
+        message: 'Entre em contato com o prestador de serviço na aba de Reservas.',
         onPress: () => {
           store.requestFeedback.visible = false
           navigation.navigate('HomeTraveler')

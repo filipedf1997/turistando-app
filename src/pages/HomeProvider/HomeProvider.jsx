@@ -52,7 +52,7 @@ const HomeProvider = observer(({ navigation }) => {
   }, [])
 
   return (
-    <Container style={[styles.container, { backgroundColor: colors.white }]}>
+    <Container style={[styles.container, { backgroundColor: colors.background }]}>
       <HeaderBarLogo />
       {store.isFetching
         ? <ActivityIndicator style={styles.activityIndicator} />

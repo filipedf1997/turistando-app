@@ -18,8 +18,8 @@ const TabTraveler = () => {
       shifting
       sceneAnimationEnabled
       activeColor={colors.primary}
-      inactiveColor={colors.borderTabColor}
-      barStyle={{ backgroundColor: colors.whiteGray, borderTopWidth: 1, borderColor: colors.borderTabColor }}
+      inactiveColor={colors.gray}
+      barStyle={{ backgroundColor: colors.background, borderTopWidth: 1, borderColor: colors.whiteGray }}
     >
       <Tab.Screen
         name="HomeTravelerNav"

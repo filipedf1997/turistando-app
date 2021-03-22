@@ -29,7 +29,7 @@ const HomeTraveler = observer(({ navigation }) => {
   }, [])
 
   return (
-    <Container style={[styles.container, { backgroundColor: colors.white }]}>
+    <Container style={[styles.container, { backgroundColor: colors.background }]}>
       <HeaderBarLogo withFilter action={() => navigation.navigate('Filter', { store })} />
       {store.isFetching ? <ActivityIndicator style={styles.activityIndicator} /> : (
         store.announcements.length ? (

@@ -14,14 +14,31 @@ const Reservations = observer(({ navigation }) => {
   const [storeDetails] = useState(() => new HomeTravelerStore())
   const { colors } = useTheme()
 
+  function seeDetailsDefault(item) {
+    storeDetails.announcement = item.announcement
+    storeDetails.reservationDateText = item.reservationDate
+    storeDetails.isCardDetail = true
+    navigation.navigate('AnnouncementConfirm', { store: storeDetails })
+  }
+
   function renderItem(item) {
     return (
       <ReservationsTravelerCard
         item={item}
-        seeDetails={() => {
-          storeDetails.announcement = item.announcement
-          navigation.navigate('AnnouncementDetails', { store: storeDetails })
+        seeDetailsRefused={() => {
+          store.requestFeedback = {
+            visible: true,
+            error: true,
+            title: 'Pedimos desculpas, sua reserva foi cancelada.',
+            message: 'Não se preocupe! O valor será estornado dentro de alguns dias. Qualquer dúvida, entre em contato conosco pelo Chat.',
+            onPress: () => {
+              store.requestFeedback = false
+              seeDetailsDefault(item)
+            },
+            btnName: 'Ok',
+          }
         }}
+        seeDetails={() => seeDetailsDefault(item)}
         contact={() => navigation.navigate('Chat', { name: item.announcement.ownerName, isSupport: false })}
         rate={() => {
           store.announcement = item.announcement
@@ -36,7 +53,7 @@ const Reservations = observer(({ navigation }) => {
   }, [])
 
   return (
-    <Container style={[styles.container, { backgroundColor: colors.white }]}>
+    <Container style={[styles.container, { backgroundColor: colors.background }]}>
       <HeaderBarLogo />
       {store.isFetching
         ? <ActivityIndicator style={styles.activityIndicator} />
@@ -58,6 +75,7 @@ const Reservations = observer(({ navigation }) => {
 
       <ModalFeedback
         visible={store.requestFeedback.visible}
+        title={store.requestFeedback.title}
         message={store.requestFeedback.message}
         btnName={store.requestFeedback.btnName}
         error={store.requestFeedback.error}

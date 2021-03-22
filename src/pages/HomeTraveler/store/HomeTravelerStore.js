@@ -53,6 +53,7 @@ class HomeTravelerStore {
     isIndication: false,
     indication: '',
   }
+  isCardDetail = false
 
   get disable() {
     return !this.paymentData.cardNumber || !this.paymentData.cardDate || !this.paymentData.cardCVV
@@ -96,6 +97,7 @@ class HomeTravelerStore {
       isIndication: false,
       indication: '',
     }
+    this.isCardDetail = false
   }
 
   async getAnnouncements(isRefreshing) {

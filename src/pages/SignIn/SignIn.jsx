@@ -92,7 +92,7 @@ const Sign = observer(({ navigation }) => {
               <TextInputPaper.Icon
                 onPress={() => { store.passwordVisible = !store.passwordVisible }}
                 name={store.passwordVisible ? 'eye' : 'eye-off'}
-                color={colors.borderTabColor}
+                color={colors.gray}
                 size={23}
               />
             )}

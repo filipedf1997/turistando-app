@@ -31,7 +31,7 @@ const Favorites = observer(({ navigation }) => {
   }, [])
 
   return (
-    <Container style={[styles.container, { backgroundColor: colors.white }]}>
+    <Container style={[styles.container, { backgroundColor: colors.background }]}>
       <HeaderBarLogo />
       {storeFavotires.isFetching ? <ActivityIndicator style={styles.activityIndicator} /> : (
         storeFavotires.favorites.length ? (

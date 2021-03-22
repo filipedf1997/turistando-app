@@ -25,7 +25,7 @@ const Comments = ({ item }) => {
         type="custom"
         ratingCount={5}
         ratingColor={colors.orange}
-        ratingBackgroundColor={colors.borderTabColor}
+        ratingBackgroundColor={colors.gray}
         tintColor={colors.whiteGray}
         readonly
         imageSize={15}

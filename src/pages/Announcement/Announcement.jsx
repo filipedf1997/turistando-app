@@ -23,7 +23,7 @@ const Announcement = observer(({ navigation }) => {
   }, [userStore.user.name, userStore.user.profile])
 
   return (
-    <Container style={[styles.container, { backgroundColor: colors.white }]}>
+    <Container style={[styles.container, { backgroundColor: colors.background }]}>
       <HeaderBarLogo />
       {store.isFetching ? <ActivityIndicator /> : (
         <Content
