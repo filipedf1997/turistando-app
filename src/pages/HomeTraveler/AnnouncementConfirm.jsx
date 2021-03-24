@@ -14,11 +14,6 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
   const store = route?.params?.store
   const { colors } = useTheme()
 
-  function renderRating(rating) {
-    const total = rating.reduce((result, current) => result + current.stars, 0)
-    return total / rating.length
-  }
-
   function renderDate() {
     return store.reservationDateText.seconds
       ? `${moment.unix(store.reservationDateText.seconds).format('ddd')}, ${moment.unix(store.reservationDateText.seconds).format('DD/MM/YYYY')}`
@@ -47,10 +42,10 @@ const AnnouncementConfirm = observer(({ navigation, route }) => {
             </Text>
             <Entypo name="star" size={15} color={colors.orange} style={styles.icon} />
             <Text style={[styles.rating, { color: colors.orange }]}>
-              {`${store.announcement.rating.length ? renderRating(store.announcement.rating) : 0}`}
+              {store.announcement.averageRatings}
             </Text>
             <Text style={styles.numberRating}>
-              {`(${store.announcement.rating.length ? store.announcement.rating.length : 0})`}
+              {`(${store.announcement.rating.length})`}
             </Text>
           </View>
 

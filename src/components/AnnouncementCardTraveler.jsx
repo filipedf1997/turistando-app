@@ -16,11 +16,6 @@ const AnnouncementCardTraveler = ({ action, item }) => {
   const { colors } = useTheme()
   const cutText = useCutText()
 
-  function renderRating(rating) {
-    const total = rating.reduce((result, current) => result + current.stars, 0)
-    return total / rating.length
-  }
-
   return (
     <Surface style={styles.container}>
       <Image defaultSource={require('../images/imageDefault.png')} source={{ uri: item.photo }} style={styles.image} />
@@ -36,10 +31,10 @@ const AnnouncementCardTraveler = ({ action, item }) => {
           </Text>
           <Entypo name="star" size={12} color={colors.orange} style={styles.icon} />
           <Text style={[styles.rating, { color: colors.orange }]}>
-            {`${item.rating.length ? renderRating(item.rating) : 0}`}
+            {item.averageRatings}
           </Text>
           <Text style={styles.text}>
-            {`(${item.rating.length ? item.rating.length : 0})`}
+            {`(${item.rating.length})`}
           </Text>
         </View>
 

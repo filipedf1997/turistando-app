@@ -26,3 +26,22 @@ export const experiencesTypes = [
 ]
 
 export const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+
+export const sortData = [
+  {
+    value: 1,
+    label: 'Avaliaçōes',
+  },
+  {
+    value: 2,
+    label: 'Ordem Alfabética',
+  },
+  {
+    value: 3,
+    label: 'Menor preço',
+  },
+  {
+    value: 4,
+    label: 'Maior preço',
+  },
+]

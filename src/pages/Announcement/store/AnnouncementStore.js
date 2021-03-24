@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import firebase, { db, storage } from '../../../firebase/firebaseConfig'
 import { experiencesTypes as xpTypes, days as daysTypes } from '../../../utils/annoucementTypes'
+import buyStatus from '../../../utils/buyStatus'
 
 class AnnouncementStore {
   announcements = []
@@ -16,21 +17,25 @@ class AnnouncementStore {
     ownerName: '',
     ownerDescription: '',
     rating: [],
+    averageRatings: 0,
     id: '',
   }
   experiencesTypes = xpTypes
   days = daysTypes
   photoBlob = ''
   isFetching = false
+  isFetchingDelete = false
   isRefreshing = false
   requestFeedback = {
     visible: false,
+    visibleEdit: false,
     error: false,
     message: '',
     onPress: null,
     btnName: '',
     secundaryAction: null,
     secundaryName: '',
+    withoutIcon: false,
   }
   ownerName = ''
   ownerDescription = ''
@@ -54,16 +59,19 @@ class AnnouncementStore {
       ownerName: '',
       ownerDescription: '',
       rating: [],
+      averageRatings: 0,
       id: '',
     }
     this.requestFeedback = {
       visible: false,
+      visibleEdit: false,
       error: false,
       message: '',
       onPress: null,
       btnName: '',
       secundaryAction: null,
       secundaryName: '',
+      withoutIcon: false,
     }
     this.photoBlob = ''
   }
@@ -108,10 +116,10 @@ class AnnouncementStore {
       await storage.child(`announcements/${this.announcement.id}`).put(this.photoBlob)
 
       this.isFetching = false
-      return true
+      return { status: true, message: 'Anúncio editado com sucesso!' }
     } catch (error) {
       this.isFetching = false
-      return false
+      return { status: false, message: 'Não foi possível editar o anúncio. Tente novamente.' }
     }
   }
 
@@ -165,6 +173,29 @@ class AnnouncementStore {
       }))
     } catch (error) {
       throw new Error()
+    }
+  }
+
+  async deleteAnnouncement() {
+    try {
+      this.isFetchingDelete = true
+
+      const announcementReservations = await db.collection('reservations')
+        .where('announcementId', '==', this.announcement.id)
+        .where('status', 'in', [buyStatus.PENDING, buyStatus.CONFIRMED])
+        .get()
+      if (!announcementReservations.empty) {
+        this.isFetchingDelete = false
+        return { status: false, message: 'Não foi possível excluir o anúncio, pois existem reservas pendentes ou confirmadas para o mesmo.' }
+      }
+
+      await db.collection('announcements').doc(this.announcement.id).delete()
+
+      this.isFetchingDelete = false
+      return { status: true, message: 'Anúncio excluído com sucesso!' }
+    } catch (error) {
+      this.isFetchingDelete = false
+      return { status: false, message: 'Não foi possível excluir o anúncio. Tente novamente.' }
     }
   }
 

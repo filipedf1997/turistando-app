@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import { StyleSheet, View } from 'react-native'
 import { Text, useTheme } from 'react-native-paper'
-import { MultiselectDropdown } from 'sharingan-rn-modal-dropdown'
+import { MultiselectDropdown, Dropdown } from 'sharingan-rn-modal-dropdown'
 import moment from 'moment'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import {
@@ -29,6 +29,21 @@ const Filter = observer(({ navigation, route }) => {
         <View style={styles.line} />
 
         <Text style={[styles.subTitle, { color: colors.primary }]}>
+          Ordenar busca
+        </Text>
+        <View>
+          <Dropdown
+            label=""
+            mode="outlined"
+            data={store.sortData}
+            value={store.chosenSort}
+            disableSort
+            onChange={(value) => { store.chosenSort = value }}
+          />
+        </View>
+        <View style={styles.line} />
+
+        <Text style={[styles.subTitle, { color: colors.primary }]}>
           Tipo de Experiência
         </Text>
         <Text style={styles.text}>
@@ -45,6 +60,7 @@ const Filter = observer(({ navigation, route }) => {
             chipStyle={{ backgroundColor: colors.blue, borderWidth: 0 }}
             value={store.filterExperiences}
             onChange={(list) => { store.filterExperiences = list }}
+            disableSort
           />
         </View>
         <View style={styles.line} />
@@ -53,7 +69,8 @@ const Filter = observer(({ navigation, route }) => {
           Data pretendida
         </Text>
         <Button
-          mode="contained"
+          mode="outlined"
+          style={{ borderColor: colors.primary, borderWidth: 1 }}
           onPress={() => { store.showDatePicker = true }}
         >
           {store.filterDateText ? `${moment(store.filterDateText).format('ddd')}, ${moment(store.filterDateText).format('DD/MM/YYYY')}` : 'Selecionar data'}

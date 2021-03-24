@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import firebase, { db, storage } from '../../../firebase/firebaseConfig'
-import { experiencesTypes, days as daysTypes } from '../../../utils/annoucementTypes'
+import { experiencesTypes, days as daysTypes, sortData } from '../../../utils/annoucementTypes'
 import buyStatus from '../../../utils/buyStatus'
 
 class HomeTravelerStore {
@@ -18,6 +18,7 @@ class HomeTravelerStore {
     ownerUID: '',
     ownerName: '',
     rating: [],
+    averageRatings: 0,
     id: '',
   }
   limit = 10
@@ -54,6 +55,8 @@ class HomeTravelerStore {
     indication: '',
   }
   isCardDetail = false
+  sortData = sortData
+  chosenSort = 1
 
   get disable() {
     return !this.paymentData.cardNumber || !this.paymentData.cardDate || !this.paymentData.cardCVV
@@ -74,6 +77,7 @@ class HomeTravelerStore {
       ownerName: '',
       ownerDescription: '',
       rating: [],
+      averageRatings: 0,
       id: '',
     }
     this.requestFeedback = {
@@ -107,11 +111,17 @@ class HomeTravelerStore {
       if (isRefreshing) this.isRefreshing = true
       else this.isFetching = true
 
+      const orderBy = this.orderByData()
+
       let announcementsRef = db.collection('announcements')
       if (this.filterExperiences.length) announcementsRef = announcementsRef.where('experiencesTypes', 'array-contains-any', this.filterExperiences)
       if (this.filtertMinAmount) announcementsRef = announcementsRef.where('amount', '>=', this.filtertMinAmount)
       if (this.filtertMaxAmount) announcementsRef = announcementsRef.where('amount', '<=', this.filtertMaxAmount)
-      const response = await announcementsRef.limit(this.limit).get()
+      if (this.chosenSort !== 3 && this.chosenSort !== 4 && (this.filtertMinAmount || this.filtertMaxAmount)) announcementsRef = announcementsRef.orderBy('amount')
+      const response = await announcementsRef
+        .orderBy(orderBy.field, orderBy.direction)
+        .limit(this.limit)
+        .get()
       response.forEach((item) => {
         const announcement = item.data()
         announcement.id = item.id
@@ -169,12 +179,15 @@ class HomeTravelerStore {
       }
 
       let moreAnnouncements = []
+      const orderBy = this.orderByData()
 
       let announcementsRef = db.collection('announcements')
       if (this.filterExperiences.length) announcementsRef = announcementsRef.where('experiencesTypes', 'array-contains-any', this.filterExperiences)
       if (this.filtertMinAmount) announcementsRef = announcementsRef.where('amount', '>=', this.filtertMinAmount)
       if (this.filtertMaxAmount) announcementsRef = announcementsRef.where('amount', '<=', this.filtertMaxAmount)
+      if (this.chosenSort !== 3 && this.chosenSort !== 4 && (this.filtertMinAmount || this.filtertMaxAmount)) announcementsRef = announcementsRef.orderBy('amount')
       const response = await announcementsRef
+        .orderBy(orderBy.field, orderBy.direction)
         .startAfter(this.lastVisible)
         .limit(this.limit)
         .get()
@@ -232,6 +245,7 @@ class HomeTravelerStore {
     this.filterDate = null
     this.filtertMinAmount = null
     this.filtertMaxAmount = null
+    this.chosenOrder = 1
   }
 
   async buyExperience() {
@@ -243,6 +257,7 @@ class HomeTravelerStore {
         travelerName: user.displayName,
         ownerUID: this.announcement.ownerUID,
         announcement: this.announcement,
+        announcementId: this.announcement.id,
         purchaseDate: new Date(),
         reservationDate: this.reservationDateText,
         status: buyStatus.PENDING,
@@ -254,6 +269,16 @@ class HomeTravelerStore {
       this.isFetching = false
       return false
     }
+  }
+
+  orderByData() {
+    const sortTypes = {
+      1: { field: 'averageRatings', direction: 'desc' },
+      2: { field: 'title', direction: 'asc' },
+      3: { field: 'amount', direction: 'asc' },
+      4: { field: 'amount', direction: 'desc' },
+    }
+    return sortTypes[this.chosenSort]
   }
 
   constructor() {

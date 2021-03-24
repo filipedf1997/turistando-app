@@ -15,6 +15,7 @@ class FavoritesStore {
     ownerUID: '',
     ownerName: '',
     rating: [],
+    averageRatings: 0,
     id: '',
   }
   requestFeedback = {

@@ -45,29 +45,43 @@ const EditAnnouncement = observer(({ navigation, route }) => {
     }
   }
 
-  async function handleSubmit() {
-    const result = await store.editAnnouncement()
-    if (result) {
-      store.requestFeedback = {
-        visible: true,
-        error: false,
-        message: 'Anúncio editado com sucesso!',
-        onPress: () => {
-          store.resetStore()
-          navigation.goBack()
-          store.getAnnouncements()
-        },
-        btnName: 'Ok',
-      }
-    } else {
-      store.requestFeedback = {
-        visible: true,
-        error: true,
-        message: 'Não foi possível editar o anúncio. Tente novamente.',
-        onPress: () => { store.requestFeedback.visible = false },
-        btnName: 'Ok',
-      }
+  async function handleSubmit(deleteAnnouncement) {
+    const result = deleteAnnouncement
+      ? await store.deleteAnnouncement()
+      : await store.editAnnouncement()
+
+    store.requestFeedback = {
+      visibleEdit: true,
+      error: !result.status,
+      message: result.message,
+      onPress: () => {
+        store.requestFeedback.visibleEdit = false
+        if (result.status) goBackActions()
+      },
+      btnName: 'Ok',
     }
+  }
+
+  function showWarningModal() {
+    store.requestFeedback = {
+      visibleEdit: true,
+      error: false,
+      message: 'Você deseja excluir este anúncio?',
+      onPress: () => {
+        store.requestFeedback.visibleEdit = false
+        handleSubmit(true)
+      },
+      btnName: 'Sim',
+      secundaryAction: () => { store.requestFeedback.visibleEdit = false },
+      secundaryName: 'Voltar',
+      withoutIcon: true,
+    }
+  }
+
+  function goBackActions() {
+    store.resetStore()
+    navigation.goBack()
+    store.getAnnouncements()
   }
 
   useEffect(() => {
@@ -76,12 +90,7 @@ const EditAnnouncement = observer(({ navigation, route }) => {
 
   return (
     <Container>
-      <HeaderBar onPress={() => {
-        store.resetStore()
-        navigation.goBack()
-        store.getAnnouncements()
-      }}
-      />
+      <HeaderBar onPress={goBackActions} />
       <Content>
         <Text
           style={[styles.title, { color: colors.primary }]}
@@ -177,21 +186,33 @@ const EditAnnouncement = observer(({ navigation, route }) => {
         <Button
           mode="contained"
           onPress={handleSubmit}
-          style={styles.wrapper}
+          style={styles.marginB10}
           disabled={store.disable}
           loading={store.isFetching}
         >
           Confirmar alteraçōes
         </Button>
+
+        <Button
+          mode="outlined"
+          onPress={showWarningModal}
+          style={[styles.wrapper, { borderColor: colors.primary, borderWidth: 1 }]}
+          loading={store.isFetchingDelete}
+        >
+          Excluir anúncio
+        </Button>
       </Content>
 
       <ModalFeedback
-        visible={store.requestFeedback.visible}
+        visible={store.requestFeedback.visibleEdit}
         message={store.requestFeedback.message}
         btnName={store.requestFeedback.btnName}
         error={store.requestFeedback.error}
         success={!store.requestFeedback.error}
         onPress={store.requestFeedback.onPress}
+        secundaryAction={store.requestFeedback.secundaryAction}
+        secundaryName={store.requestFeedback.secundaryName}
+        withoutIcon={store.requestFeedback.withoutIcon}
       />
     </Container>
   )
@@ -228,6 +249,7 @@ const styles = StyleSheet.create({
     height: 160,
     borderRadius: 5,
   },
+  marginB10: { marginBottom: 10 },
 })
 
 export default EditAnnouncement

@@ -1,9 +1,10 @@
 import { makeAutoObservable } from 'mobx'
 import firebase, { db } from '../../../firebase/firebaseConfig'
+import buyStatus from '../../../utils/buyStatus'
 
 class ReservationsStore {
   reservations = []
-  announcement= {}
+  announcement = {}
   isFetching = true
   requestFeedback = {
     visible: false,
@@ -49,6 +50,7 @@ class ReservationsStore {
   async getReservations() {
     try {
       const user = firebase.auth().currentUser
+      let reservation = {}
       let aux = []
 
       const unsubscribe = db.collection('reservations')
@@ -56,7 +58,9 @@ class ReservationsStore {
         .onSnapshot((querySnapshot) => {
           aux = []
           querySnapshot.forEach((doc) => {
-            aux.push(doc.data())
+            reservation = doc.data()
+            this.setConcludedStatus(reservation, doc.id)
+            aux.push(reservation)
           })
           this.reservations = aux
           this.isFetching = false
@@ -92,17 +96,40 @@ class ReservationsStore {
     try {
       this.isFetching = true
 
+      const updatedAnnouncement = (await db.collection('announcements').doc(this.announcement.id).get()).data()
       this.rating.name = firebase.auth().currentUser.displayName
+      updatedAnnouncement.rating.push(this.rating)
+
+      const totalStars = updatedAnnouncement.rating.reduce((acc, cur) => acc + cur.stars, 0)
+      const averageRatings = (totalStars / updatedAnnouncement.rating.length).toFixed(1)
 
       await db.collection('announcements').doc(this.announcement.id)
         .update({
-          rating: firebase.firestore.FieldValue.arrayUnion(this.rating),
+          rating: updatedAnnouncement.rating,
+          averageRatings,
         })
 
       this.isFetching = false
       return true
     } catch (error) {
       this.isFetching = false
+      return false
+    }
+  }
+
+  async setConcludedStatus(reservationData, reservationId) {
+    try {
+      const currentDate = new Date().getTime() / 1000
+      const reservationConcluded = reservationData.status === buyStatus.CONFIRMED && currentDate > reservationData.reservationDate.seconds
+      if (!reservationConcluded) return false
+
+      await db.collection('reservations').doc(reservationId)
+        .update({
+          status: buyStatus.CONCLUDED,
+        })
+
+      return true
+    } catch (error) {
       return false
     }
   }
