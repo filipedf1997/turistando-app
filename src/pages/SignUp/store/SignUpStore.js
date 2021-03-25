@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import firebase, { db } from '../../../firebase/firebaseConfig'
+import getCep from '../../../service/cepApi'
+import { banks, accountTypes } from '../../../utils/bankData'
 
 class SignUpStore {
   user = {
@@ -10,6 +12,23 @@ class SignUpStore {
     confirmPassword: '',
     isProvider: false,
     profile: null,
+    address: {
+      cep: '',
+      cepNumber: 0,
+      street: '',
+      number: '',
+      district: '',
+      city: '',
+      uf: '',
+    },
+    financialData: {
+      bank: '',
+      holderAccount: '',
+      accountType: '',
+      account: '',
+      agency: '',
+      cpf: '',
+    },
   }
   isFetching = false
   requestFeedback = {
@@ -20,11 +39,25 @@ class SignUpStore {
     btnName: '',
   }
   passwordVisible = false
+  errorCep = false
+  banks = banks
+  accountTypes = accountTypes
 
   get disable() {
     return !this.user.name || !this.user.email || !this.user.password || !this.user.fone
       || !this.user.confirmPassword || (this.user.isProvider && !this.user.profile) || this.errorEmail
       || this.errorPassword || this.errorConfirmPassword
+  }
+
+  get financialDataDisable() {
+    return !this.user.financialData.bank || !this.user.financialData.holderAccount || !this.user.financialData.accountType
+      || !this.user.financialData.account || !this.user.financialData.agency || !this.user.financialData.cpf
+  }
+
+  get adressDisable() {
+    return !this.user.address.cep || !this.user.address.street || !this.user.address.district
+      || !this.user.address.city || !this.user.address.uf || !this.user.address.number
+      || this.errorCep
   }
 
   get errorEmail() {
@@ -74,6 +107,19 @@ class SignUpStore {
     }
 
     return errorsList[code] ?? errorsList.default
+  }
+
+  async getAddress() {
+    const response = await getCep(this.user.address.cep)
+    if (!response.erro) {
+      this.user.address.street = response.logradouro
+      this.user.address.district = response.bairro
+      this.user.address.city = response.localidade
+      this.user.address.uf = response.uf
+      this.errorCep = false
+    } else {
+      this.errorCep = true
+    }
   }
 
   constructor() {

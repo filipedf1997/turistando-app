@@ -41,7 +41,7 @@ const EditData = observer(({ navigation }) => {
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Editar Dados
+          Alterar Dados
         </Text>
         <TextInput
           label="Nome"

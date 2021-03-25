@@ -5,6 +5,8 @@ import EditData from '../../pages/MyAccount/EditData'
 import ChangePassword from '../../pages/MyAccount/ChangePassword'
 import FAQ from '../../pages/MyAccount/FAQ'
 import FAQAnswer from '../../pages/MyAccount/FAQAnswer'
+import EditAddress from '../../pages/MyAccount/EditAddress'
+import EditFinancialData from '../../pages/MyAccount/EditFinancialData'
 
 const MyAccountNav = () => {
   const Stack = createStackNavigator()
@@ -25,6 +27,14 @@ const MyAccountNav = () => {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
+      />
+      <Stack.Screen
+        name="EditAddress"
+        component={EditAddress}
+      />
+      <Stack.Screen
+        name="EditFinancialData"
+        component={EditFinancialData}
       />
       <Stack.Screen
         name="FAQ"

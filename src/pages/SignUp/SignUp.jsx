@@ -152,12 +152,15 @@ const SignUp = observer(({ navigation }) => {
           )}
         <Button
           mode="contained"
-          onPress={handleSubmit}
-          style={styles.marginB10}
+          onPress={() => {
+            if (store.user.isProvider) navigation.navigate('Address', { store })
+            else handleSubmit()
+          }}
+          style={styles.marginB20}
           disabled={store.disable}
           loading={store.isFetching}
         >
-          Registrar
+          {store.user.isProvider ? 'Prosseguir' : 'Registrar'}
         </Button>
       </Content>
 

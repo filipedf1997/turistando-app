@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet,
+  StyleSheet, View,
 } from 'react-native'
 import {
   Text, useTheme, TextInput as TextInputPaper,
@@ -88,6 +88,61 @@ const MyAccount = observer(({ navigation }) => {
           text="Clique aqui para alterar a sua senha"
           action={() => navigation.navigate('ChangePassword')}
         />
+        {userStore.user.isProvider && (
+        <View>
+          <Text
+            style={[styles.title, { color: colors.primary }]}
+          >
+            Endereço
+          </Text>
+          <TextInput
+            disabled
+            value={userStore.user.address.street}
+            style={styles.marginB10}
+          />
+          <View style={[styles.marginB10, styles.rowWrapper]}>
+            <TextInput
+              disabled
+              value={userStore.user.address.number}
+              style={styles.rowInput}
+            />
+            <TextInput
+              disabled
+              value={userStore.user.address.cep}
+              style={styles.rowInput}
+            />
+          </View>
+          <TextLinkIcon
+            text="Clique aqui para alterar o seu endereço"
+            action={() => navigation.navigate('EditAddress')}
+          />
+
+          <Text
+            style={[styles.title, { color: colors.primary }]}
+          >
+            Dados bancários
+          </Text>
+          <TextInput
+            disabled
+            value={userStore.user.financialData.bank}
+            style={styles.marginB10}
+          />
+          <TextInput
+            disabled
+            value={userStore.user.financialData.account}
+            style={styles.marginB10}
+          />
+          <TextInput
+            disabled
+            value={userStore.user.financialData.agency}
+            style={styles.marginB10}
+          />
+          <TextLinkIcon
+            text="Clique aqui para alterar seus dados bancários"
+            action={() => navigation.navigate('EditFinancialData')}
+          />
+        </View>
+        )}
         <Text
           style={[styles.subTitle, { color: colors.primary }]}
         >
@@ -127,7 +182,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 25,
@@ -147,6 +202,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.25)',
   },
   button: { marginTop: 20 },
+  rowWrapper: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  rowInput: { width: '45%' },
 })
 
 export default MyAccount
