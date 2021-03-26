@@ -44,7 +44,7 @@ class HomeProviderStore {
       this.requestFeedback = {
         visible: true,
         error: true,
-        message: 'Não foi possível recuperar as reservas.Tente novamente.',
+        message: 'Não foi possível recuperar as reservas. Tente novamente.',
         onPress: () => {
           this.requestFeedback.visible = false
           this.requestFeedback.secundaryName = ''

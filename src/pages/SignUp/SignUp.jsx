@@ -75,7 +75,7 @@ const SignUp = observer(({ navigation }) => {
           left={<TextInputPaper.Icon name="account" color={colors.primary} size={25} />}
         />
         <TextInput
-          label="Email"
+          label="E-mail"
           value={store.user.email}
           onChangeText={(text) => { store.user.email = text }}
           style={styles.marginB10}

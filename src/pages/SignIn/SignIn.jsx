@@ -75,7 +75,7 @@ const Sign = observer(({ navigation }) => {
         </View>
         <View>
           <TextInput
-            label="Email"
+            label="E-mail"
             value={store.email}
             onChangeText={(text) => { store.email = text }}
             style={styles.marginB10}

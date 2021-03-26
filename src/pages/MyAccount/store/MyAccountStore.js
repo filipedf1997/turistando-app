@@ -111,7 +111,7 @@ class MyAccountStore {
       this.requestFeedback = {
         visible: true,
         error: false,
-        message: 'Sua senha foi alterada com sucesso!',
+        message: 'Senha alterada com sucesso!',
         onPress: () => { this.requestFeedback.visible = false },
         btnName: 'Ok',
       }

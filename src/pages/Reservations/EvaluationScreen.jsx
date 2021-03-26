@@ -17,7 +17,7 @@ const EvaluationScreen = observer(({ navigation, route }) => {
       store.requestFeedback = {
         visible: true,
         error: false,
-        message: 'Avaliação concluída! Obrigado.',
+        message: 'Avaliação enviada com sucesso!',
         onPress: () => {
           store.requestFeedback.visible = false
           navigation.goBack()

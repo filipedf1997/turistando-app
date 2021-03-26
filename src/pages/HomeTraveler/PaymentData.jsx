@@ -34,7 +34,7 @@ const PaymentData = observer(({ navigation, route }) => {
         visible: true,
         error: true,
         title: 'Não foi possível efetivar a reserva',
-        message: 'A reserva não foi efetivado, mas não se preocupe, nenhum valor será cobrado. Tente novamente!',
+        message: 'A reserva não foi efetivada, mas não se preocupe, nenhum valor será cobrado. Tente novamente!',
         onPress: () => {
           store.requestFeedback.visible = false
         },

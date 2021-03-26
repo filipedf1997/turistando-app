@@ -25,7 +25,11 @@ const FAQAnswer = observer(({ navigation, route }) => {
           Perguntas Frequentes
         </Text>
         <Text style={[styles.question, { color: colors.lightText }]}>{store.selectedQuestion.question}</Text>
-        <Text style={[styles.answer, { color: colors.lightText }]}>{`\t${store.selectedQuestion.answer}`}</Text>
+        {store.selectedQuestion.answer.map((text, index) => (
+          <Text key={index} style={[styles.answer, { color: colors.lightText }]}>
+            {`      ${text}`}
+          </Text>
+        ))}
       </Content>
 
     </Container>
@@ -47,6 +51,7 @@ const styles = StyleSheet.create({
   },
   answer: {
     lineHeight: 19,
+    marginBottom: 10,
   },
 })
 

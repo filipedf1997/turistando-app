@@ -41,7 +41,7 @@ const EditAnnouncement = observer(({ navigation, route }) => {
   async function getPermission() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
     if (status !== 'granted') {
-      Alert.alert(null, 'Precisamos da permissão para efitivar o cadastro do anúncio')
+      Alert.alert(null, 'Precisamos de sua permissão para acessar as imagens do seu dispositivo.')
     }
   }
 

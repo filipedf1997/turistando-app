@@ -45,7 +45,7 @@ const ForgotPassword = ({ navigation }) => {
         visible: true,
         error: true,
         success: false,
-        message: 'Houve um erro ao enviar o e-mail. Tente novamente.',
+        message: 'Não foi possível enviar o e-mail. Tente novamente.',
         onPress: () => setModalData({}),
         btnName: 'Ok',
       })
@@ -70,7 +70,7 @@ const ForgotPassword = ({ navigation }) => {
           Informe seu e-mail para receber uma mensagem com as instruções para mudança de senha.
         </Text>
         <TextInput
-          label="Email"
+          label="E-mail"
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.marginV15}
