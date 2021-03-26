@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet, View, Dimensions, Platform, Keyboard,
 } from 'react-native'
 import {
   Text, Caption, useTheme, Switch, TextInput as TextInputPaper,
@@ -37,10 +37,31 @@ const SignUp = observer(({ navigation }) => {
     }
   }
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = false },
+    )
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { store.wavesVisibility = true },
+    )
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
   return (
     <Container>
       <HeaderBar onPress={() => navigation.navigate('SignIn')} />
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <Content
+        keyboardAvoidingProps={{
+          behavior: (Platform.OS === 'ios') ? 'padding' : null,
+        }}
+      >
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -153,8 +174,10 @@ const SignUp = observer(({ navigation }) => {
         <Button
           mode="contained"
           onPress={() => {
-            if (store.user.isProvider) navigation.navigate('Address', { store })
-            else handleSubmit()
+            if (store.user.isProvider) {
+              store.wavesVisibility = true
+              navigation.navigate('Address', { store })
+            } else handleSubmit()
           }}
           style={styles.marginB20}
           disabled={store.disable}
@@ -173,6 +196,7 @@ const SignUp = observer(({ navigation }) => {
         onPress={store.requestFeedback.onPress}
       />
 
+      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -180,14 +204,12 @@ const SignUp = observer(({ navigation }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 })
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-  },
   title: {
     fontSize: 25,
     marginVertical: 20,

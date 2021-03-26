@@ -94,6 +94,7 @@ const EditAddress = observer(({ navigation }) => {
             value={store.user.address.number}
             onChangeText={(text) => { store.user.address.number = text }}
             style={[styles.shortInput, styles.marginB10]}
+            keyboardType="numeric"
           />
         </View>
         <View style={[styles.marginB10, styles.rowWrapper]}>

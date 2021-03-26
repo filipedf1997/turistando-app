@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet, View, Dimensions, Keyboard, Platform,
 } from 'react-native'
 import {
   Text, useTheme,
@@ -37,10 +37,35 @@ const FinancialData = observer(({ navigation, route }) => {
     }
   }
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = false },
+    )
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { store.wavesVisibility = true },
+    )
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
   return (
     <Container>
-      <HeaderBar onPress={navigation.goBack} />
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <HeaderBar onPress={() => {
+        store.wavesVisibility = true
+        navigation.goBack()
+      }}
+      />
+      <Content
+        keyboardAvoidingProps={{
+          behavior: (Platform.OS === 'ios') ? 'padding' : null,
+        }}
+      >
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -97,7 +122,7 @@ const FinancialData = observer(({ navigation, route }) => {
           maxLength={14}
           value={store.user.financialData.cpf}
           onChangeText={(text) => { store.user.financialData.cpf = text }}
-          style={styles.marginB10}
+          style={styles.marginB20}
         />
         <Button
           mode="contained"
@@ -119,6 +144,7 @@ const FinancialData = observer(({ navigation, route }) => {
         onPress={store.requestFeedback.onPress}
       />
 
+      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -126,6 +152,7 @@ const FinancialData = observer(({ navigation, route }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 })

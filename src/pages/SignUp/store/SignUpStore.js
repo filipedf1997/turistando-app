@@ -42,6 +42,7 @@ class SignUpStore {
   errorCep = false
   banks = banks
   accountTypes = accountTypes
+  wavesVisibility = true
 
   get disable() {
     return !this.user.name || !this.user.email || !this.user.password || !this.user.fone

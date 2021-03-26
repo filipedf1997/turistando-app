@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import {
-  StyleSheet, View, Dimensions,
+  StyleSheet, View, Dimensions, Platform, Keyboard,
 } from 'react-native'
 import {
   Text, useTheme, Caption,
@@ -27,10 +27,35 @@ const Address = observer(({ navigation, route }) => {
     }
   }, [store.user.address.cepNumber])
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => { if (Platform.OS === 'android') store.wavesVisibility = false },
+    )
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => { store.wavesVisibility = true },
+    )
+
+    return () => {
+      keyboardDidShowListener.remove()
+      keyboardDidHideListener.remove()
+    }
+  }, [])
+
   return (
     <Container>
-      <HeaderBar onPress={navigation.goBack} />
-      <Content scrollViewProps={{ contentContainerStyle: styles.container }}>
+      <HeaderBar onPress={() => {
+        store.wavesVisibility = true
+        navigation.goBack()
+      }}
+      />
+      <Content
+        keyboardAvoidingProps={{
+          behavior: (Platform.OS === 'ios') ? 'padding' : null,
+        }}
+      >
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
@@ -78,6 +103,7 @@ const Address = observer(({ navigation, route }) => {
             value={store.user.address.number}
             onChangeText={(text) => { store.user.address.number = text }}
             style={[styles.shortInput, styles.marginB10]}
+            keyboardType="numeric"
           />
         </View>
         <View style={[styles.marginB10, styles.rowWrapper]}>
@@ -96,7 +122,10 @@ const Address = observer(({ navigation, route }) => {
         </View>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('FinancialData', { store })}
+          onPress={() => {
+            store.wavesVisibility = true
+            navigation.navigate('FinancialData', { store })
+          }}
           style={styles.marginB20}
           disabled={store.adressDisable}
         >
@@ -104,6 +133,7 @@ const Address = observer(({ navigation, route }) => {
         </Button>
       </Content>
 
+      {store.wavesVisibility && (
       <View style={{ width: windowWidth, aspectRatio }}>
         <Waves
           width="100%"
@@ -111,6 +141,7 @@ const Address = observer(({ navigation, route }) => {
           viewBox={`0 0 ${originalWidth} ${originalHeight}`}
         />
       </View>
+      )}
     </Container>
   )
 })
