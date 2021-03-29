@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#F8F8F8"
-      }
+      },
+      "package": "com.filipe12345.turistandobeberibe"
     },
     "web": {
       "favicon": "./assets/favicon.png"
