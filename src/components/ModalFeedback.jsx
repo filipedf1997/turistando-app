@@ -30,7 +30,7 @@ const ModalFeedback = ({
           {error && <MaterialIcons name="cancel" size={82} color={colors.error} />}
         </View>
         )}
-        {title && (
+        {!!title && (
         <View>
           <Text style={styles.title}>{title}</Text>
           <View style={styles.line} />

@@ -37,7 +37,7 @@ const HomeProvider = observer(({ navigation }) => {
       visible: true,
       error: false,
       title: status === buyStatus.CONFIRMED
-        ? 'Reserva confirmada com sucesso! '
+        ? 'Reserva confirmada com sucesso!'
         : '',
       message: status === buyStatus.CONFIRMED
         ? 'Entre em contato com o cliente para acertar os detalhes.'
