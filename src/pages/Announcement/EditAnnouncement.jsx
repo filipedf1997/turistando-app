@@ -46,9 +46,9 @@ const EditAnnouncement = observer(({ navigation, route }) => {
   }
 
   async function handleSubmit(deleteAnnouncement) {
-    const result = deleteAnnouncement
-      ? await store.deleteAnnouncement()
-      : await store.editAnnouncement()
+    let result
+    if (deleteAnnouncement) result = await store.deleteAnnouncement()
+    else result = await store.editAnnouncement()
 
     store.requestFeedback = {
       visibleEdit: true,
@@ -185,7 +185,7 @@ const EditAnnouncement = observer(({ navigation, route }) => {
 
         <Button
           mode="contained"
-          onPress={handleSubmit}
+          onPress={() => handleSubmit(false)}
           style={styles.marginB10}
           disabled={store.disable}
           loading={store.isFetching}

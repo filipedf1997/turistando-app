@@ -21,7 +21,7 @@ const AnnouncementCard = ({ action, item, secundaryAction }) => {
 
       <View style={styles.content}>
         <Text style={styles.title}>
-          {cutText(item.title, 20)}
+          {cutText(item.title, 17)}
         </Text>
 
         <Text style={styles.daysTitle}>

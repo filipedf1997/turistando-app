@@ -44,13 +44,13 @@ const ReservationsTravelerCard = ({
 
         <View style={styles.content}>
           <Text style={styles.title}>
-            {cutText(item.announcement.title, 20)}
+            {cutText(item.announcement.title, 17)}
           </Text>
 
           <View style={styles.nameWrapper}>
             <CircleFirstLetter name={item.announcement.ownerName} />
             <Text style={[styles.name, styles.text]}>
-              {cutText(item.announcement.ownerName, 20)}
+              {cutText(item.announcement.ownerName, 17)}
             </Text>
           </View>
 
