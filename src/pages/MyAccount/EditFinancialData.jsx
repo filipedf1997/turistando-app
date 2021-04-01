@@ -46,7 +46,7 @@ const EditFinancialData = observer(({ navigation }) => {
         <Text
           style={[styles.title, { color: colors.primary }]}
         >
-          Alterar endereço
+          Alterar dados bancários
         </Text>
         <View style={styles.marginB10}>
           <Dropdown

@@ -43,7 +43,7 @@ const EditAddress = observer(({ navigation }) => {
   }, [])
 
   useEffect(() => {
-    if (store.user.address.cepNumber.length >= CEP_SIZE - 1) {
+    if (!store.firstTime && store.user.address.cepNumber.length >= CEP_SIZE - 1) {
       store.getAddress()
     }
   }, [store.user.address.cepNumber])
@@ -65,6 +65,7 @@ const EditAddress = observer(({ navigation }) => {
           onChangeText={(text, number) => {
             store.user.address.cep = text
             store.user.address.cepNumber = number
+            store.firstTime = false
           }}
           style={styles.marginB10}
           maxLength={CEP_SIZE}

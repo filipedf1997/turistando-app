@@ -46,6 +46,7 @@ class MyAccountStore {
   errorCep = false
   banks = banks
   accountTypes = accountTypes
+  firstTime = true
 
   get disableEdit() {
     return !this.user.name || !this.user.fone || (this.user.isProvider && !this.user.profile)
