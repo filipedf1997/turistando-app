@@ -21,28 +21,28 @@ const messageSupport = [
   },
 ]
 
-const messageClient = [
-  {
-    _id: 1,
-    text: 'Gostaria de saber mais sobre o passeio, por favor',
-    createdAt: new Date(),
-    user: {
-      _id: 3,
-      name: 'Suporte do Turistando',
-      avatar: () => null,
-    },
-  },
-  {
-    _id: 2,
-    text: 'Olá! Tudo bem?',
-    createdAt: new Date(),
-    user: {
-      _id: 2,
-      name: 'Suporte do Turistando',
-      avatar: () => null,
-    },
-  },
-]
+// const messageClient = [
+//   {
+//     _id: 1,
+//     text: 'Gostaria de saber mais sobre o passeio, por favor',
+//     createdAt: new Date(),
+//     user: {
+//       _id: 3,
+//       name: 'Suporte do Turistando',
+//       avatar: () => null,
+//     },
+//   },
+//   {
+//     _id: 2,
+//     text: 'Olá! Tudo bem?',
+//     createdAt: new Date(),
+//     user: {
+//       _id: 2,
+//       name: 'Suporte do Turistando',
+//       avatar: () => null,
+//     },
+//   },
+// ]
 
 const Chat = ({ navigation, route }) => {
   const { name, isSupport } = route.params
@@ -50,7 +50,7 @@ const Chat = ({ navigation, route }) => {
   const { colors } = useTheme()
 
   useEffect(() => {
-    setMessages(isSupport ? messageSupport : messageClient)
+    setMessages(isSupport ? messageSupport : [])
   }, [])
 
   const onSend = useCallback((messagesText = []) => {

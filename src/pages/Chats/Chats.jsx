@@ -32,13 +32,13 @@ const Chats = ({ navigation }) => {
           icon={<AntDesign name="pushpin" size={10} color={colors.white} style={{ transform: [{ rotateY: '180deg' }] }} />}
           action={() => navigation.navigate('Chat', { name: 'Suporte do Turistando', isSupport: true })}
         />
-        <ChatButton
+        {/* <ChatButton
           name="Cliente 01 (Passeio de Buggy)"
           lastMessage="Você recebeu 2 novas mensagens"
           date="08:21"
           icon="2"
           action={() => navigation.navigate('Chat', { name: 'Cliente 01 (Passeio de Buggy)', isSupport: false })}
-        />
+        /> */}
       </Content>
     </Container>
   )
