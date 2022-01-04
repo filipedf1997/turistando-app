@@ -11,6 +11,7 @@ LogBox.ignoreLogs([
   'Setting a timer',
   'Failed prop type: Invalid prop `locale` of type `object` supplied to `GiftedChat`, expected `string`.',
   'Non-serializable values were found in the navigation state',
+  'AsyncStorage has been extracted from react-native core and will be removed in a future release.',
 ])
 
 moment.defineLocale('pt-br', { weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sab'.split('_') })
